@@ -29,6 +29,7 @@ if (!fs.existsSync(outdir)) fs.mkdirSync(outdir);
 
 days.reverse().forEach(date => {
   const filename = `${date.replace(/-/g,'')}.ods`
+
   if(fs.existsSync(`${outdir}/informe_${filename}`)) {
     console.log(`🛑 informe_${filename} already exists!`)
   } else {
@@ -85,16 +86,14 @@ const pathTo = '../app/public/'
 
 //Number parser for Spanish numbers like -> 1.000,00
 const parser = new d2lIntl.NumberParse('es-ES');
-
 Promise.all(
     days.reverse().map(date => 
         fetch(`${baseUrl}${date.replace(/-/g,'')}.ods`)
             .then(res => res.buffer())
             .then(data => {
                 const headers = find(schema, d => d.date <= new Date(date)).header;
-
                 const workbook = xlsx.read(data, {type:'buffer'});
-                const json = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3, {raw: false, range: 1, header:headers});
+                const json = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
                 json.map(d=> {
                     d.fecha = d3time.timeParse('%Y-%m-%d')(date);
                     d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
@@ -102,7 +101,7 @@ Promise.all(
                     d.ccaa = sanitizeName(d.ccaa);
                     return {...d}
                 })
-
+                //console.log('hey',json)
                 return json;
             })
   )).then(json => transform(json));
@@ -143,7 +142,10 @@ const transform = (json) => {
 	// });
 
   const data = groupby(json.flat(), d => d.ccaa);
+  console.log(json)
   // writeJSON(latestNumbers, 'data_latest', pathTo);
   writeJSON(data, 'data', pathTo);
+  console.log('json data created')
   writeCSV(data, 'data', pathTo);
+  console.log('csv data created')
 }
