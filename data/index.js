@@ -57,7 +57,15 @@ const schema = [
     {
       date: new Date('2021-02-09'),
       header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_completa', 'hasta']
-  }
+    },
+    {
+      date: new Date('2021-04-06'),
+      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_1dosis', 'vacuna_completa', 'hasta']
+    },
+    {
+      date: new Date('2021-04-22'),
+      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'janssen', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_1dosis', 'vacuna_completa', 'hasta']
+    }
 ];
 
 //Some regions' names have extra spaces, missing accents, hyphens ... We should write a better function :/
@@ -92,7 +100,9 @@ Promise.all(
             .then(res => res.buffer())
             .then(data => {
                 const headers = find(schema, d => d.date <= new Date(date)).header;
+                console.log(headers)
                 const workbook = xlsx.read(data, {type:'buffer'});
+                
                 const json = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
                 json.map(d=> {
                     d.fecha = d3time.timeParse('%Y-%m-%d')(date);
@@ -142,7 +152,7 @@ const transform = (json) => {
 	// });
 
   const data = groupby(json.flat(), d => d.ccaa);
-  console.log(json)
+  //console.log(json)
   // writeJSON(latestNumbers, 'data_latest', pathTo);
   writeJSON(data, 'data', pathTo);
   console.log('json data created')
