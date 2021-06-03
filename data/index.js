@@ -41,6 +41,7 @@ days.reverse().forEach(date => {
 
 //SANITIZE SPREADSHEETS
 //Unfortunately different days have different numbers of columns (worksheet ranges)
+//TODO => make it more resiliant to changes in headers. 
 const schema = [
     {
         date: new Date('2021-01-04'),
