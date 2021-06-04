@@ -10,8 +10,13 @@
 	import {extent, max, min} from 'd3-array'
 	import {dateDiff, approxDate} from './dateDiff'
 	import locale from '@reuters-graphics/d3-locale';
+	
+
 
 	export let data;
+
+	
+
 	let width, datum, sort;
 	const loc = new locale('es');
 
@@ -77,6 +82,10 @@
 		sort = mode;
 	}
 
+	// Get rid of objects which actually are not ccaa
+	_data.splice(19)
+	console.log(_data)
+
 </script>
 
 <svelte:window bind:innerWidth={width}/>
@@ -133,9 +142,12 @@
 	{/if}
 
 	<ul>
-		{#each _data as d,i }
-		<Comunidad   data={d} height={y(max(d, d => d.entregadas))} index={i} />
-		{/each}
+		<li>
+			{#each _data as d,i }
+			<Comunidad   data={d} height={y(max(d, d => d.entregadas))} index={i} />
+			
+			{/each}
+		</li>
 	</ul>
 
 	<Errata />
