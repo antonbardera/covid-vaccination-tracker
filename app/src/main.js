@@ -10,7 +10,8 @@ fetch(url)
     const app = new App({
       target: document.body,
       props: {
-		data: data
+		    data: data
+  
       }
 	});
 });

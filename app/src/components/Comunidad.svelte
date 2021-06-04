@@ -3,10 +3,12 @@
     import Legend from './common/Legend.svelte'
     import locale from '@reuters-graphics/d3-locale';
     import {dateDiff, approxDate, sNumber} from '../dateDiff'
+    import ProgressBar from "@okrad/svelte-progressbar";
 
     export let data;
     export let height;
     export let index;
+    let series = [12,64]
 
     let width;
     let margin = {bottom:20, top:20, left:4, right:4};
@@ -17,8 +19,8 @@
         y: loc.format(',.1d'),
         pct: loc.format(',.1f')
     }
-
-    $:diff = dateDiff(new Date('2021-03-16'), data.latest.dateComplete);
+    
+    $:diff = dateDiff(new Date('2021-05-16'), data.latest.dateComplete);
 
     $:sentenceTarget = `${data.latest.ccaa} vacunará a <strong>${loc.format(`,.2r`)(data.latest.shareTarget)}</strong> personas en esta primera fase, según el reparto de vacunas actual.`;
     $:sentenceDiff = (diff <= -7)
@@ -66,6 +68,26 @@
 
     <div class='chart' style='height:{height + margin.top + margin.bottom}' bind:clientWidth={width}> 
         <BarsWithBg {data} {width} height={height + margin.top + margin.bottom} key={{x: 'hasta', y: 'administradas', bg: 'entregadas' }} format={f} {margin} />
+    </div>
+    <div style="position:absolute">
+        <!-- <button on:click={() => series = [50, 50]}>fill</button>
+        <button on:click={() => series = [0, 0]}>clear</button> -->
+        <ProgressBar
+            style="radial"
+            series={[
+                { perc: f.y(+data.latest.vacuna_completa/+data.latest.entregadas*100), color: '#4D87FF' },
+                { perc: f.y(+data.latest.pfizer/+data.latest.entregadas*100), color: '#9a82fd' },
+                { perc: f.y(+data.latest.administradas/+data.latest.entregadas*100), color: '#60fc7f' }
+                ]}
+            textSize={80}
+            stackSeries={false}
+            width="30%"
+            height="250"
+            thickness={10} 
+            margin={4 }  
+  
+        > 
+      </ProgressBar>
     </div>
     <div class='estimates'>
         <p class='indent text'>{@html sentence}</p>
