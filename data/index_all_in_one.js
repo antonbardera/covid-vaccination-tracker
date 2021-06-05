@@ -14,12 +14,6 @@ const d2lIntl = require('d2l-intl');
 //List of days since January 4, 2021, the first date with data
 const days = listDates(new Date('2021-01-04'), new Date());
 
-//Total vaccines Pfizer + Moderna
-const totalVacc = 5190735;
-
-//Target population for Phase 1
-const target = 2447000;
-
 //Base URL of the OpenDocument Spreadsheets
 const baseUrl = 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/documentos/Informe_Comunicacion_'
 
@@ -131,13 +125,6 @@ const sanitizeObject = (datum, date) => {
   const keys = Object.keys(datum);
   keys.forEach(key =>{
     switch (key) {
-      case 'fecha':
-        datum[key] = d3time.timeParse('%Y-%m-%d')(date);
-        break;
-      case 'hasta':
-        //datum[key] = d3time.timeParse('%d/%m/%Y')(datum[key]);
-        //datum[key] = sanitizeDate(datum[key], datum.fecha);
-        break;
       case 'ccaa':
         datum[key] = sanitizeName(datum[key]);
         break;
@@ -200,11 +187,37 @@ Promise.all(
                 d.hasta = sanitizeDate(d.hasta, d.fecha);
                 return {...d}
               })
-              console.log(vacOneDose);
+              //console.log(vacOneDose);
+              aqVacTotals = aq.from(vacTotals);
+              //console.log("VacTotals!!!")
+              //aqVacTotals.print();
+              const cn_totals = aqVacTotals.columnNames();
+              //console.log("VacOneDose!!!")
+              aqVacOneDose = aq.from(vacOneDose);
+              const cn_OneDose = aqVacOneDose.columnNames();
 
+              cn_totals[0] === cn_OneDose[0] ? console.log("son iguals"+cn_totals[0]) :console.log("son diferent"+cn_totals[0]);
+              //aqVacOneDose.print();
+              //console.log("***************")
+              cn_totals[0] === 'ccaa' ? console.log("sson iguals"+cn_totals[0]) :console.log("sson diferent"+cn_totals[0]);
 
+              if(cn_totals[0] === cn_OneDose[0] && cn_totals[0] === 'ccaa'){
+                const aqJoin = aqVacTotals.join(aqVacOneDose,'ccaa')
+                  .derive({perc_Under50: d => d.perc_50 + d.perc_25 + d.perc_18 + d.perc_16})
+                  .objects();
 
-
+                //console.log("VacTotalsJoint!!!")
+                console.log(aqJoin);
+                //aqVacTotals.print();
+              }else{
+                console.log("*******")
+                console.log(date)
+                console.log("Not equal")
+                console.log(cn_totals)
+                console.log("--")
+                console.log(cn_OneDose)
+                console.log("*******")
+              }
               vacComplete.map(d=>{return {...d}})
               
               const json = {date:date, vac_Totals: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
@@ -282,6 +295,7 @@ const transform = (json) => {
 	// });
 
   //better with arquero
+  //console.log(json);
   const data = groupby(json.flat(), d => d.ccaa);
   // aqVacTotals = aq.from(vacTotals);
   // aqVacOneDose = aq.from(vacOneDose);
