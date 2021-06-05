@@ -174,9 +174,9 @@ Promise.all(
               vacOneDose.map(d=>{return {...d}})
               vacComplete.map(d=>{return {...d}})
               
-              const json = []
-              json.push(...vacTotals,...vacComplete,...vacOneDose)
               
+              
+              const json = {date:date, values: { total_results: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}}
               
               // console.log(json)
               return json
@@ -224,8 +224,19 @@ Promise.all(
   
 const transform = (json) => {
 
-  json.flat().forEach(d => {
-      Object.keys(d) = (Object.keys(d)? parser.parse(Object.values(d)):'')
+  json.flat().forEach(d => { console.log(d)
+      d.pfizer = (d.pfizer) ? parser.parse(d.pfizer) : '';
+      d.moderna = (d.moderna) ? parser.parse(d.moderna) : '';
+      d.astrazeneca = (d.astrazeneca) ? parser.parse(d.astrazeneca) : '';
+      d.janssen = (d.janssen) ? parser.parse(d.janssen) : '';
+      d.entregadas = (d.entregadas) ? parser.parse(d.entregadas): '';
+      // d.entregadas = (d.astrazeneca) ? d.entregadas - d.astrazeneca : d.entregadas;
+      d.administradas = (d.administradas)?parser.parse(d.administradas):'';
+      // d.administradas = (d.astrazeneca) ? d.administradas - d.astrazeneca : d.administradas;
+      d.admin_entregadas = (d.admin_entregadas) ? parser.parse(d.admin_entregadas) : '';
+      // d.admin_entregadas = (d.astrazeneca) ? d.administradas/d.entregadas * 100 : d.admin_entregadas;
+      d.vacuna_1dosis = (d.vacuna_1dosis) ? parser.parse(d.vacuna_1dosis) : '';
+      d.vacuna_completa = (d.vacuna_completa) ? parser.parse(d.vacuna_completa) : '';
       
   });
     // const range = extent(json.flat(), d => d.fecha);
@@ -254,9 +265,9 @@ const transform = (json) => {
   // const data_ages_complete = groupby(json_ages_complete.flat(), d => d.ccaa);
 
   // writeJSON(latestNumbers, 'data_latest', pathTo);
-  writeJSON(data, 'data2', pathTo);
+  writeJSON(data, 'data_all_in_one', pathTo);
   console.log('json data created')
-  writeCSV(data, 'data2', pathTo);
+  writeCSV(data, 'data_all_in_one', pathTo);
   console.log('csv data created')
 }
 //   writeJSON(data_ages_1dose, 'data_ages_1dose', pathTo);
