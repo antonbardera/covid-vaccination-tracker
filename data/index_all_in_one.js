@@ -85,7 +85,6 @@ const schema_ages_1dose = [
         'dose1_16', 'pop_16','perc_16',
         'dose1_total', 'pop_total','perc_total'
       ]
-
   }
 ];
 
