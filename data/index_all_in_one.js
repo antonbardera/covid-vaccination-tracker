@@ -7,6 +7,7 @@ const fs = require('fs');
 const {writeCSV, writeJSON} = require('./utils/write');
 const {listDates, find, download, dateDiff, approxDate, sNumber} = require('./utils/utils');
 const groupby = require('lodash/groupBy');
+const aq = require('arquero')
 const d2lIntl = require('d2l-intl');
 // const {extent} = require('d3-array');
 
@@ -126,6 +127,28 @@ const sanitizeDate = (date, date2) => {
   
 }
 
+const sanitizeObject = (datum, date) => {
+  const keys = Object.keys(datum);
+  keys.forEach(key =>{
+    switch (key) {
+      case 'fecha':
+        datum[key] = d3time.timeParse('%Y-%m-%d')(date);
+        break;
+      case 'hasta':
+        //datum[key] = d3time.timeParse('%d/%m/%Y')(datum[key]);
+        //datum[key] = sanitizeDate(datum[key], datum.fecha);
+        break;
+      case 'ccaa':
+        datum[key] = sanitizeName(datum[key]);
+        break;
+      default:
+        //console.log(key)
+        datum[key] = parser.parse(datum[key]);
+    }
+  })
+  return datum;
+}
+
 //FETCH THE SPREADSHEETS
 //Output folder in the Svelte app
 const pathTo = '../app/public/'
@@ -163,26 +186,28 @@ Promise.all(
               const vacComplete = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:schema_ages_complete[0].header})
 
               vacTotals.map(d=> {
+                  d = sanitizeObject(d, date);
                   d.fecha = d3time.timeParse('%Y-%m-%d')(date);
                   d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                   d.hasta = sanitizeDate(d.hasta, d.fecha);
-                  d.pfizer = (d.pfizer) ? parser.parse(d.pfizer): 0;
-                  d.moderna = (d.moderna) ? parser.parse(d.moderna): 0;
-                  d.astrazeneca = (d.astrazeneca) ? parser.parse(d.astrazeneca): 0;
-                  d.janssen = (d.janssen) ? parser.parse(d.janssen): 0;
-                  d.entregadas = (d.entregadas) ? parser.parse(d.entregadas): 0;
-                  d.administradas = (d.administradas) ? parser.parse(d.administradas): 0;
-                  d.admin_entregadas = (d.admin_entregadas) ? parser.parse(d.admin_entregadas): 0;
-                  d.vacuna_1dosis = (d.vacuna_1dosis) ? parser.parse(d.vacuna_1dosis): 0;
-                  d.vacuna_completa = (d.vacuna_completa) ? parser.parse(d.vacuna_completa): 0;
-                  d.ccaa = sanitizeName(d.ccaa);
-
                   return {...d}
               })
-              vacOneDose.map(d=>{return {...d}})
+
+              vacOneDose.map(d=>{
+                d = sanitizeObject(d, date);
+                d.fecha = d3time.timeParse('%Y-%m-%d')(date);
+                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                return {...d}
+              })
+              console.log(vacOneDose);
+
+
+
+
               vacComplete.map(d=>{return {...d}})
               
-              const json = vacTotals;//date:date}//, ...vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
+              const json = {date:date, vac_Totals: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
               
               return json
 
@@ -258,8 +283,10 @@ const transform = (json) => {
 
   //better with arquero
   const data = groupby(json.flat(), d => d.ccaa);
+  // aqVacTotals = aq.from(vacTotals);
+  // aqVacOneDose = aq.from(vacOneDose);
 
-  console.log(data);
+  // aqVacTotals.join(aqVacOneDose, ['ccaa'])
 
   // const data_ages_1dose = groupby(json_ages_1dose.flat(), d => d.ccaa);
   // const data_ages_complete = groupby(json_ages_complete.flat(), d => d.ccaa);
