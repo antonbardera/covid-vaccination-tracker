@@ -166,6 +166,15 @@ Promise.all(
                   d.fecha = d3time.timeParse('%Y-%m-%d')(date);
                   d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                   d.hasta = sanitizeDate(d.hasta, d.fecha);
+                  d.pfizer = (d.pfizer) ? parser.parse(d.pfizer): 0;
+                  d.moderna = (d.moderna) ? parser.parse(d.moderna): 0;
+                  d.astrazeneca = (d.astrazeneca) ? parser.parse(d.astrazeneca): 0;
+                  d.janssen = (d.janssen) ? parser.parse(d.janssen): 0;
+                  d.entregadas = (d.entregadas) ? parser.parse(d.entregadas): 0;
+                  d.administradas = (d.administradas) ? parser.parse(d.administradas): 0;
+                  d.admin_entregadas = (d.admin_entregadas) ? parser.parse(d.admin_entregadas): 0;
+                  d.vacuna_1dosis = (d.vacuna_1dosis) ? parser.parse(d.vacuna_1dosis): 0;
+                  d.vacuna_completa = (d.vacuna_completa) ? parser.parse(d.vacuna_completa): 0;
                   d.ccaa = sanitizeName(d.ccaa);
 
                   return {...d}
@@ -173,11 +182,8 @@ Promise.all(
               vacOneDose.map(d=>{return {...d}})
               vacComplete.map(d=>{return {...d}})
               
+              const json = vacTotals;//date:date}//, ...vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
               
-              
-              const json = {date:date, values: { total_results: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}}
-              
-              // console.log(json)
               return json
 
           })
@@ -223,21 +229,13 @@ Promise.all(
   
 const transform = (json) => {
 
-  json.flat().forEach(d => { console.log(d)
-      d.pfizer = (d.pfizer) ? parser.parse(d.pfizer) : '';
-      d.moderna = (d.moderna) ? parser.parse(d.moderna) : '';
-      d.astrazeneca = (d.astrazeneca) ? parser.parse(d.astrazeneca) : '';
-      d.janssen = (d.janssen) ? parser.parse(d.janssen) : '';
-      d.entregadas = (d.entregadas) ? parser.parse(d.entregadas): '';
-      // d.entregadas = (d.astrazeneca) ? d.entregadas - d.astrazeneca : d.entregadas;
-      d.administradas = (d.administradas)?parser.parse(d.administradas):'';
-      // d.administradas = (d.astrazeneca) ? d.administradas - d.astrazeneca : d.administradas;
-      d.admin_entregadas = (d.admin_entregadas) ? parser.parse(d.admin_entregadas) : '';
-      // d.admin_entregadas = (d.astrazeneca) ? d.administradas/d.entregadas * 100 : d.admin_entregadas;
-      d.vacuna_1dosis = (d.vacuna_1dosis) ? parser.parse(d.vacuna_1dosis) : '';
-      d.vacuna_completa = (d.vacuna_completa) ? parser.parse(d.vacuna_completa) : '';
-      
-  });
+  //console.log(json.flat())
+  // json.flat().forEach((d,i) => { //if(i===0){console.log(d.values.total_results)}
+  //     d.values.total_results.entregadas = (d.values.total_results.entregadas) ? parser.parse(d.values.total_results.entregadas): '';
+  //     d.values.total_results.administradas = (d.values.total_results.administradas)?parser.parse(d.values.total_results.administradas):'';
+  //     d.values.total_results.admin_entregadas = (d.values.total_results.admin_entregadas) ? parser.parse(d.values.total_results.admin_entregadas) : '';
+  //     //if(i===0){console.log(d.values.total_results)}
+  // });
     // const range = extent(json.flat(), d => d.fecha);
   // const dateRange = dateDiff(range[0], range[1]);
   // const latestNumbers = Object.values(json)
@@ -258,7 +256,10 @@ const transform = (json) => {
 	// 		return {...d}
 	// });
 
+  //better with arquero
   const data = groupby(json.flat(), d => d.ccaa);
+
+  console.log(data);
 
   // const data_ages_1dose = groupby(json_ages_1dose.flat(), d => d.ccaa);
   // const data_ages_complete = groupby(json_ages_complete.flat(), d => d.ccaa);
