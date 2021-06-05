@@ -11,7 +11,7 @@ const d2lIntl = require('d2l-intl');
 // const {extent} = require('d3-array');
 
 //List of days since January 4, 2021, the first date with data
-const days = listDates(new Date('2021-01-04'), new Date());
+const days = listDates(new Date('2021-03-31'), new Date());
 
 //Total vaccines Pfizer + Moderna
 const totalVacc = 5190735;
@@ -42,32 +42,23 @@ days.reverse().forEach(date => {
 //SANITIZE SPREADSHEETS
 //Unfortunately different days have different numbers of columns (worksheet ranges)
 //TODO => make it more resiliant to changes in headers. 
-const schema = [
+const schema =  [
     {
-        date: new Date('2021-01-04'),
-        header: ['ccaa', 'entregadas', 'administradas', 'admin_entregadas', 'hasta']
-    },
-    {
-        date: new Date('2021-01-14'),
-        header: ['ccaa', 'pfizer', 'moderna', 'entregadas', 'administradas', 'admin_entregadas', 'hasta']
-    },
-    {
-        date: new Date('2021-01-17'),
-        header: ['ccaa', 'pfizer', 'moderna', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_completa', 'hasta']
-    },
-    {
-      date: new Date('2021-02-09'),
-      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_completa', 'hasta']
-    },
-    {
-      date: new Date('2021-04-06'),
-      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_1dosis', 'vacuna_completa', 'hasta']
-    },
-    {
-      date: new Date('2021-04-22'),
-      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'janssen', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_1dosis', 'vacuna_completa', 'hasta']
+        date: new Date('2021-03-31'),
+        header: [
+          'ccaa',
+          'dose1_80','pop_80','perc_80',
+          'dose1_70', 'pop_70','perc_70',
+          'dose1_60', 'pop_70','perc_60', 
+          'dose1_50', 'pop_50','perc_50',
+          'dose1_25', 'pop_25','perc_25',
+          'dose1_18', 'pop_18','perc_18',
+          'dose1_16', 'pop_16','perc_16',
+          'dose1_total', 'pop_total','perc_total'
+        ]
+  
     }
-];
+  ];
 
 //Some regions' names have extra spaces, missing accents, hyphens ... We should write a better function :/
 const sanitizeName = (ccaa) => {
@@ -103,12 +94,11 @@ Promise.all(
                 const headers = find(schema, d => d.date <= new Date(date)).header;
                 const workbook = xlsx.read(data, {type:'buffer'});
                 
-                const json = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
-                console.log(json)
+                const json = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:headers});
                 json.map(d=> {
                     d.fecha = d3time.timeParse('%Y-%m-%d')(date);
-                    d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                    d.hasta = sanitizeDate(d.hasta, d.fecha);
+                    // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                    // d.hasta = sanitizeDate(d.hasta, d.fecha);
                     d.ccaa = sanitizeName(d.ccaa);
                     return {...d}
                 })
@@ -120,7 +110,32 @@ Promise.all(
 const transform = (json) => {
 
   json.flat().forEach(d => {
-    d.pfizer = (d.pfizer) ? parser.parse(d.pfizer) : '';
+    // d.dose1_80 = (d.dose1_80) ? parser.parse(d.dose1_80):'';
+    // d.pop_80 = (d.pop_80) ? parser.parse(d.pop_80):'';
+    // d.perc_80 = (d.perc_80) ? parser.parse(d.perc_80):'';
+    // d.dose1_70 = (d.dose1_70) ? parser.parse(d.dose1_70):'';
+    // d.pop_70 = (d.pop_70) ? parser.parse(d.pop_70):'';
+    // d.perc_70 = (d.perc_70) ? parser.parse(d.perc_70):'';
+    // d.dose1_60 = (d.dose1_60) ? parser.parse(d.dose1_60):''; 
+    // d.dose1_60 = (d.dose1_60) ? parser.parse(d.dose1_60):''; 
+    // d.dose1_60 = (d.dose1_60) ? parser.parse(d.dose1_60):''; 
+    // d.perc_60 = (d.perc_60) ? parser.parse(d.perc_60):''; 
+    // d.dose1_50 = (d.dose1_50) ? parser.parse(d.dose1_50):''; 
+    // d.pop_50 = (d.pop_50) ? parser.parse(d.pop_50):''; 
+    // d.perc_50 = (d.perc_50) ? parser.parse(d.perc_50):''; 
+    // d.dose1_25 = (d.dose1_25) ? parser.parse(d.dose1_25):''; 
+    // d.pop_25 = (d.pop_25) ? parser.parse(d.pop_25):''; 
+    // d.perc_25 = (d.perc_25) ? parser.parse(d.perc_25):''; 
+    // d.dose1_18 = (d.dose1_18) ? parser.parse(d.dose1_18):''; 
+    // d.pop_18 = (d.pop_18) ? parser.parse(d.pop_18):''; 
+    // d.perc_18 = (d.perc_18) ? parser.parse(d.perc_18):''; 
+    // d.dose1_16 = (d.dose1_16) ? parser.parse(d.dose1_16):''; 
+    // d.pop_16 = (d.pop_16) ? parser.parse(d.pop_16):''; 
+    // d.perc_16 = (d.perc_16) ? parser.parse(d.perc_16):''; 
+    // d.dose1_total = (d.dose1_total) ? parser.parse(d.dose1_total):''; 
+    // d.pop_total = (d.pop_total) ? parser.parse(d.pop_total):''; 
+    // d.perc_total = (d.perc_total) ? parser.parse(d.perc_total):''
+    /* d.pfizer = (d.pfizer) ? parser.parse(d.pfizer) : '';
     d.moderna = (d.moderna) ? parser.parse(d.moderna) : '';
     d.astrazeneca = (d.astrazeneca) ? parser.parse(d.astrazeneca) : '';
     d.janssen = (d.janssen) ? parser.parse(d.janssen) : '';
@@ -131,7 +146,8 @@ const transform = (json) => {
     d.admin_entregadas = (d.admin_entregadas) ? parser.parse(d.admin_entregadas) : '';
     // d.admin_entregadas = (d.astrazeneca) ? d.administradas/d.entregadas * 100 : d.admin_entregadas;
     d.vacuna_1dosis = (d.vacuna_1dosis) ? parser.parse(d.vacuna_1dosis) : '';
-    d.vacuna_completa = (d.vacuna_completa) ? parser.parse(d.vacuna_completa) : '';
+    d.vacuna_completa = (d.vacuna_completa) ? parser.parse(d.vacuna_completa) : ''; */
+    return {...d}
 });
 
   // const range = extent(json.flat(), d => d.fecha);
@@ -157,8 +173,8 @@ const transform = (json) => {
   const data = groupby(json.flat(), d => d.ccaa);
   //console.log(json)
   // writeJSON(latestNumbers, 'data_latest', pathTo);
-  writeJSON(data, 'data', pathTo);
+  writeJSON(data, 'data1dose', pathTo);
   console.log('json data created')
-  writeCSV(data, 'data', pathTo);
+  writeCSV(data, 'data1dose', pathTo);
   console.log('csv data created')
 }

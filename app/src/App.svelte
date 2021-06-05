@@ -120,7 +120,7 @@
 	<p class="text summary"><strong>¡Actualización!</strong> Desde el 9 de febrero los datos incluyen las dosis de AstraZeneca con las que se vacunará al personal sanitario y sociosanitario en activo —hasta los 55 años de edad— que no estuviera incluido hasta ahora.</p>
 	<p class="text summary">El Ministerio de Sanidad es responsable del reparto de las dosis y la estrategia de vacunación, mientras que las comunidades autónomas son las responsables de ponerla en práctica.</p>
 	<p class="text summary">Si continúan los ritmos de vacunación actuales, {latestNumbers[0].ccaa} será la comunidad que antes complete la primera fase, mientras que {latestNumbers[latestNumbers.length - 1].ccaa} será la última.</p>
-	
+
 	<SummaryTable data={latestNumbers.filter(d => d.ccaa !== 'Totales')} />
 
 	{#if width < 640}
