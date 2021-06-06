@@ -245,11 +245,10 @@ Promise.all(
               }
               
               console.log(aqJoin);
-              
+              writeCSV(aqJoin, 'data_all_in_one', pathTo);
+              writeJSON(aqJoin, 'data_all_in_one', pathTo);
+              return aqJoin
               // const json = {date:date, vac_Totals: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
-
-              return json
-
           })
   )).then(json => transform(json));
 
@@ -265,14 +264,14 @@ const transform = (json) => {
 	// 		const daily = d.administradas / dateRange;
 	// 		const vaccinesLeft = d.poblacion_diana * 2 - d.administradas;
 	// 		d.fecha_completa  = new Date(d.fecha);
-  //     d.fecha_completa.setDate(d.fecha.getDate() + 1 * (vaccinesLeft / daily ) )
+  //    d.fecha_completa.setDate(d.fecha.getDate() + 1 * (vaccinesLeft / daily ) )
   //     d.fecha_completa = approxDate(d.fecha_completa )
 	// 		return {...d}
 	// });
 
   //better with arquero
   //console.log(json);
-  const data = groupby(json.flat(), d => d.ccaa);
+  const data = json.this()
   // aqVacTotals = aq.from(vacTotals);
   // aqVacOneDose = aq.from(vacOneDose);
 

@@ -60,8 +60,9 @@ const main = async () => {
         //.print({ offset: 5000 })
         .objects();
         
-  //console.log(data)
+  // console.log(data)
   writeJSON(data, 'data_covid_indices', dest) 
+  writeCSV(data, 'data_covid_indices', dest) 
 }
 
 
