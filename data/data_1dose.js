@@ -96,7 +96,7 @@ Promise.all(
                 
                 const json = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:headers});
                 json.map(d=> {
-                    d.fecha = d3time.timeParse('%Y-%m-%d')(date);
+                    d.fecha = date=> d3time.timeParse('%Y-%m-%d')(date);
                     // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                     // d.hasta = sanitizeDate(d.hasta, d.fecha);
                     d.ccaa = sanitizeName(d.ccaa);
