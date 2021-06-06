@@ -50,19 +50,19 @@ const schema = [
     },
     {
         date: new Date('2021-01-17'),
-        header: ['ccaa', 'pfizer', 'moderna', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_completa', 'hasta']
+        header: ['ccaa', 'pfizer', 'moderna', 'entregadas', 'administradas', 'admin_entregadas', 'dose2', 'hasta']
     },
     {
       date: new Date('2021-02-09'),
-      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_completa', 'hasta']
+      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'dose2', 'hasta']
     },
     {
       date: new Date('2021-04-06'),
-      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_1dosis', 'vacuna_completa', 'hasta']
+      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'entregadas', 'administradas', 'admin_entregadas', 'dose1', 'dose2', 'hasta']
     },
     {
       date: new Date('2021-04-22'),
-      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'janssen', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_1dosis', 'vacuna_completa', 'hasta']
+      header: ['ccaa', 'pfizer', 'moderna', 'astrazeneca', 'janssen', 'entregadas', 'administradas', 'admin_entregadas', 'dose1', 'dose2', 'hasta']
     }
 ];
 
@@ -71,31 +71,30 @@ const schema_ages_1dose = [
       date: new Date('2021-03-31'),
       header: [
         'ccaa',
-        'dose1_80','pop_80','perc_80',
-        'dose1_70', 'pop_70','perc_70',
-        'dose1_60', 'pop_70','perc_60', 
-        'dose1_50', 'pop_50','perc_50',
+        'dose1_above80','pop_above80','dose1_pct_above80',
+        'dose1_70to79', 'pop_70to79','dose1_pct_70to79',
+        'dose1_60to69', 'pop_60to69','dose1_pct_60to69', 
+        'dose1_50to59', 'pop_50to59','dose1_pct_50to59',
         'dose1_25', 'pop_25','perc_25',
         'dose1_18', 'pop_18','perc_18',
         'dose1_16', 'pop_16','perc_16',
-        'dose1_total', 'pop_total','perc_total'
+        'dose1_total', 'pop_total','dose1_perc_total'
       ]
-  }
-];
+  }];
 
 const schema_ages_complete = [
   {
       date: new Date('2021-03-31'),
       header: [
         'ccaa',
-        'complete_80','pop_80', 'perc_80',
-        'complete_70', 'pop_70', 'perc_70', 
-        'complete_60', 'pop_70', 'perc_60', 
-        'complete_50', 'pop_50','perc_50',
-        'complete_25', 'pop_25','perc_25',
-        'complete_18', 'pop_18','perc_18',
-        'complete_16', 'pop_16','perc_16',
-        'complete_total', 'pop_total','perc_total'
+        'dose2_above80','pop_above80','dose2_pct_above80',
+        'dose2_70to79', 'pop_70to79','dose2_pct_70to79',
+        'dose2_60to69', 'pop_60to69','dose2_pct_60to69', 
+        'dose2_50to59', 'pop_50to59','dose2_pct_50to59',
+        'dose2_25', 'pop_25','perc_25',
+        'dose2_18', 'pop_18','perc_18',
+        'dose2_16', 'pop_16','perc_16',
+        'dose2_total', 'pop_total','dose2_perc_total'
       ]
 
   }
@@ -142,7 +141,7 @@ const pathTo = '../app/public/'
 
 //Number parser for Spanish numbers like -> 1.000,00
 const parser = new d2lIntl.NumberParse('es-ES');
-let json =[]
+
 // create agregated data
 Promise.all(
     days.reverse().map(date => 
@@ -169,8 +168,8 @@ Promise.all(
               const headers = find(schema, d => d.date <= new Date(date)).header;
 
               const vacTotals = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
-              const vacOneDose = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:schema_ages_1dose[0].header})
-              const vacComplete = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:schema_ages_complete[0].header})
+              const vacDose1 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:schema_ages_1dose[0].header})
+              const vacDose2 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:schema_ages_complete[0].header})
 
               vacTotals.map(d=> {
                   d = sanitizeObject(d, date);
@@ -180,7 +179,15 @@ Promise.all(
                   return {...d}
               })
 
-              vacOneDose.map(d=>{
+              vacDose1.map(d=>{
+                d = sanitizeObject(d, date);
+                d.fecha = d3time.timeParse('%Y-%m-%d')(date);
+                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                return {...d}
+              })
+              
+              vacDose2.map(d=>{
                 d = sanitizeObject(d, date);
                 d.fecha = d3time.timeParse('%Y-%m-%d')(date);
                 d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
@@ -193,21 +200,38 @@ Promise.all(
               //aqVacTotals.print();
               const cn_totals = aqVacTotals.columnNames();
               //console.log("VacOneDose!!!")
-              aqVacOneDose = aq.from(vacOneDose);
-              const cn_OneDose = aqVacOneDose.columnNames();
+              aqVacDose1 = aq.from(vacDose1);
+              const cn_Dose1 = aqVacDose1.columnNames();
 
-              cn_totals[0] === cn_OneDose[0] ? console.log("son iguals"+cn_totals[0]) :console.log("son diferent"+cn_totals[0]);
+              aqVacDose2 = aq.from(vacDose2);
+              const cn_Dose2 = aqVacDose2.columnNames();
+
+              // cn_totals[0] === cn_Dose1[0] ? console.log("son iguals"+cn_totals[0]) :console.log("son diferent"+cn_totals[0]);
+              // cn_totals[0] === cn_Dose2[0] ? console.log("son iguals"+cn_totals[0]) :console.log("son diferent"+cn_totals[0]);
               //aqVacOneDose.print();
               //console.log("***************")
-              cn_totals[0] === 'ccaa' ? console.log("sson iguals"+cn_totals[0]) :console.log("sson diferent"+cn_totals[0]);
+              // cn_totals[0] === 'ccaa' ? console.log("sson iguals"+cn_totals[0]) :console.log("sson diferent"+cn_totals[0]);
+              var  aqJoin = {}
+              if(cn_totals[0] === cn_Dose1[0]  &&cn_totals[0] === 'ccaa'){
+                aqJoin = aqVacTotals.join(aqVacDose1,'ccaa')//.join(aqvacDose2,'ccaa')
+                .derive({pct_under50: d => d.perc_25 + d.perc_18 + d.perc_16})
+                .select(aq.not('perc_25','perc_18','perc_16'))
+                .derive({pop_under50: d => d.pop_25 + d.pop_18 + d.pop_16})
+                .select(aq.not('pop_25','pop_18','pop_16'))
+                .derive({dose1_under50: d => d.dose1_25 + d.dose1_18 + d.dose1_16})
+                .select(aq.not('dose1_25','dose1_18','dose1_16'))
+                .select(aq.not('fecha_2','hasta_2'))
 
-              if(cn_totals[0] === cn_OneDose[0] && cn_totals[0] === 'ccaa'){
-                const aqJoin = aqVacTotals.join(aqVacOneDose,'ccaa')
-                  .derive({perc_Under50: d => d.perc_50 + d.perc_25 + d.perc_18 + d.perc_16})
-                  .objects();
+                .join(
+                  aqVacDose2
+                  .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total')),'ccaa')
+                .derive({dose2_under50: d => d.dose2_25 + d.dose2_18 + d.dose2_16})
+                .select(aq.not('dose2_25','dose2_18','dose2_16'))
+                .select(aq.not('pop_25','pop_18','pop_16'))
+                .select(aq.not('fecha_1','hasta_1'))
+                .objects()
 
                 //console.log("VacTotalsJoint!!!")
-                console.log(aqJoin);
                 //aqVacTotals.print();
               }else{
                 console.log("*******")
@@ -215,71 +239,23 @@ Promise.all(
                 console.log("Not equal")
                 console.log(cn_totals)
                 console.log("--")
-                console.log(cn_OneDose)
+                console.log(cn_Dose1)
+                console.log(cn_Dose2)
                 console.log("*******")
               }
-              vacComplete.map(d=>{return {...d}})
               
-              const json = {date:date, vac_Totals: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
+              console.log(aqJoin);
               
+              // const json = {date:date, vac_Totals: vacTotals, ages_oneDose: vacOneDose, ages_twoDose: vacComplete}
+
               return json
 
           })
   )).then(json => transform(json));
 
-// // create 1dose by ccaa data
-//  let json_ages_1dose = Promise.all(
-//     days.reverse().map(date => 
-//         fetch(`${baseUrl}${date.replace(/-/g,'')}.ods`)
-//             .then(res => res.buffer())
-//             .then(data => {
-//                 const headers_ages_1dose = find(schema_ages_1dose, d => d.date <= new Date(date)).header;
-//                 const workbook = xlsx.read(data, {type:'buffer'});
-//                 const json_ages_1dose = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_almenos_1_dosis, {raw: false, range: 1, header:headers_ages_1dose});
-//                 json_ages_1dose.map(d=> {
-//                     d.fecha = d3time.timeParse('%Y-%m-%d')(date);
-//                     d.ccaa = sanitizeName(d.ccaa);
-//                     return {...d}
-//                 })
-//                 //console.log('hey',json)
-//                 return json_ages_1dose;
-//             })
-//   )).then(json => transform(json));
-
-// // create complete by ccaa data
-//  let json_ages_complete = Promise.all(
-//     days.reverse().map(date => 
-//         fetch(`${baseUrl}${date.replace(/-/g,'')}.ods`)
-//             .then(res => res.buffer())
-//             .then(data => {
-//               const headers_ages_complete = find(schema_ages_complete, d => d.date <= new Date(date)).header;
-//                 const workbook = xlsx.read(data, {type:'buffer'});
-//                 const json_ages_complete = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:headers_ages_complete});
-//                 json_ages_complete.map(d=> {
-//                     d.fecha = d3time.timeParse('%Y-%m-%d')(date);
-//                     d.ccaa = sanitizeName(d.ccaa);
-//                     return {...d}
-//                   })
-//                 return json_ages_complete
-//             })
-//   )).then(json => transform(json));
-
   
 const transform = (json) => {
 
-  //console.log(json.flat())
-  // json.flat().forEach((d,i) => { //if(i===0){console.log(d.values.total_results)}
-  //     d.values.total_results.entregadas = (d.values.total_results.entregadas) ? parser.parse(d.values.total_results.entregadas): '';
-  //     d.values.total_results.administradas = (d.values.total_results.administradas)?parser.parse(d.values.total_results.administradas):'';
-  //     d.values.total_results.admin_entregadas = (d.values.total_results.admin_entregadas) ? parser.parse(d.values.total_results.admin_entregadas) : '';
-  //     //if(i===0){console.log(d.values.total_results)}
-  // });
-    // const range = extent(json.flat(), d => d.fecha);
-  // const dateRange = dateDiff(range[0], range[1]);
-  // const latestNumbers = Object.values(json)
-	// 	.flat()
-	// 	.sort((a, b) => b.fecha - a.fecha)
-  //   .slice(0,20);
     
   // const totalCurrent = latestNumbers.find(d => d.ccaa === 'Totales' ).entregadas;
 
@@ -311,13 +287,3 @@ const transform = (json) => {
   writeCSV(data, 'data_all_in_one', pathTo);
   console.log('csv data created')
 }
-//   writeJSON(data_ages_1dose, 'data_ages_1dose', pathTo);
-//   console.log('json data_ages_1dose created')
-//   writeCSV(data_ages_1dose, 'data_ages_1dose', pathTo);
-//   console.log('csv data_ages_1dose created')
-  
-//   writeJSON(data_ages_complete, 'data_ages_complete', pathTo);
-//   console.log('json data_ages_complete created')
-//   writeCSV(data_ages_complete, 'data_ages_complete', pathTo);
-//   console.log('csv data_ages_complete created')
-// 
