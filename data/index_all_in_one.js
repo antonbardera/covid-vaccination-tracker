@@ -12,6 +12,7 @@ const d2lIntl = require('d2l-intl');
 const { join } = require('path');
 // const {extent} = require('d3-array');
 
+// CONSTANTS
 //List of days since January 4, 2021, the first date with data
 const days = listDates(new Date('2021-01-04'), new Date());
 
@@ -136,14 +137,14 @@ const sanitizeObject = (datum, date) => {
   return datum;
 }
 
+//Number parser for Spanish numbers like -> 1.000,00
+const parser = new d2lIntl.NumberParse('es-ES');
+
 //FETCH THE SPREADSHEETS
 //Output folder in the Svelte app
 const pathTo = '../app/public/'
 
-//Number parser for Spanish numbers like -> 1.000,00
-const parser = new d2lIntl.NumberParse('es-ES');
-
-// create agregated data
+////// PARSE SPREADSHEETS
 Promise.all(
     days.reverse().map(date => 
         fetch(`${baseUrl}${date.replace(/-/g,'')}.ods`)
@@ -157,19 +158,20 @@ Promise.all(
               const vacTotals = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
               const vacDose1 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:schema_ages_1dose[0].header})
               const vacDose2 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:schema_ages_complete[0].header})
-
               vacTotals.map(d=> {
-                  d = sanitizeObject(d, date);
-                  d.fecha = d3time.timeParse('%Y-%m-%d')(date)+1;
-                  d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                  d.hasta = sanitizeDate(d.hasta, d.fecha);
-                  
-                  return {...d}
+                d = sanitizeObject(d, date);
+                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1)
+                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                
+                return {...d}
               })
-
+              // console.log(vacTotals.filter(d=> d.fecha ==='2021-01-19T22:00:00.000Z'))
+              
+              ////// PROCESS COLUMNS
               vacDose1.map(d=>{
                 d = sanitizeObject(d, date);
-                d.fecha = d3time.timeParse('%Y-%m-%d')(date)+1;
+                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
                 d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose1_under50 = d.dose1_25 + d.dose1_18 + d.dose1_16;
@@ -179,7 +181,7 @@ Promise.all(
               
               vacDose2.map(d=>{
                 d = sanitizeObject(d, date);
-                d.fecha = d3time.timeParse('%Y-%m-%d')(date)+1;
+                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
                 d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
@@ -187,14 +189,16 @@ Promise.all(
                 d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
                 return {...d}
               })
-
-           
-              const fecha = [date]
-
-              aqVacDate = aq.from(fecha);
+              // console.log(vacDose2)
+              
+              ////// CREATE ARQUERO OBJECTS 
+              const fecha = days
+              aqVacDate = aq.fromJSON({fecha: fecha});
+              // aqVacDate.print()
+              // console.log(aqVacDate.objects())
               aqVacTotals = aq.from(vacTotals);
               const cn_totals = aqVacTotals.columnNames();
-
+              // aqVacTotals.print()
               aqVacDose1 = aq.from(vacDose1);
               const cn_Dose1 = aqVacDose1.columnNames();
               // aqVacDose1.print()
@@ -206,31 +210,32 @@ Promise.all(
 
               // cn_totals[0] === 'ccaa' ? console.log("sson iguals"+cn_totals[0]) :console.log("sson diferent"+cn_totals[0]);
               var  aqJoin = []
-            
-            
+              
+              ////// JOIN OBJECTS
               if(cn_totals[0] === cn_Dose1[0]  &&cn_totals[0] === 'ccaa'){
-                aqJoin = aqVacTotals.join(aqVacDose1
+                aqJoin = aqVacTotals/* .join(aqVacTotals, 'fecha') */
+                  .join(aqVacDose1
                   .select(aq.not('perc_25','perc_18','perc_16','pop_25','pop_18','pop_16','dose1_25','dose1_18','dose1_16'))
                   ,'ccaa')
-                // .derive({pop_under50: d => d.pop_25 + d.pop_18 + d.pop_16})
-                .join(
-                     aqVacDose2
-                     .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total','perc_25','perc_18','perc_16','dose2_25','dose2_18','dose2_16')),
-                     'ccaa')
-                .select(aq.not('fecha_1','fecha_2','hasta_1','hasta_2'))
-                // .select(aq.not('pop_25','pop_18','pop_16'))
-                // .derive({dose1_under50: d => d.dose1_25 + d.dose1_18 + d.dose1_16})
-                // .select(aq.not('dose1_25','dose1_18','dose1_16'))
-                // .select(aq.not('fecha_2','hasta_2'))
+                  // .derive({pop_under50: d => d.pop_25 + d.pop_18 + d.pop_16})
+                  .join(
+                        aqVacDose2
+                        .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total','perc_25','perc_18','perc_16','dose2_25','dose2_18','dose2_16')),
+                        'ccaa')
+                  .select(aq.not('fecha_1','fecha_2','hasta_1','hasta_2'))
+                  // .select(aq.not('pop_25','pop_18','pop_16'))
+                  // .derive({dose1_under50: d => d.dose1_25 + d.dose1_18 + d.dose1_16})
+                  // .select(aq.not('dose1_25','dose1_18','dose1_16'))
+                  // .select(aq.not('fecha_2','hasta_2'))
 
-                // .join(
-                //   aqVacDose2
-                //   .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total')),'ccaa')
-                // .derive({dose2_under50: d => d.dose2_25 + d.dose2_18 + d.dose2_16})
-                // .select(aq.not('dose2_25','dose2_18','dose2_16'))
-                // .select(aq.not('pop_25','pop_18','pop_16'))
-                // .select(aq.not('fecha_1','hasta_1'))
-                .objects()
+                  // .join(
+                  //   aqVacDose2
+                  //   .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total')),'ccaa')
+                  // .derive({dose2_under50: d => d.dose2_25 + d.dose2_18 + d.dose2_16})
+                  // .select(aq.not('dose2_25','dose2_18','dose2_16'))
+                  // .select(aq.not('pop_25','pop_18','pop_16'))
+                  // .select(aq.not('fecha_1','hasta_1'))
+                  .objects()
 
 
                 //aqVacTotals.print();
@@ -252,11 +257,13 @@ Promise.all(
               return a
           })
   )).then(json => {
-    const age_data = json.map(d=>d.aqJoin).flat()
+    
+
+    // const aq_ages = aq.from(age_data)
     // const keys = Object.keys(data[0]).filter(key=> !key.includes('_2'))//.filter(({key})=> !key.includes('_1'))))
-    const aqdata = aq.from(age_data).objects()
+    
 
-
+    ////// COVID INDICES DATA
     const main = async () => {
       let url ='https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv'
         const covid_data = aq.fromCSV(await fetch(url).then(res => res.text()))
@@ -298,76 +305,122 @@ Promise.all(
             .derive({uci_above80: d=> d['80+'].uci})
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
+            
+            ////// GATHER OUTPUT DATA
+            const covid = covid_data.objects().flat()
+            const age =  json.map(d=>d.aqJoin)
+            
+            ////// CONVERT TO ARQUERO OBJECT
+            const aq_covid = aq.from(covid.flat())
+            const aq_ages = aq.from(age.flat())
+            // console.log(aq_covid)
+            // console.log(aq_ages)
+            
+            ////// JOIN OUTPUT DATA
+            full_data = aq_covid.join_full(aq_ages,['fecha','ccaa'],[aq.all(), aq.not(['fecha','ccaa'])])
+              // .select(aq.not(aq.endswith('_2')))
+            .objects()
+            // console.log(full_data)
+            return full_data
+            
+          }
+          main().then(data => { 
 
+            // console.log(data.map(d=> d[0]))
+            // data.map(d=> d[0] === undefined ? d=0:d)
+            console.log(data)
+            // WRITE FILES
+            writeJSON(data, 'data_all_in_one', pathTo);
+            console.log('json data created')
+            writeCSV(data, 'data_all_in_one', pathTo);
+            console.log('csv data created')
+    //// PREPARE OBJECTS
+    // const covid = covid_data.objects().flat()
+    // const age = age_data.flat()
+    
+    // const aq_covid = aq.from(covid.flat())
+    // const aq_ages = aq.from(age.flat())
+    // console.log(aq_covid)
+    // console.log(aq_ages)
 
-
-            return covid_data
-
-    }
-  main().then(data=> { 
-    const full_data = data.table()
+    // const full_data = aq_covid.join_full(aq_ages,'fecha')
+    //   .select(aq.not(aq.endswith('_2'))).objects()
+    // // console.log(full_data)
+    // // WRITE FILES
+    // writeJSON(full_data, 'data_all_in_one', pathTo);
+    // console.log('json data created')
+    // writeCSV(full_data, 'data_all_in_one', pathTo);
+    // console.log('csv data created')
+  }) 
+  // console.log(full_data)
+  // console.log(aq_age_data)
+  // const aq_covid_data = covid_data  
+  // console.log(aq_covid_data)
+  // aq_covid_data.print()
+  // aq_age_data.print()
+  // const full_data = aq_covid_data.join_full(aq_age_data, [['fecha','ccaa']])
+    // .objects()
 
   
+  
 
-  writeJSON(json, 'data_all_in_one', pathTo);
-  console.log('json data created')
-  writeCSV(json, 'data_all_in_one', pathTo);
-  console.log('csv data created')
-  })
-    });
+});
+//////////////////
 
+
+/////////////////////////////////////////////////////
 // ARQUERO WRANGLING
-const transform = (json) => {
-  // var data = json
-  // console.log(data.flat())
-  // data.print()
-  // console.log(aqDates.map(d=>d.vacTotals))
-  // var  aqJoin = aqDates.join
-  // if(cn_totals[0] === cn_Dose1[0]  &&cn_totals[0] === 'ccaa'){
-  //        aqJoin = aqVacTotals.join(aqVacDose1,'ccaa')
-  //         .derive({pct_under50: d => d.perc_25 + d.perc_18 + d.perc_16})
-  //         .select(aq.not('perc_25','perc_18','perc_16'))
-  //         // .derive({pop_under50: d => d.pop_25 + d.pop_18 + d.pop_16})
-  //         // .select(aq.not('pop_25','pop_18','pop_16'))
-  //         // .derive({dose1_under50: d => d.dose1_25 + d.dose1_18 + d.dose1_16})
-  //         // .select(aq.not('dose1_25','dose1_18','dose1_16'))
-  //         // .select(aq.not('fecha_2','hasta_2'))
+// const transform = (json) => {
+//   // var data = json
+//   // console.log(data.flat())
+//   // data.print()
+//   // console.log(aqDates.map(d=>d.vacTotals))
+//   // var  aqJoin = aqDates.join
+//   // if(cn_totals[0] === cn_Dose1[0]  &&cn_totals[0] === 'ccaa'){
+//   //        aqJoin = aqVacTotals.join(aqVacDose1,'ccaa')
+//   //         .derive({pct_under50: d => d.perc_25 + d.perc_18 + d.perc_16})
+//   //         .select(aq.not('perc_25','perc_18','perc_16'))
+//   //         // .derive({pop_under50: d => d.pop_25 + d.pop_18 + d.pop_16})
+//   //         // .select(aq.not('pop_25','pop_18','pop_16'))
+//   //         // .derive({dose1_under50: d => d.dose1_25 + d.dose1_18 + d.dose1_16})
+//   //         // .select(aq.not('dose1_25','dose1_18','dose1_16'))
+//   //         // .select(aq.not('fecha_2','hasta_2'))
 
-  //         // .join(
-  //         //   aqVacDose2
-  //         //   .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total')),'ccaa')
-  //         // .derive({dose2_under50: d => d.dose2_25 + d.dose2_18 + d.dose2_16})
-  //         // .select(aq.not('dose2_25','dose2_18','dose2_16'))
-  //         // .select(aq.not('pop_25','pop_18','pop_16'))
-  //         // .select(aq.not('fecha_1','hasta_1'))
-  //         .objects()
+//   //         // .join(
+//   //         //   aqVacDose2
+//   //         //   .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total')),'ccaa')
+//   //         // .derive({dose2_under50: d => d.dose2_25 + d.dose2_18 + d.dose2_16})
+//   //         // .select(aq.not('dose2_25','dose2_18','dose2_16'))
+//   //         // .select(aq.not('pop_25','pop_18','pop_16'))
+//   //         // .select(aq.not('fecha_1','hasta_1'))
+//   //         .objects()
           
-  //         } 
-  //         // else{
-  //         //   console.log("*******")
-  //         //   console.log(date)
-  //         //   console.log("Not equal")
-  //         //   console.log(cn_totals)
-  //         //   console.log("--")
-  //         //   console.log(cn_Dose1)
-  //         //   console.log(cn_Dose2)
-  //         //   console.log("*******")
-  //         // }
-  //         console.log(aqJoin)
-  //better with arquero
+//   //         } 
+//   //         // else{
+//   //         //   console.log("*******")
+//   //         //   console.log(date)
+//   //         //   console.log("Not equal")
+//   //         //   console.log(cn_totals)
+//   //         //   console.log("--")
+//   //         //   console.log(cn_Dose1)
+//   //         //   console.log(cn_Dose2)
+//   //         //   console.log("*******")
+//   //         // }
+//   //         console.log(aqJoin)
+//   //better with arquero
 
-  // console.log(json)
-  // aqVacTotals = aq.from(vacTotals);
-  // aqVacOneDose = aq.from(vacOneDose);
+//   // console.log(json)
+//   // aqVacTotals = aq.from(vacTotals);
+//   // aqVacOneDose = aq.from(vacOneDose);
 
-  // aqVacTotals.join(aqVacOneDose, ['ccaa'])
+//   // aqVacTotals.join(aqVacOneDose, ['ccaa'])
 
-  // const data_ages_1dose = groupby(json_ages_1dose.flat(), d => d.ccaa);
-  // const data_ages_complete = groupby(json_ages_complete.flat(), d => d.ccaa);
+//   // const data_ages_1dose = groupby(json_ages_1dose.flat(), d => d.ccaa);
+//   // const data_ages_complete = groupby(json_ages_complete.flat(), d => d.ccaa);
 
-  // writeJSON(latestNumbers, 'data_latest', pathTo);
-  // writeJSON(json, 'data_all_in_one', pathTo);
-  // console.log('json data created')
-  // writeCSV(json, 'data_all_in_one', pathTo);
-  // console.log('csv data created')
-}
+//   // writeJSON(latestNumbers, 'data_latest', pathTo);
+//   // writeJSON(json, 'data_all_in_one', pathTo);
+//   // console.log('json data created')
+//   // writeCSV(json, 'data_all_in_one', pathTo);
+//   // console.log('csv data created')
+// }
