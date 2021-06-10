@@ -10,6 +10,7 @@ const groupby = require('lodash/groupBy');
 const aq = require('arquero')
 const d2lIntl = require('d2l-intl');
 const { join } = require('path');
+const { values } = require('lodash');
 // const {extent} = require('d3-array');
 
 // CONSTANTS
@@ -158,6 +159,8 @@ Promise.all(
               const vacTotals = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
               const vacDose1 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:schema_ages_1dose[0].header})
               const vacDose2 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:schema_ages_complete[0].header})
+              
+              ////// PROCESS COLUMNS
               vacTotals.map(d=> {
                 d = sanitizeObject(d, date);
                 d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1)
@@ -168,7 +171,6 @@ Promise.all(
               })
               // console.log(vacTotals.filter(d=> d.fecha ==='2021-01-19T22:00:00.000Z'))
               
-              ////// PROCESS COLUMNS
               vacDose1.map(d=>{
                 d = sanitizeObject(d, date);
                 d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
@@ -237,10 +239,10 @@ Promise.all(
                   // .select(aq.not('fecha_1','hasta_1'))
                   .objects()
 
-
-                //aqVacTotals.print();
+                  //aqVacTotals.print();
                 }
-              // else{
+                // else{
+
               //   console.log("*******")
               //   console.log(date)
               //   console.log("Not equal")
@@ -253,11 +255,19 @@ Promise.all(
               
               // console.log(aqJoin);
               
-              const a = {date,aqJoin}
+              // const a = {date,aqJoin}
+              const a = {date:date,values:{vacTotals,vacDose1,vacDose2}}
+              // console.log(a)
               return a
           })
   )).then(json => {
-    
+    const joined_vacc = json.map(d=> {
+      // https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key
+      arr = d.values.vacTotals.map((item, i) => Object.assign({}, item, d.values.vacDose1[i]));
+      const grouped = arr.map((item, i) => Object.assign({}, item, d.values.vacDose2[i]));
+          
+      return grouped
+    })
 
     // const aq_ages = aq.from(age_data)
     // const keys = Object.keys(data[0]).filter(key=> !key.includes('_2'))//.filter(({key})=> !key.includes('_1'))))
@@ -306,34 +316,33 @@ Promise.all(
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
             
-            ////// GATHER OUTPUT DATA
-            const covid = covid_data.objects().flat()
-            const age =  json.map(d=>d.aqJoin)
-            
-            ////// CONVERT TO ARQUERO OBJECT
-            const aq_covid = aq.from(covid.flat())
-            const aq_ages = aq.from(age.flat())
-            // console.log(aq_covid)
-            // console.log(aq_ages)
-            
-            ////// JOIN OUTPUT DATA
-            full_data = aq_covid.join_full(aq_ages,['fecha','ccaa'],[aq.all(), aq.not(['fecha','ccaa'])])
-              // .select(aq.not(aq.endswith('_2')))
-            .objects()
-            // console.log(full_data)
-            return full_data
-            
+          ////// GATHER OUTPUT DATA
+        const covid = covid_data.objects().flat()
+        // console.log(joined_vacc)
+        
+        ////// CONVERT TO ARQUERO OBJECT
+        const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
+        // console.log(aq_covid)
+        // console.log(aq_vacc)
+        
+        ////// JOIN OUTPUT DATA
+        // full_data = aq_covid.join_full(aq_vacc,['fecha','ccaa'])
+          // .select(aq.not(aq.endswith('_2')))
+        // .objects()
+        console.log(full_data)
+        
+        writeJSON(full_data, 'data_all_in_one', pathTo);
+        console.log('json data created')
+        writeCSV(full_data, 'data_all_in_one', pathTo);
+        console.log('csv data created')
+        return full_data
           }
           main().then(data => { 
 
             // console.log(data.map(d=> d[0]))
             // data.map(d=> d[0] === undefined ? d=0:d)
-            console.log(data)
+            // console.log(data.map(d=>d[200000]))
             // WRITE FILES
-            writeJSON(data, 'data_all_in_one', pathTo);
-            console.log('json data created')
-            writeCSV(data, 'data_all_in_one', pathTo);
-            console.log('csv data created')
     //// PREPARE OBJECTS
     // const covid = covid_data.objects().flat()
     // const age = age_data.flat()
