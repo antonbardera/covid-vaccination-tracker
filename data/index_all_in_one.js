@@ -163,7 +163,7 @@ Promise.all(
               ////// PROCESS COLUMNS
               vacTotals.map(d=> {
                 d = sanitizeObject(d, date);
-                d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date))
+                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1)
                 d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 d.hasta = sanitizeDate(d.hasta, d.fecha);
                 
@@ -173,7 +173,7 @@ Promise.all(
               
               vacDose1.map(d=>{
                 d = sanitizeObject(d, date);
-                d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
+                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
                 d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose1_under50 = d.dose1_25 + d.dose1_18 + d.dose1_16;
@@ -183,7 +183,7 @@ Promise.all(
               
               vacDose2.map(d=>{
                 d = sanitizeObject(d, date);
-                d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
+                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
                 d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
@@ -276,7 +276,7 @@ Promise.all(
     ////// COVID INDICES DATA
     const main = async () => {
       let url ='https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv'
-        const covid_data = aq.fromCSV(await fetch(url).then(res => res.text()), { parse: { fecha: d3time.utcParse('%Y-%m-%d') }})
+        const covid_data = aq.fromCSV(await fetch(url).then(res => res.text()))
             .derive({ccaa: d => { 
               const provToCcaa = { 
                 A :'Com. Valenciana', AB: 'Castilla-La Mancha', AL:	'Andalucía', AV: 'Castilla y León', B : 'Cataluña',
@@ -317,14 +317,11 @@ Promise.all(
             //.print({ offset: 5000 })
             
           ////// GATHER OUTPUT DATA
-          // Only 2021 because vaccination data only covers that period
-        const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2021)
-        const flatvac = joined_vacc.flat();
+        const covid = covid_data.objects().flat()
+        // console.log(joined_vacc)
         
         ////// CONVERT TO ARQUERO OBJECT
-        //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        //This is necessary since covid and flatvac arrays haven't the same order
-        const full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
+        const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
         // console.log(aq_covid)
         // console.log(aq_vacc)
         
@@ -332,7 +329,7 @@ Promise.all(
         // full_data = aq_covid.join_full(aq_vacc,['fecha','ccaa'])
           // .select(aq.not(aq.endswith('_2')))
         // .objects()
-        //console.log(full_data.filter(d=>d.ccaa === "Cataluña").slice(0,50))
+        console.log(full_data)
         
         writeJSON(full_data, 'data_all_in_one', pathTo);
         console.log('json data created')
