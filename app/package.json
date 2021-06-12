@@ -23,10 +23,13 @@
     "@okrad/svelte-progressbar": "^1.11.2",
     "@reuters-graphics/d3-locale": "^0.1.0",
     "d3-array": "^2.10.0",
+    "d3-delaunay": "^6.0.2",
     "d3-scale": "^3.2.3",
     "d3-shape": "^2.0.0",
     "d3-time": "^2.0.0",
     "d3-time-format": "^3.0.0",
+    "rollup-plugin-dsv": "^1.2.0",
+    "rollup-plugin-json": "^4.0.0",
     "sirv-cli": "^1.0.0",
     "svelte-material-ui": "^4.2.0"
   }

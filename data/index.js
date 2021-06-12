@@ -1,17 +1,13 @@
 const fetch = require('node-fetch');
 const xlsx = require('xlsx');
-const dir = require('node-dir');
-const https = require('https');
 const d3time = require('d3-time-format');
 const fs = require('fs');
 const {writeCSV, writeJSON} = require('./utils/write');
-const {listDates, find, download, dateDiff, approxDate, sNumber} = require('./utils/utils');
-const groupby = require('lodash/groupBy');
+const {listDates, find, download, dateDiff} = require('./utils/utils');
+
 const aq = require('arquero')
 const d2lIntl = require('d2l-intl');
-const { join } = require('path');
-const { values } = require('lodash');
-// const {extent} = require('d3-array');
+
 
 // CONSTANTS
 //List of days since January 4, 2021, the first date with data

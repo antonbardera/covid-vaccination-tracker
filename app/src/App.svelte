@@ -4,6 +4,7 @@
 	import Button from "@smui/button";
 	import Card, { Content } from "@smui/card";
 	import Select, { Option } from "@smui/select";
+	import DiffMultiline from "./components/charts/DiffMultiline.svelte";
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
 
