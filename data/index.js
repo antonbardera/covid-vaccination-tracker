@@ -162,8 +162,8 @@ Promise.all(
               vacTotals.map(d=> {
                 d = sanitizeObject(d, date);
                 d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date))
-                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 
                 return {...d}
               })
@@ -172,8 +172,8 @@ Promise.all(
               vacDose1.map(d=>{
                 d = sanitizeObject(d, date);
                 d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
-                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose1_under50 = d.dose1_25 + d.dose1_18 + d.dose1_16;
                 d.dose1_perc_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 return {...d}
@@ -182,8 +182,8 @@ Promise.all(
               vacDose2.map(d=>{
                 d = sanitizeObject(d, date);
                 d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
-                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
                 d.dose2_perc_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
@@ -206,7 +206,7 @@ Promise.all(
           
       return grouped
     })
-
+// console.log(joined_vacc)
     // const keys = Object.keys(data[0]).filter(key=> !key.includes('_2'))//.filter(({key})=> !key.includes('_1'))))
     
 
@@ -256,21 +256,38 @@ Promise.all(
             
         ////// GATHER OUTPUT DATA
         // Only 2021 because vaccination data only covers that period
+        const flatvac = joined_vacc.flat()
+       
+        // console.log(flatvac)
         const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2021)
-        const flatvac = joined_vacc.flat();
         
         ////// JOIN VACCINES AND INDICES DATA. 
         //This is necessary since covid and flatvac arrays haven't the same order
-        const full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
         //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        
+        const full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
+        //  .map(d=> {
+        //   d.dose2_25 === null ? '' : delete d.dose2_25,
+        //   d.dose2_18 === null ? '' : delete d.dose2_18,
+        //   d.dose2_16 === null ? '' : delete d.dose2_16,
+        //   d.perc_25 === null ? '' : delete d.perc_25,
+        //   d.perc_18 === null ? '' : delete d.perc_18,
+        //   d.perc_16 === null ? '' : delete d.perc_16,
+        //   d.pop_25 === null ? '' : delete d.pop_25,
+        //   d.pop_18 === null ? '' : delete d.pop_18,
+        //   d.pop_16 === null ? '' : delete d.pop_16,
+        //   d.dose1_25 === null ? '' : delete d.dose1_25,
+        //   d.dose1_18 === null ? '' : delete d.dose1_18,
+        //   d.dose1_16 === null ? '' : delete d.dose1_16
+        // })
+  
+
         // console.log(full_data)
         
         writeJSON(full_data, 'data', pathTo);
         console.log('json data created')
         writeCSV(full_data, 'data', pathTo);
         console.log('csv data created')
-        return full_data
+        // return full_data
           }
           main().then(data => { }) 
 });
