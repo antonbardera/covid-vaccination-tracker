@@ -1,5 +1,5 @@
 
-(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
+(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35730/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
 var app = (function () {
     'use strict';
 
@@ -123,12 +123,6 @@ var app = (function () {
     function detach(node) {
         node.parentNode.removeChild(node);
     }
-    function destroy_each(iterations, detaching) {
-        for (let i = 0; i < iterations.length; i += 1) {
-            if (iterations[i])
-                iterations[i].d(detaching);
-        }
-    }
     function element(name) {
         return document.createElement(name);
     }
@@ -191,9 +185,6 @@ var app = (function () {
     }
     function children(element) {
         return Array.from(element.childNodes);
-    }
-    function set_style(node, key, value, important) {
-        node.style.setProperty(key, value, important ? 'important' : '');
     }
     function custom_event(type, detail) {
         const e = document.createEvent('CustomEvent');
@@ -12269,7 +12260,7 @@ var app = (function () {
     	];
 
     	let floatinglabel_props = {
-    		$$slots: { default: [create_default_slot_5$1] },
+    		$$slots: { default: [create_default_slot_5] },
     		$$scope: { ctx }
     	};
 
@@ -12337,7 +12328,7 @@ var app = (function () {
     }
 
     // (90:6) <FloatingLabel         bind:this={floatingLabel}         id={inputId + '-smui-label'}         floatAbove={$selectedTextStore !== ''}         {required}         {...prefixFilter($$restProps, 'label$')}         >
-    function create_default_slot_5$1(ctx) {
+    function create_default_slot_5(ctx) {
     	let t_value = (/*label*/ ctx[9] == null ? "" : /*label*/ ctx[9]) + "";
     	let t;
     	let current;
@@ -12384,7 +12375,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_5$1.name,
+    		id: create_default_slot_5.name,
     		type: "slot",
     		source: "(90:6) <FloatingLabel         bind:this={floatingLabel}         id={inputId + '-smui-label'}         floatAbove={$selectedTextStore !== ''}         {required}         {...prefixFilter($$restProps, 'label$')}         >",
     		ctx
@@ -12406,7 +12397,7 @@ var app = (function () {
     	];
 
     	let notchedoutline_props = {
-    		$$slots: { default: [create_default_slot_3$1] },
+    		$$slots: { default: [create_default_slot_3] },
     		$$scope: { ctx }
     	};
 
@@ -12486,7 +12477,7 @@ var app = (function () {
     	];
 
     	let floatinglabel_props = {
-    		$$slots: { default: [create_default_slot_4$1] },
+    		$$slots: { default: [create_default_slot_4] },
     		$$scope: { ctx }
     	};
 
@@ -12554,7 +12545,7 @@ var app = (function () {
     }
 
     // (106:10) <FloatingLabel             bind:this={floatingLabel}             id={inputId + '-smui-label'}             floatAbove={$selectedTextStore !== ''}             {required}             {...prefixFilter($$restProps, 'label$')}             >
-    function create_default_slot_4$1(ctx) {
+    function create_default_slot_4(ctx) {
     	let t_value = (/*label*/ ctx[9] == null ? "" : /*label*/ ctx[9]) + "";
     	let t;
     	let current;
@@ -12601,7 +12592,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_4$1.name,
+    		id: create_default_slot_4.name,
     		type: "slot",
     		source: "(106:10) <FloatingLabel             bind:this={floatingLabel}             id={inputId + '-smui-label'}             floatAbove={$selectedTextStore !== ''}             {required}             {...prefixFilter($$restProps, 'label$')}             >",
     		ctx
@@ -12611,7 +12602,7 @@ var app = (function () {
     }
 
     // (100:6) <NotchedOutline         bind:this={notchedOutline}         noLabel={noLabel || (label == null && !$$slots.label)}         {...prefixFilter($$restProps, 'outline$')}       >
-    function create_default_slot_3$1(ctx) {
+    function create_default_slot_3(ctx) {
     	let if_block_anchor;
     	let current;
     	let if_block = !/*noLabel*/ ctx[8] && (/*label*/ ctx[9] != null || /*$$slots*/ ctx[52].label) && create_if_block_3(ctx);
@@ -12667,7 +12658,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_3$1.name,
+    		id: create_default_slot_3.name,
     		type: "slot",
     		source: "(100:6) <NotchedOutline         bind:this={notchedOutline}         noLabel={noLabel || (label == null && !$$slots.label)}         {...prefixFilter($$restProps, 'outline$')}       >",
     		ctx
@@ -19619,7 +19610,7 @@ var app = (function () {
     /* node_modules/@smui/tab-bar/TabBar.svelte generated by Svelte v3.38.2 */
     const file$1 = "node_modules/@smui/tab-bar/TabBar.svelte";
 
-    function get_each_context$1(ctx, list, i) {
+    function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
     	child_ctx[32] = list[i];
     	child_ctx[34] = i;
@@ -19630,7 +19621,7 @@ var app = (function () {
     const get_default_slot_context = ctx => ({ tab: /*tab*/ ctx[32] });
 
     // (21:4) {#each tabs as tab, i (key(tab))}
-    function create_each_block$1(key_2, ctx) {
+    function create_each_block(key_2, ctx) {
     	let first;
     	let current;
     	const default_slot_template = /*#slots*/ ctx[20].default;
@@ -19679,7 +19670,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block$1.name,
+    		id: create_each_block.name,
     		type: "each",
     		source: "(21:4) {#each tabs as tab, i (key(tab))}",
     		ctx
@@ -19697,12 +19688,12 @@ var app = (function () {
     	let each_value = /*tabs*/ ctx[2];
     	validate_each_argument(each_value);
     	const get_key = ctx => /*key*/ ctx[3](/*tab*/ ctx[32]);
-    	validate_each_keys(ctx, each_value, get_each_context$1, get_key);
+    	validate_each_keys(ctx, each_value, get_each_context, get_key);
 
     	for (let i = 0; i < each_value.length; i += 1) {
-    		let child_ctx = get_each_context$1(ctx, each_value, i);
+    		let child_ctx = get_each_context(ctx, each_value, i);
     		let key = get_key(child_ctx);
-    		each_1_lookup.set(key, each_blocks[i] = create_each_block$1(key, child_ctx));
+    		each_1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
     	}
 
     	const block = {
@@ -19726,8 +19717,8 @@ var app = (function () {
     				each_value = /*tabs*/ ctx[2];
     				validate_each_argument(each_value);
     				group_outros();
-    				validate_each_keys(ctx, each_value, get_each_context$1, get_key);
-    				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block$1, each_1_anchor, get_each_context$1);
+    				validate_each_keys(ctx, each_value, get_each_context, get_key);
+    				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block, each_1_anchor, get_each_context);
     				check_outros();
     			}
     		},
@@ -20276,350 +20267,9 @@ var app = (function () {
     /* src/App.svelte generated by Svelte v3.38.2 */
     const file = "src/App.svelte";
 
-    function get_each_context(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[6] = list[i];
-    	return child_ctx;
-    }
-
-    function get_each_context_1(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[9] = list[i];
-    	return child_ctx;
-    }
-
-    // (50:2) <Content class="mdc-typography--headline4">
-    function create_default_slot_9(ctx) {
-    	let t;
-
-    	const block = {
-    		c: function create() {
-    			t = text("Gauge chart");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(t);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_9.name,
-    		type: "slot",
-    		source: "(50:2) <Content class=\\\"mdc-typography--headline4\\\">",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (51:2) <Content class="mdc-typography--body2">
-    function create_default_slot_8(ctx) {
-    	let t;
-
-    	const block = {
-    		c: function create() {
-    			t = text("This is a card!");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(t);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_8.name,
-    		type: "slot",
-    		source: "(51:2) <Content class=\\\"mdc-typography--body2\\\">",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (48:1) <Card style="width: 360px; margin: 2em auto;">
-    function create_default_slot_7(ctx) {
-    	let img;
-    	let img_src_value;
-    	let t0;
-    	let content0;
-    	let t1;
-    	let content1;
-    	let current;
-
-    	content0 = new Content({
-    			props: {
-    				class: "mdc-typography--headline4",
-    				$$slots: { default: [create_default_slot_9] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	content1 = new Content({
-    			props: {
-    				class: "mdc-typography--body2",
-    				$$slots: { default: [create_default_slot_8] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	const block = {
-    		c: function create() {
-    			img = element("img");
-    			t0 = space();
-    			create_component(content0.$$.fragment);
-    			t1 = space();
-    			create_component(content1.$$.fragment);
-    			if (img.src !== (img_src_value = "img/placeholder.jpg")) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "alt", "placeholder");
-    			add_location(img, file, 48, 2, 1228);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, img, anchor);
-    			insert_dev(target, t0, anchor);
-    			mount_component(content0, target, anchor);
-    			insert_dev(target, t1, anchor);
-    			mount_component(content1, target, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			const content0_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				content0_changes.$$scope = { dirty, ctx };
-    			}
-
-    			content0.$set(content0_changes);
-    			const content1_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				content1_changes.$$scope = { dirty, ctx };
-    			}
-
-    			content1.$set(content1_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(content0.$$.fragment, local);
-    			transition_in(content1.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(content0.$$.fragment, local);
-    			transition_out(content1.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(img);
-    			if (detaching) detach_dev(t0);
-    			destroy_component(content0, detaching);
-    			if (detaching) detach_dev(t1);
-    			destroy_component(content1, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_7.name,
-    		type: "slot",
-    		source: "(48:1) <Card style=\\\"width: 360px; margin: 2em auto;\\\">",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (68:5) <Option value={fruit}>
-    function create_default_slot_6(ctx) {
-    	let t_value = /*fruit*/ ctx[9] + "";
-    	let t;
-
-    	const block = {
-    		c: function create() {
-    			t = text(t_value);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-    		p: noop,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(t);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_6.name,
-    		type: "slot",
-    		source: "(68:5) <Option value={fruit}>",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (67:4) {#each fruits as fruit}
-    function create_each_block_1(ctx) {
-    	let option;
-    	let current;
-
-    	option = new Option({
-    			props: {
-    				value: /*fruit*/ ctx[9],
-    				$$slots: { default: [create_default_slot_6] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	const block = {
-    		c: function create() {
-    			create_component(option.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(option, target, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			const option_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				option_changes.$$scope = { dirty, ctx };
-    			}
-
-    			option.$set(option_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(option.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(option.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(option, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_each_block_1.name,
-    		type: "each",
-    		source: "(67:4) {#each fruits as fruit}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (66:3) <Select bind:value label="Pick a fruit">
-    function create_default_slot_5(ctx) {
-    	let each_1_anchor;
-    	let current;
-    	let each_value_1 = /*fruits*/ ctx[2];
-    	validate_each_argument(each_value_1);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-    	}
-
-    	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-    		each_blocks[i] = null;
-    	});
-
-    	const block = {
-    		c: function create() {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			each_1_anchor = empty();
-    		},
-    		m: function mount(target, anchor) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(target, anchor);
-    			}
-
-    			insert_dev(target, each_1_anchor, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*fruits*/ 4) {
-    				each_value_1 = /*fruits*/ ctx[2];
-    				validate_each_argument(each_value_1);
-    				let i;
-
-    				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    						transition_in(each_blocks[i], 1);
-    					} else {
-    						each_blocks[i] = create_each_block_1(child_ctx);
-    						each_blocks[i].c();
-    						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-    					}
-    				}
-
-    				group_outros();
-
-    				for (i = each_value_1.length; i < each_blocks.length; i += 1) {
-    					out(i);
-    				}
-
-    				check_outros();
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-
-    			for (let i = 0; i < each_value_1.length; i += 1) {
-    				transition_in(each_blocks[i]);
-    			}
-
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			each_blocks = each_blocks.filter(Boolean);
-
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				transition_out(each_blocks[i]);
-    			}
-
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_each(each_blocks, detaching);
-    			if (detaching) detach_dev(each_1_anchor);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_5.name,
-    		type: "slot",
-    		source: "(66:3) <Select bind:value label=\\\"Pick a fruit\\\">",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (87:4) <Label>
-    function create_default_slot_4(ctx) {
-    	let t_value = /*tab*/ ctx[6] + "";
+    // (116:6) <Label>
+    function create_default_slot_2(ctx) {
+    	let t_value = /*tab*/ ctx[4] + "";
     	let t;
 
     	const block = {
@@ -20630,7 +20280,7 @@ var app = (function () {
     			insert_dev(target, t, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*tab*/ 64 && t_value !== (t_value = /*tab*/ ctx[6] + "")) set_data_dev(t, t_value);
+    			if (dirty & /*tab*/ 16 && t_value !== (t_value = /*tab*/ ctx[4] + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(t);
@@ -20639,23 +20289,23 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_4.name,
+    		id: create_default_slot_2.name,
     		type: "slot",
-    		source: "(87:4) <Label>",
+    		source: "(116:6) <Label>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (86:3) <Tab {tab}>
-    function create_default_slot_3(ctx) {
+    // (115:5) <Tab {tab} minWidth>
+    function create_default_slot_1(ctx) {
     	let label;
     	let current;
 
     	label = new CommonLabel({
     			props: {
-    				$$slots: { default: [create_default_slot_4] },
+    				$$slots: { default: [create_default_slot_2] },
     				$$scope: { ctx }
     			},
     			$$inline: true
@@ -20672,7 +20322,7 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const label_changes = {};
 
-    			if (dirty & /*$$scope, tab*/ 4160) {
+    			if (dirty & /*$$scope, tab*/ 48) {
     				label_changes.$$scope = { dirty, ctx };
     			}
 
@@ -20694,24 +20344,25 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_3.name,
+    		id: create_default_slot_1.name,
     		type: "slot",
-    		source: "(86:3) <Tab {tab}>",
+    		source: "(115:5) <Tab {tab} minWidth>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (80:2) <TabBar    tabs={["Cases", "Hospitalized", "Deaths", "ICU"]}    let:tab    bind:active   >
-    function create_default_slot_2(ctx) {
+    // (110:4) <TabBar      tabs={["Cases", "Hospitalized", "Deaths", "ICU"]}      let:tab      bind:active     >
+    function create_default_slot(ctx) {
     	let tab;
     	let current;
 
     	tab = new Tab({
     			props: {
-    				tab: /*tab*/ ctx[6],
-    				$$slots: { default: [create_default_slot_3] },
+    				tab: /*tab*/ ctx[4],
+    				minWidth: true,
+    				$$slots: { default: [create_default_slot_1] },
     				$$scope: { ctx }
     			},
     			$$inline: true
@@ -20727,9 +20378,9 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const tab_changes = {};
-    			if (dirty & /*tab*/ 64) tab_changes.tab = /*tab*/ ctx[6];
+    			if (dirty & /*tab*/ 16) tab_changes.tab = /*tab*/ ctx[4];
 
-    			if (dirty & /*$$scope, tab*/ 4160) {
+    			if (dirty & /*$$scope, tab*/ 48) {
     				tab_changes.$$scope = { dirty, ctx };
     			}
 
@@ -20751,154 +20402,9 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_2.name,
-    		type: "slot",
-    		source: "(80:2) <TabBar    tabs={[\\\"Cases\\\", \\\"Hospitalized\\\", \\\"Deaths\\\", \\\"ICU\\\"]}    let:tab    bind:active   >",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (95:6) <Label>
-    function create_default_slot_1(ctx) {
-    	let t;
-
-    	const block = {
-    		c: function create() {
-    			t = text(/*tab*/ ctx[6]);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-    		p: noop,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(t);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_1.name,
-    		type: "slot",
-    		source: "(95:6) <Label>",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (94:4) <Button on:click={() => (active = tab)}      >
-    function create_default_slot(ctx) {
-    	let label;
-    	let current;
-
-    	label = new CommonLabel({
-    			props: {
-    				$$slots: { default: [create_default_slot_1] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	const block = {
-    		c: function create() {
-    			create_component(label.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(label, target, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			const label_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				label_changes.$$scope = { dirty, ctx };
-    			}
-
-    			label.$set(label_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(label.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(label.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(label, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(94:4) <Button on:click={() => (active = tab)}      >",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (93:3) {#each ["Cases", "Hospitalized", "Deaths", "ICU"] as tab}
-    function create_each_block(ctx) {
-    	let button;
-    	let current;
-
-    	function click_handler() {
-    		return /*click_handler*/ ctx[5](/*tab*/ ctx[6]);
-    	}
-
-    	button = new Button_1({
-    			props: {
-    				$$slots: { default: [create_default_slot] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	button.$on("click", click_handler);
-
-    	const block = {
-    		c: function create() {
-    			create_component(button.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(button, target, anchor);
-    			current = true;
-    		},
-    		p: function update(new_ctx, dirty) {
-    			ctx = new_ctx;
-    			const button_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				button_changes.$$scope = { dirty, ctx };
-    			}
-
-    			button.$set(button_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(button.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(button.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(button, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_each_block.name,
-    		type: "each",
-    		source: "(93:3) {#each [\\\"Cases\\\", \\\"Hospitalized\\\", \\\"Deaths\\\", \\\"ICU\\\"] as tab}",
+    		source: "(110:4) <TabBar      tabs={[\\\"Cases\\\", \\\"Hospitalized\\\", \\\"Deaths\\\", \\\"ICU\\\"]}      let:tab      bind:active     >",
     		ctx
     	});
 
@@ -20908,183 +20414,290 @@ var app = (function () {
     function create_fragment(ctx) {
     	let link0;
     	let link1;
-    	let link2;
-    	let link3;
-    	let link4;
-    	let link5;
     	let t0;
     	let menu;
     	let t1;
     	let main;
-    	let card;
-    	let t2;
+    	let div7;
+    	let div0;
     	let p0;
+    	let t3;
+    	let img0;
+    	let img0_src_value;
     	let t4;
     	let p1;
     	let t6;
     	let div1;
-    	let div0;
-    	let select;
-    	let updating_value;
-    	let t7;
-    	let pre0;
+    	let p2;
     	let t8;
-    	let t9;
+    	let p3;
     	let t10;
+    	let p4;
+    	let t12;
+    	let br0;
+    	let t13;
+    	let div2;
+    	let p5;
+    	let t15;
+    	let p6;
+    	let t17;
+    	let img1;
+    	let img1_src_value;
+    	let t18;
+    	let p7;
+    	let t20;
+    	let p8;
+    	let t22;
+    	let br1;
+    	let t23;
     	let div4;
+    	let br2;
+    	let t24;
+    	let p9;
+    	let t26;
+    	let p10;
+    	let t28;
+    	let p11;
+    	let t30;
+    	let div3;
     	let tabbar;
     	let updating_active;
-    	let t11;
-    	let div3;
-    	let div2;
-    	let t13;
-    	let t14;
-    	let pre1;
-    	let t15;
-    	let t16;
+    	let t31;
+    	let br3;
+    	let t32;
+    	let img2;
+    	let img2_src_value;
+    	let t33;
+    	let img3;
+    	let img3_src_value;
+    	let t34;
+    	let p12;
+    	let t36;
+    	let img4;
+    	let img4_src_value;
+    	let t37;
+    	let br4;
+    	let t38;
+    	let div5;
+    	let p13;
+    	let t40;
+    	let p14;
+    	let t42;
+    	let p15;
+    	let t44;
+    	let img5;
+    	let img5_src_value;
+    	let t45;
+    	let p16;
+    	let t47;
+    	let div6;
+    	let p17;
+    	let t49;
+    	let p18;
     	let current;
     	menu = new Menu$1({ $$inline: true });
 
-    	card = new Card({
-    			props: {
-    				style: "width: 360px; margin: 2em auto;",
-    				$$slots: { default: [create_default_slot_7] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	function select_value_binding(value) {
-    		/*select_value_binding*/ ctx[3](value);
-    	}
-
-    	let select_props = {
-    		label: "Pick a fruit",
-    		$$slots: { default: [create_default_slot_5] },
-    		$$scope: { ctx }
-    	};
-
-    	if (/*value*/ ctx[0] !== void 0) {
-    		select_props.value = /*value*/ ctx[0];
-    	}
-
-    	select = new Select({ props: select_props, $$inline: true });
-    	binding_callbacks.push(() => bind(select, "value", select_value_binding));
-
     	function tabbar_active_binding(value) {
-    		/*tabbar_active_binding*/ ctx[4](value);
+    		/*tabbar_active_binding*/ ctx[1](value);
     	}
 
     	let tabbar_props = {
     		tabs: ["Cases", "Hospitalized", "Deaths", "ICU"],
     		$$slots: {
-    			default: [
-    				create_default_slot_2,
-    				({ tab }) => ({ 6: tab }),
-    				({ tab }) => tab ? 64 : 0
-    			]
+    			default: [create_default_slot, ({ tab }) => ({ 4: tab }), ({ tab }) => tab ? 16 : 0]
     		},
     		$$scope: { ctx }
     	};
 
-    	if (/*active*/ ctx[1] !== void 0) {
-    		tabbar_props.active = /*active*/ ctx[1];
+    	if (/*active*/ ctx[0] !== void 0) {
+    		tabbar_props.active = /*active*/ ctx[0];
     	}
 
     	tabbar = new TabBar({ props: tabbar_props, $$inline: true });
     	binding_callbacks.push(() => bind(tabbar, "active", tabbar_active_binding));
-    	let each_value = ["Cases", "Hospitalized", "Deaths", "ICU"];
-    	validate_each_argument(each_value);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < 4; i += 1) {
-    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
-    	}
-
-    	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-    		each_blocks[i] = null;
-    	});
 
     	const block = {
     		c: function create() {
     			link0 = element("link");
     			link1 = element("link");
-    			link2 = element("link");
-    			link3 = element("link");
-    			link4 = element("link");
-    			link5 = element("link");
     			t0 = space();
     			create_component(menu.$$.fragment);
     			t1 = space();
     			main = element("main");
-    			create_component(card.$$.fragment);
-    			t2 = space();
+    			div7 = element("div");
+    			div0 = element("div");
     			p0 = element("p");
-    			p0.textContent = "This is how vaccination progresses in Spain";
+    			p0.textContent = "17% of the population with the complete schedule of the vaccine\n\t\t\t\tin Spain";
+    			t3 = space();
+    			img0 = element("img");
     			t4 = space();
     			p1 = element("p");
-    			p1.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat donec\n\t\tpretium, proin metus. Amet, malesuada dui purus amet ullamcorper dui,\n\t\tnec. Dis nisl eu tristique dolor fames consectetur.";
+    			p1.textContent = "17% 1 dose Lorem ipsum dolor sit amet, consectetur adipiscing\n\t\t\t\telit. Volutpat donec pretium, proin metus. At the current rate,\n\t\t\t\tit would take 3 months to vaccinate 70% of the population (with\n\t\t\t\ttwo doses)";
     			t6 = space();
     			div1 = element("div");
-    			div0 = element("div");
-    			create_component(select.$$.fragment);
-    			t7 = space();
-    			pre0 = element("pre");
-    			t8 = text("Selected: ");
-    			t9 = text(/*value*/ ctx[0]);
+    			p2 = element("p");
+    			p2.textContent = "This is how vaccination progresses in Spain";
+    			t8 = space();
+    			p3 = element("p");
+    			p3.textContent = "By Spe Chen, Xavier Bolló and Santiago Salcido June 26, 2021";
     			t10 = space();
-    			div4 = element("div");
-    			create_component(tabbar.$$.fragment);
-    			t11 = space();
-    			div3 = element("div");
-    			div2 = element("div");
-    			div2.textContent = "Programmatically select:";
+    			p4 = element("p");
+    			p4.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\t\t\t\tVolutpat donec pretium, proin metus. Amet, malesuada dui purus\n\t\t\t\tamet ullamcorper dui, nec. Dis nisl eu tristique dolor fames\n\t\t\t\tconsectetur.";
+    			t12 = space();
+    			br0 = element("br");
     			t13 = space();
-
-    			for (let i = 0; i < 4; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			t14 = space();
-    			pre1 = element("pre");
-    			t15 = text("Selected: ");
-    			t16 = text(/*active*/ ctx[1]);
+    			div2 = element("div");
+    			p5 = element("p");
+    			p5.textContent = "[TopicA]";
+    			t15 = space();
+    			p6 = element("p");
+    			p6.textContent = "How does each CCAA compare to the national share of vaccinated\n\t\t\t\tpeople?";
+    			t17 = space();
+    			img1 = element("img");
+    			t18 = space();
+    			p7 = element("p");
+    			p7.textContent = "Share of the population that has received two doses";
+    			t20 = space();
+    			p8 = element("p");
+    			p8.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\t\t\t\tVolutpat donec pretium, proin metus. Amet, malesuada dui purus\n\t\t\t\tamet ullamcorper dui, nec. Dis nisl eu tristique dolor fames\n\t\t\t\tconsectetur.";
+    			t22 = space();
+    			br1 = element("br");
+    			t23 = space();
+    			div4 = element("div");
+    			br2 = element("br");
+    			t24 = space();
+    			p9 = element("p");
+    			p9.textContent = "[TopicB]";
+    			t26 = space();
+    			p10 = element("p");
+    			p10.textContent = "Vaccine effect shown by age group";
+    			t28 = space();
+    			p11 = element("p");
+    			p11.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\t\t\t\tVolutpat donec pretium, proin metus. Amet, malesuada dui purus\n\t\t\t\tamet ullamcorper dui, nec. Dis nisl eu tristique dolor fames\n\t\t\t\tconsectetur.";
+    			t30 = space();
+    			div3 = element("div");
+    			create_component(tabbar.$$.fragment);
+    			t31 = space();
+    			br3 = element("br");
+    			t32 = space();
+    			img2 = element("img");
+    			t33 = space();
+    			img3 = element("img");
+    			t34 = space();
+    			p12 = element("p");
+    			p12.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\t\t\t\tVolutpat donec pretium, proin metus. Amet, malesuada dui purus\n\t\t\t\tamet ullamcorper dui, nec. Dis nisl eu tristique dolor fames\n\t\t\t\tconsectetur.";
+    			t36 = space();
+    			img4 = element("img");
+    			t37 = space();
+    			br4 = element("br");
+    			t38 = space();
+    			div5 = element("div");
+    			p13 = element("p");
+    			p13.textContent = "[TopicC]";
+    			t40 = space();
+    			p14 = element("p");
+    			p14.textContent = "How each age group compare to the others";
+    			t42 = space();
+    			p15 = element("p");
+    			p15.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\t\t\t\tVolutpat donec pretium, proin metus. Amet, malesuada dui purus\n\t\t\t\tamet ullamcorper dui, nec. Dis nisl eu tristique dolor fames\n\t\t\t\tconsectetur.";
+    			t44 = space();
+    			img5 = element("img");
+    			t45 = space();
+    			p16 = element("p");
+    			p16.textContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\t\t\t\tVolutpat donec pretium, proin metus. Amet, malesuada dui purus\n\t\t\t\tamet ullamcorper dui, nec. Dis nisl eu tristique dolor fames\n\t\t\t\tconsectetur.";
+    			t47 = space();
+    			div6 = element("div");
+    			p17 = element("p");
+    			p17.textContent = "Credits";
+    			t49 = space();
+    			p18 = element("p");
+    			p18.textContent = "Spe Chen, Xavier Bolló and Santiago Salcido";
     			attr_dev(link0, "rel", "stylesheet");
-    			attr_dev(link0, "href", "https://fonts.googleapis.com/icon?family=Material+Icons");
-    			add_location(link0, file, 17, 1, 454);
+    			attr_dev(link0, "href", "https://unpkg.com/@material/typography@11.0.0/dist/mdc.typography.css");
+    			add_location(link0, file, 18, 1, 496);
     			attr_dev(link1, "rel", "stylesheet");
-    			attr_dev(link1, "href", "https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700");
-    			add_location(link1, file, 21, 1, 549);
-    			attr_dev(link2, "rel", "preconnect");
-    			attr_dev(link2, "href", "https://fonts.gstatic.com");
-    			add_location(link2, file, 25, 1, 655);
-    			attr_dev(link3, "href", "https://fonts.googleapis.com/css?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-    			attr_dev(link3, "rel", "stylesheet");
-    			add_location(link3, file, 26, 1, 715);
-    			attr_dev(link4, "rel", "stylesheet");
-    			attr_dev(link4, "href", "/mdc.typography.css");
-    			add_location(link4, file, 36, 1, 995);
-    			attr_dev(link5, "rel", "stylesheet");
-    			attr_dev(link5, "href", "/build/smui.css");
-    			add_location(link5, file, 39, 1, 1065);
-    			attr_dev(p0, "class", "mdc-typography--headline2");
-    			add_location(p0, file, 53, 1, 1425);
-    			attr_dev(p1, "class", "mdc-typography--body1");
-    			add_location(p1, file, 57, 1, 1517);
-    			attr_dev(pre0, "class", "status");
-    			add_location(pre0, file, 71, 3, 1979);
-    			add_location(div0, file, 64, 2, 1828);
-    			attr_dev(div1, "class", "columns margins");
-    			set_style(div1, "justify-content", "flex-start");
-    			add_location(div1, file, 63, 1, 1759);
-    			add_location(div2, file, 91, 3, 2366);
-    			set_style(div3, "margin-top", "1em");
-    			add_location(div3, file, 90, 2, 2332);
-    			attr_dev(pre1, "class", "status");
-    			add_location(pre1, file, 99, 2, 2571);
-    			add_location(div4, file, 75, 1, 2042);
-    			attr_dev(main, "class", "svelte-5iqe6t");
-    			add_location(main, file, 46, 0, 1171);
+    			attr_dev(link1, "href", "/build/smui.css");
+    			add_location(link1, file, 23, 1, 632);
+    			attr_dev(p0, "class", "mdc-typography--body2");
+    			add_location(p0, file, 34, 3, 806);
+    			if (img0.src !== (img0_src_value = "img/placeholder.jpg")) attr_dev(img0, "src", img0_src_value);
+    			attr_dev(img0, "alt", "placeholder");
+    			attr_dev(img0, "width", "360");
+    			attr_dev(img0, "height", "202");
+    			attr_dev(img0, "class", "center svelte-10qhgte");
+    			add_location(img0, file, 38, 3, 932);
+    			attr_dev(p1, "class", "mdc-typography--body2");
+    			add_location(p1, file, 45, 3, 1050);
+    			add_location(div0, file, 33, 2, 797);
+    			attr_dev(p2, "class", "mdc-typography--headline2");
+    			add_location(p2, file, 55, 3, 1346);
+    			attr_dev(p3, "class", "mdc-typography--body1");
+    			add_location(p3, file, 58, 3, 1443);
+    			attr_dev(p4, "class", "mdc-typography--body1");
+    			add_location(p4, file, 61, 3, 1553);
+    			add_location(div1, file, 54, 2, 1337);
+    			add_location(br0, file, 70, 2, 1835);
+    			attr_dev(p5, "class", "mdc-typography--body2");
+    			add_location(p5, file, 72, 3, 1853);
+    			attr_dev(p6, "class", "mdc-typography--headline4");
+    			add_location(p6, file, 73, 3, 1902);
+    			if (img1.src !== (img1_src_value = "img/topicA-smallMultiples.png")) attr_dev(img1, "src", img1_src_value);
+    			attr_dev(img1, "alt", "placeholder");
+    			attr_dev(img1, "class", "wideColumn svelte-10qhgte");
+    			add_location(img1, file, 77, 3, 2030);
+    			attr_dev(p7, "class", "mdc-typography--caption");
+    			add_location(p7, file, 82, 3, 2129);
+    			attr_dev(p8, "class", "mdc-typography--body1");
+    			add_location(p8, file, 85, 3, 2232);
+    			add_location(div2, file, 71, 2, 1844);
+    			add_location(br1, file, 94, 2, 2514);
+    			add_location(br2, file, 96, 3, 2532);
+    			attr_dev(p9, "class", "mdc-typography--body2");
+    			add_location(p9, file, 97, 3, 2542);
+    			attr_dev(p10, "class", "mdc-typography--headline4");
+    			add_location(p10, file, 98, 3, 2591);
+    			attr_dev(p11, "class", "mdc-typography--body1");
+    			add_location(p11, file, 101, 3, 2678);
+    			add_location(div3, file, 108, 3, 2957);
+    			add_location(br3, file, 119, 3, 3158);
+    			if (img2.src !== (img2_src_value = "img/topicB-DailyCases1.png")) attr_dev(img2, "src", img2_src_value);
+    			attr_dev(img2, "alt", "placeholder");
+    			attr_dev(img2, "class", "wideColumn svelte-10qhgte");
+    			add_location(img2, file, 120, 3, 3168);
+    			if (img3.src !== (img3_src_value = "img/topicB-DailyCases2.png")) attr_dev(img3, "src", img3_src_value);
+    			attr_dev(img3, "alt", "placeholder");
+    			attr_dev(img3, "class", "wideColumn svelte-10qhgte");
+    			add_location(img3, file, 125, 3, 3264);
+    			attr_dev(p12, "class", "mdc-typography--body1");
+    			add_location(p12, file, 130, 3, 3360);
+    			if (img4.src !== (img4_src_value = "img/topicB-scatterplot.png")) attr_dev(img4, "src", img4_src_value);
+    			attr_dev(img4, "alt", "placeholder");
+    			add_location(img4, file, 136, 3, 3615);
+    			add_location(div4, file, 95, 2, 2523);
+    			add_location(br4, file, 140, 2, 3704);
+    			attr_dev(p13, "class", "mdc-typography--body2");
+    			add_location(p13, file, 142, 3, 3722);
+    			attr_dev(p14, "class", "mdc-typography--headline4");
+    			add_location(p14, file, 143, 3, 3771);
+    			attr_dev(p15, "class", "mdc-typography--body1");
+    			add_location(p15, file, 146, 3, 3865);
+    			if (img5.src !== (img5_src_value = "img/topicC-scatterplot.png")) attr_dev(img5, "src", img5_src_value);
+    			attr_dev(img5, "alt", "placeholder");
+    			attr_dev(img5, "class", "wideColumn svelte-10qhgte");
+    			add_location(img5, file, 152, 3, 4120);
+    			attr_dev(p16, "class", "mdc-typography--body1");
+    			add_location(p16, file, 157, 3, 4216);
+    			add_location(div5, file, 141, 2, 3713);
+    			attr_dev(p17, "class", "mdc-typography--subtitle2");
+    			add_location(p17, file, 167, 3, 4524);
+    			attr_dev(p18, "class", "mdc-typography--body1");
+    			add_location(p18, file, 168, 3, 4576);
+    			attr_dev(div6, "class", "credits svelte-10qhgte");
+    			add_location(div6, file, 166, 2, 4499);
+    			attr_dev(div7, "class", "narrowColumn svelte-10qhgte");
+    			add_location(div7, file, 31, 1, 746);
+    			attr_dev(main, "class", "svelte-10qhgte");
+    			add_location(main, file, 30, 0, 738);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -21092,152 +20705,115 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			append_dev(document.head, link0);
     			append_dev(document.head, link1);
-    			append_dev(document.head, link2);
-    			append_dev(document.head, link3);
-    			append_dev(document.head, link4);
-    			append_dev(document.head, link5);
     			insert_dev(target, t0, anchor);
     			mount_component(menu, target, anchor);
     			insert_dev(target, t1, anchor);
     			insert_dev(target, main, anchor);
-    			mount_component(card, main, null);
-    			append_dev(main, t2);
-    			append_dev(main, p0);
-    			append_dev(main, t4);
-    			append_dev(main, p1);
-    			append_dev(main, t6);
-    			append_dev(main, div1);
-    			append_dev(div1, div0);
-    			mount_component(select, div0, null);
-    			append_dev(div0, t7);
-    			append_dev(div0, pre0);
-    			append_dev(pre0, t8);
-    			append_dev(pre0, t9);
-    			append_dev(main, t10);
-    			append_dev(main, div4);
-    			mount_component(tabbar, div4, null);
-    			append_dev(div4, t11);
+    			append_dev(main, div7);
+    			append_dev(div7, div0);
+    			append_dev(div0, p0);
+    			append_dev(div0, t3);
+    			append_dev(div0, img0);
+    			append_dev(div0, t4);
+    			append_dev(div0, p1);
+    			append_dev(div7, t6);
+    			append_dev(div7, div1);
+    			append_dev(div1, p2);
+    			append_dev(div1, t8);
+    			append_dev(div1, p3);
+    			append_dev(div1, t10);
+    			append_dev(div1, p4);
+    			append_dev(div7, t12);
+    			append_dev(div7, br0);
+    			append_dev(div7, t13);
+    			append_dev(div7, div2);
+    			append_dev(div2, p5);
+    			append_dev(div2, t15);
+    			append_dev(div2, p6);
+    			append_dev(div2, t17);
+    			append_dev(div2, img1);
+    			append_dev(div2, t18);
+    			append_dev(div2, p7);
+    			append_dev(div2, t20);
+    			append_dev(div2, p8);
+    			append_dev(div7, t22);
+    			append_dev(div7, br1);
+    			append_dev(div7, t23);
+    			append_dev(div7, div4);
+    			append_dev(div4, br2);
+    			append_dev(div4, t24);
+    			append_dev(div4, p9);
+    			append_dev(div4, t26);
+    			append_dev(div4, p10);
+    			append_dev(div4, t28);
+    			append_dev(div4, p11);
+    			append_dev(div4, t30);
     			append_dev(div4, div3);
-    			append_dev(div3, div2);
-    			append_dev(div3, t13);
-
-    			for (let i = 0; i < 4; i += 1) {
-    				each_blocks[i].m(div3, null);
-    			}
-
-    			append_dev(div4, t14);
-    			append_dev(div4, pre1);
-    			append_dev(pre1, t15);
-    			append_dev(pre1, t16);
+    			mount_component(tabbar, div3, null);
+    			append_dev(div4, t31);
+    			append_dev(div4, br3);
+    			append_dev(div4, t32);
+    			append_dev(div4, img2);
+    			append_dev(div4, t33);
+    			append_dev(div4, img3);
+    			append_dev(div4, t34);
+    			append_dev(div4, p12);
+    			append_dev(div4, t36);
+    			append_dev(div4, img4);
+    			append_dev(div7, t37);
+    			append_dev(div7, br4);
+    			append_dev(div7, t38);
+    			append_dev(div7, div5);
+    			append_dev(div5, p13);
+    			append_dev(div5, t40);
+    			append_dev(div5, p14);
+    			append_dev(div5, t42);
+    			append_dev(div5, p15);
+    			append_dev(div5, t44);
+    			append_dev(div5, img5);
+    			append_dev(div5, t45);
+    			append_dev(div5, p16);
+    			append_dev(div7, t47);
+    			append_dev(div7, div6);
+    			append_dev(div6, p17);
+    			append_dev(div6, t49);
+    			append_dev(div6, p18);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			const card_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				card_changes.$$scope = { dirty, ctx };
-    			}
-
-    			card.$set(card_changes);
-    			const select_changes = {};
-
-    			if (dirty & /*$$scope*/ 4096) {
-    				select_changes.$$scope = { dirty, ctx };
-    			}
-
-    			if (!updating_value && dirty & /*value*/ 1) {
-    				updating_value = true;
-    				select_changes.value = /*value*/ ctx[0];
-    				add_flush_callback(() => updating_value = false);
-    			}
-
-    			select.$set(select_changes);
-    			if (!current || dirty & /*value*/ 1) set_data_dev(t9, /*value*/ ctx[0]);
     			const tabbar_changes = {};
 
-    			if (dirty & /*$$scope, tab*/ 4160) {
+    			if (dirty & /*$$scope, tab*/ 48) {
     				tabbar_changes.$$scope = { dirty, ctx };
     			}
 
-    			if (!updating_active && dirty & /*active*/ 2) {
+    			if (!updating_active && dirty & /*active*/ 1) {
     				updating_active = true;
-    				tabbar_changes.active = /*active*/ ctx[1];
+    				tabbar_changes.active = /*active*/ ctx[0];
     				add_flush_callback(() => updating_active = false);
     			}
 
     			tabbar.$set(tabbar_changes);
-
-    			if (dirty & /*active*/ 2) {
-    				each_value = ["Cases", "Hospitalized", "Deaths", "ICU"];
-    				validate_each_argument(each_value);
-    				let i;
-
-    				for (i = 0; i < 4; i += 1) {
-    					const child_ctx = get_each_context(ctx, each_value, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    						transition_in(each_blocks[i], 1);
-    					} else {
-    						each_blocks[i] = create_each_block(child_ctx);
-    						each_blocks[i].c();
-    						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(div3, null);
-    					}
-    				}
-
-    				group_outros();
-
-    				for (i = 4; i < 4; i += 1) {
-    					out(i);
-    				}
-
-    				check_outros();
-    			}
-
-    			if (!current || dirty & /*active*/ 2) set_data_dev(t16, /*active*/ ctx[1]);
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(menu.$$.fragment, local);
-    			transition_in(card.$$.fragment, local);
-    			transition_in(select.$$.fragment, local);
     			transition_in(tabbar.$$.fragment, local);
-
-    			for (let i = 0; i < 4; i += 1) {
-    				transition_in(each_blocks[i]);
-    			}
-
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(menu.$$.fragment, local);
-    			transition_out(card.$$.fragment, local);
-    			transition_out(select.$$.fragment, local);
     			transition_out(tabbar.$$.fragment, local);
-    			each_blocks = each_blocks.filter(Boolean);
-
-    			for (let i = 0; i < 4; i += 1) {
-    				transition_out(each_blocks[i]);
-    			}
-
     			current = false;
     		},
     		d: function destroy(detaching) {
     			detach_dev(link0);
     			detach_dev(link1);
-    			detach_dev(link2);
-    			detach_dev(link3);
-    			detach_dev(link4);
-    			detach_dev(link5);
     			if (detaching) detach_dev(t0);
     			destroy_component(menu, detaching);
     			if (detaching) detach_dev(t1);
     			if (detaching) detach_dev(main);
-    			destroy_component(card);
-    			destroy_component(select);
     			destroy_component(tabbar);
-    			destroy_each(each_blocks, detaching);
     		}
     	};
 
@@ -21257,24 +20833,17 @@ var app = (function () {
     	validate_slots("App", slots, []);
     	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
     	let value = "Orange";
-    	let active = "Home";
+    	let active = "Cases";
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	function select_value_binding(value$1) {
-    		value = value$1;
-    		$$invalidate(0, value);
-    	}
-
     	function tabbar_active_binding(value) {
     		active = value;
-    		$$invalidate(1, active);
+    		$$invalidate(0, active);
     	}
-
-    	const click_handler = tab => $$invalidate(1, active = tab);
 
     	$$self.$capture_state = () => ({
     		Menu: Menu$1,
@@ -21292,23 +20861,16 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ("fruits" in $$props) $$invalidate(2, fruits = $$props.fruits);
-    		if ("value" in $$props) $$invalidate(0, value = $$props.value);
-    		if ("active" in $$props) $$invalidate(1, active = $$props.active);
+    		if ("fruits" in $$props) fruits = $$props.fruits;
+    		if ("value" in $$props) value = $$props.value;
+    		if ("active" in $$props) $$invalidate(0, active = $$props.active);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [
-    		value,
-    		active,
-    		fruits,
-    		select_value_binding,
-    		tabbar_active_binding,
-    		click_handler
-    	];
+    	return [active, tabbar_active_binding];
     }
 
     class App extends SvelteComponentDev {

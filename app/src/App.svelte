@@ -7,36 +7,20 @@
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
 
+	/* TopicB Tab */
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
-	let active = "Home";
+	let active = "Cases";
 </script>
 
 <!-- HEAD -->
 <svelte:head>
-	<!-- Fonts -->
+	<!-- Material Baseline Typography -->
 	<link
-		rel="stylesheet"
-		href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	/>
-	<link
-		rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700"
-	/>
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link
-		href="https://fonts.googleapis.com/css?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-		rel="stylesheet"
-	/>
-
-	<!-- Material Typography -->
-	<!-- <link
 		rel="stylesheet"
 		href="https://unpkg.com/@material/typography@11.0.0/dist/mdc.typography.css"
-	/> -->
-	<link rel="stylesheet" href="/mdc.typography.css" />
-
-	<!-- SMUI -->
+	/>
+	<!-- SMUI / Our Theme -->
 	<link rel="stylesheet" href="/build/smui.css" />
 </svelte:head>
 
@@ -45,90 +29,181 @@
 
 <!-- CONTENT -->
 <main>
-	<Card style="width: 360px; margin: 2em auto;">
-		<img src="img/placeholder.jpg" alt="placeholder" />
-		<Content class="mdc-typography--headline4">Gauge chart</Content>
-		<Content class="mdc-typography--body2">This is a card!</Content>
-	</Card>
-
-	<p class="mdc-typography--headline2">
-		This is how vaccination progresses in Spain
-	</p>
-
-	<p class="mdc-typography--body1">
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat donec
-		pretium, proin metus. Amet, malesuada dui purus amet ullamcorper dui,
-		nec. Dis nisl eu tristique dolor fames consectetur.
-	</p>
-
-	<div class="columns margins" style="justify-content: flex-start;">
+	<div class="narrowColumn">
+		<!-- GaugeChart -->
 		<div>
-			<Select bind:value label="Pick a fruit">
-				{#each fruits as fruit}
-					<Option value={fruit}>{fruit}</Option>
-				{/each}
-			</Select>
-
-			<pre class="status">Selected: {value}</pre>
+			<p class="mdc-typography--body2">
+				17% of the population with the complete schedule of the vaccine
+				in Spain
+			</p>
+			<img
+				src="img/placeholder.jpg"
+				alt="placeholder"
+				width="360"
+				height="202"
+				class="center"
+			/>
+			<p class="mdc-typography--body2">
+				17% 1 dose Lorem ipsum dolor sit amet, consectetur adipiscing
+				elit. Volutpat donec pretium, proin metus. At the current rate,
+				it would take 3 months to vaccinate 70% of the population (with
+				two doses)
+			</p>
 		</div>
-	</div>
 
-	<div>
-		<!--
-			  Note: tabs must be unique. (They cannot === each other.)
-			-->
-		<TabBar
-			tabs={["Cases", "Hospitalized", "Deaths", "ICU"]}
-			let:tab
-			bind:active
-		>
-			<!-- Note: the `tab` property is required! -->
-			<Tab {tab}>
-				<Label>{tab}</Label>
-			</Tab>
-		</TabBar>
+		<!-- Hero -->
+		<div>
+			<p class="mdc-typography--headline2">
+				This is how vaccination progresses in Spain
+			</p>
+			<p class="mdc-typography--body1">
+				By Spe Chen, Xavier Bolló and Santiago Salcido June 26, 2021
+			</p>
+			<p class="mdc-typography--body1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
+			</p>
+		</div>
 
-		<div style="margin-top: 1em;">
-			<div>Programmatically select:</div>
-			{#each ["Cases", "Hospitalized", "Deaths", "ICU"] as tab}
-				<Button on:click={() => (active = tab)}
-					><Label>{tab}</Label></Button
+		<!-- TopicA -->
+		<br />
+		<div>
+			<p class="mdc-typography--body2">[TopicA]</p>
+			<p class="mdc-typography--headline4">
+				How does each CCAA compare to the national share of vaccinated
+				people?
+			</p>
+			<img
+				src="img/topicA-smallMultiples.png"
+				alt="placeholder"
+				class="wideColumn"
+			/>
+			<p class="mdc-typography--caption">
+				Share of the population that has received two doses
+			</p>
+			<p class="mdc-typography--body1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
+			</p>
+		</div>
+
+		<!-- TopicB -->
+		<br />
+		<div>
+			<br />
+			<p class="mdc-typography--body2">[TopicB]</p>
+			<p class="mdc-typography--headline4">
+				Vaccine effect shown by age group
+			</p>
+			<p class="mdc-typography--body1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
+			</p>
+			<!-- TopicB Tabs -->
+			<div>
+				<TabBar
+					tabs={["Cases", "Hospitalized", "Deaths", "ICU"]}
+					let:tab
+					bind:active
 				>
-			{/each}
+					<Tab {tab} minWidth>
+						<Label>{tab}</Label>
+					</Tab>
+				</TabBar>
+			</div>
+			<br />
+			<img
+				src="img/topicB-DailyCases1.png"
+				alt="placeholder"
+				class="wideColumn"
+			/>
+			<img
+				src="img/topicB-DailyCases2.png"
+				alt="placeholder"
+				class="wideColumn"
+			/>
+			<p class="mdc-typography--body1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
+			</p>
+			<img src="img/topicB-scatterplot.png" alt="placeholder" />
 		</div>
 
-		<pre class="status">Selected: {active}</pre>
+		<!-- TopicC -->
+		<br />
+		<div>
+			<p class="mdc-typography--body2">[TopicC]</p>
+			<p class="mdc-typography--headline4">
+				How each age group compare to the others
+			</p>
+			<p class="mdc-typography--body1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
+			</p>
+			<img
+				src="img/topicC-scatterplot.png"
+				alt="placeholder"
+				class="wideColumn"
+			/>
+			<p class="mdc-typography--body1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
+			</p>
+		</div>
+
+		<!-- Credits -->
+		<div class="credits">
+			<p class="mdc-typography--subtitle2">Credits</p>
+			<p class="mdc-typography--body1">Spe Chen, Xavier Bolló and Santiago Salcido</p>
+		</div>
 	</div>
+
 </main>
 
-<!-- CSS & STYLES -->
+<!-- EXTRA CSS & STYLES -->
 <style>
 	:global(body, html) {
 		margin: 0;
-		padding: 0;
+	}
+
+	.center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
 	}
 
 	main {
 		margin: 0 auto;
+		padding-top: 24px;
+		padding-bottom: 24px;
+		max-width: 1048px;
+		background-color: #fff;
+	}
+
+	.narrowColumn {
+		margin: 0 auto;
 		max-width: 680px;
-		padding: 0px 24px;
-		background-color: #fff;
 	}
 
-	/* :global(.link) {
-		color: #333;
-		text-decoration: none;
-		border-bottom: 1px dashed #333;
-		transition: all 0.3s;
-	} */
-
-	/* :global(.link:hover) {
-		color: #505050;
-		background-color: #fff;
-		text-decoration: none;
-		border-bottom: 1px solid #333;
+	.wideColumn {
+		margin-left: -160px;
 	}
-	:global(.number, .header) {
-		padding-left: 1rem !important;
-	} */
+
+	.credits {
+		border-top: 1px solid rgb(124, 124, 124);
+		margin: 48px 0px 24px 0px;
+	}
 </style>
