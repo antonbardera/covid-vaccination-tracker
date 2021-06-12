@@ -4,12 +4,20 @@
 	import Button from "@smui/button";
 	import Card, { Content } from "@smui/card";
 	import Select, { Option } from "@smui/select";
+	import DiffMultiline from "./components/charts/DiffMultiline.svelte";
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
 
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Home";
+
+	// Test data
+	// import weather2 from '/Users/spechen/Desktop/MVTEC/covid-vaccination-tracker/data/weather2.json';
+	// weather2.forEach(d => d.time = new Date(d.time));
+	export let testData;
+
+
 </script>
 
 <!-- HEAD -->
@@ -45,6 +53,14 @@
 
 <!-- CONTENT -->
 <main>
+	<DiffMultiline
+		data={weather2}
+		title='Title' desc='Description'
+		key={{x: 'time', y: ['ny1', 'sf1', 'au1']}}
+		{format}
+		color={['#fc0', '#036', '#f0c']}
+		layout='col'
+	/>
 	<Card style="width: 360px; margin: 2em auto;">
 		<img src="img/placeholder.jpg" alt="placeholder" />
 		<Content class="mdc-typography--headline4">Gauge chart</Content>
