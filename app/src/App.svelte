@@ -34,7 +34,7 @@
 		rel="stylesheet"
 		href="https://unpkg.com/@material/typography@11.0.0/dist/mdc.typography.css"
 	/> -->
-	<link rel="stylesheet" href="/build/mdc.typography.css" />
+	<link rel="stylesheet" href="/mdc.typography.css" />
 
 	<!-- SMUI -->
 	<link rel="stylesheet" href="/build/smui.css" />

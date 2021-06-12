@@ -20379,7 +20379,7 @@ var app = (function () {
     			create_component(content1.$$.fragment);
     			if (img.src !== (img_src_value = "img/placeholder.jpg")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "placeholder");
-    			add_location(img, file, 48, 2, 1234);
+    			add_location(img, file, 48, 2, 1228);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, img, anchor);
@@ -21062,29 +21062,29 @@ var app = (function () {
     			attr_dev(link3, "rel", "stylesheet");
     			add_location(link3, file, 26, 1, 715);
     			attr_dev(link4, "rel", "stylesheet");
-    			attr_dev(link4, "href", "/build/mdc.typography.css");
+    			attr_dev(link4, "href", "/mdc.typography.css");
     			add_location(link4, file, 36, 1, 995);
     			attr_dev(link5, "rel", "stylesheet");
     			attr_dev(link5, "href", "/build/smui.css");
-    			add_location(link5, file, 39, 1, 1071);
+    			add_location(link5, file, 39, 1, 1065);
     			attr_dev(p0, "class", "mdc-typography--headline2");
-    			add_location(p0, file, 53, 1, 1431);
+    			add_location(p0, file, 53, 1, 1425);
     			attr_dev(p1, "class", "mdc-typography--body1");
-    			add_location(p1, file, 57, 1, 1523);
+    			add_location(p1, file, 57, 1, 1517);
     			attr_dev(pre0, "class", "status");
-    			add_location(pre0, file, 71, 3, 1985);
-    			add_location(div0, file, 64, 2, 1834);
+    			add_location(pre0, file, 71, 3, 1979);
+    			add_location(div0, file, 64, 2, 1828);
     			attr_dev(div1, "class", "columns margins");
     			set_style(div1, "justify-content", "flex-start");
-    			add_location(div1, file, 63, 1, 1765);
-    			add_location(div2, file, 91, 3, 2372);
+    			add_location(div1, file, 63, 1, 1759);
+    			add_location(div2, file, 91, 3, 2366);
     			set_style(div3, "margin-top", "1em");
-    			add_location(div3, file, 90, 2, 2338);
+    			add_location(div3, file, 90, 2, 2332);
     			attr_dev(pre1, "class", "status");
-    			add_location(pre1, file, 99, 2, 2577);
-    			add_location(div4, file, 75, 1, 2048);
+    			add_location(pre1, file, 99, 2, 2571);
+    			add_location(div4, file, 75, 1, 2042);
     			attr_dev(main, "class", "svelte-5iqe6t");
-    			add_location(main, file, 46, 0, 1177);
+    			add_location(main, file, 46, 0, 1171);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
