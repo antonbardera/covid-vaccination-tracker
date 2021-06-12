@@ -15,7 +15,8 @@
   "license": "MIT",
   "dependencies": {
     "@reuters-graphics/d3-locale": "^0.1.0",
-    "arquero": "^2.2.0",
+    "arquero": "^2.3.0",
+    "csv-parse": "^4.15.4",
     "d2l-intl": "^2.1.0",
     "d3-time-format": "^3.0.0",
     "http": "^0.0.1-security",
