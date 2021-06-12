@@ -322,11 +322,13 @@ Promise.all(
         
         ////// CONVERT TO ARQUERO OBJECT
         const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        console.log(aq_covid)
-        console.log(aq_vacc)
+        // console.log(aq_covid)
+        // console.log(aq_vacc)
         
         ////// JOIN OUTPUT DATA
-    
+        // full_data = aq_covid.join_full(aq_vacc,['fecha','ccaa'])
+          // .select(aq.not(aq.endswith('_2')))
+        // .objects()
         // console.log(full_data)
         
         writeJSON(full_data, 'data', pathTo);
@@ -335,7 +337,10 @@ Promise.all(
         console.log('csv data created')
         return full_data
           }
-          main()
+          main().then(data => { 
+
+    
+  }) 
   
 
 });
