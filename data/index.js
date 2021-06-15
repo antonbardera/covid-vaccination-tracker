@@ -236,16 +236,26 @@ Promise.all(
             .derive({cases_60to69: d=> d['60-69'].cases})
             .derive({cases_70to79: d=> d['70-79'].cases})
             .derive({cases_above80: d=> d['80+'].cases})
+
+            // Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
+            .derive({ra_cases_under50: aq.rolling(d=> op.average(d.cases_under50))})
+            .derive({ra_cases_50to59: aq.rolling(d=> op.average(d.cases_50to59))})
+            .derive({ra_cases_60to69: aq.rolling(d=> op.average(d.cases_60to69))})
+            .derive({ra_cases_70to79: aq.rolling(d=> op.average(d.cases_70to79))})
+            .derive({ra_cases_above80: aq.rolling(d=> op.average(d.cases_above80))})
+            -
             .derive({deaths_under50: d=> d['0-9'].deaths+ d['10-19'].deaths+ d['20-29'].deaths+ d['30-39'].deaths+ d['40-49'].deaths })
             .derive({deaths_50to59: d=> d['50-59'].deaths})
             .derive({deaths_60to69: d=> d['60-69'].deaths})
             .derive({deaths_70to79: d=> d['70-79'].deaths})
             .derive({deaths_above80: d=> d['80+'].deaths})
+            
             .derive({hosp_under50: d=> d['0-9'].hosp+ d['10-19'].hosp+ d['20-29'].hosp+ d['30-39'].hosp+ d['40-49'].hosp })
             .derive({hosp_50to59: d=> d['50-59'].hosp})
             .derive({hosp_60to69: d=> d['60-69'].hosp})
             .derive({hosp_70to79: d=> d['70-79'].hosp})
-            .derive({hosp_above80: d=> d['80+'].hosp})
+            .derive({hosp_above80: d=> d['80+'].hosp})r
+
             .derive({uci_under50: d=> d['0-9'].uci+ d['10-19'].uci+ d['20-29'].uci+ d['30-39'].uci+ d['40-49'].uci })
             .derive({uci_50to59: d=> d['50-59'].uci})
             .derive({uci_60to69: d=> d['60-69'].uci})
@@ -265,6 +275,7 @@ Promise.all(
         //This is necessary since covid and flatvac arrays haven't the same order
         //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
         const full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
+        //TODO: delete unused elements
         //  .map(d=> {
         //   d.dose2_25 === null ? '' : delete d.dose2_25,
         //   d.dose2_18 === null ? '' : delete d.dose2_18,
@@ -279,6 +290,9 @@ Promise.all(
         //   d.dose1_18 === null ? '' : delete d.dose1_18,
         //   d.dose1_16 === null ? '' : delete d.dose1_16
         // })
+
+        let aqFullData =  aq.from(full_data)
+        aqFullData.print()
   
 
         // console.log(full_data)

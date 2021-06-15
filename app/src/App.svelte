@@ -10,6 +10,11 @@
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Home";
+	
+	// comes from main.js processing
+	export let data
+	console.log(data)
+
 </script>
 
 <!-- HEAD -->
