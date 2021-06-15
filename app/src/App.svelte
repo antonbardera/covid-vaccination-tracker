@@ -8,6 +8,7 @@
 	let value = "Orange"
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
+	import LayoutGrid, { Cell } from '@smui/layout-grid'
 	let active = "Home";
 	
 	// GET APP DATA FROM MAIN.JS
@@ -17,8 +18,9 @@
 	// GET DATA FROM STATIC FILE
 	import * as json from "../public/data.json";
 	import * as csv from "../public/data.csv";
-	console.log(csv)
-	// console.log(json)
+	// console.log(csv)
+	$: ccaas = [...new Set(json.default.map(d=>d.ccaa))]
+	console.log(ccaas)
 
 </script>
 
@@ -55,6 +57,16 @@
 
 <!-- CONTENT -->
 <main>
+
+	<LayoutGrid>
+		{#each ccaas as ccaa, i}
+		  <Cell>
+			<div class="demo-cell">{ccaa}</div>
+		  </Cell>
+		{/each}
+	  </LayoutGrid>
+
+
 	<Card style="width: 360px; margin: 2em auto;">
 		<img src="img/placeholder.jpg" alt="placeholder" />
 		<Content class="mdc-typography--headline4">Gauge chart</Content>
@@ -141,4 +153,13 @@
 	:global(.number, .header) {
 		padding-left: 1rem !important;
 	} */
+
+	.demo-cell {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--mdc-theme-secondary, #333);
+    color: var(--mdc-theme-on-secondary, #fff);
+  }
 </style>
