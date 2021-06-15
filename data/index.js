@@ -243,7 +243,7 @@ Promise.all(
             .derive({ra_cases_60to69: aq.rolling(d=> op.average(d.cases_60to69))})
             .derive({ra_cases_70to79: aq.rolling(d=> op.average(d.cases_70to79))})
             .derive({ra_cases_above80: aq.rolling(d=> op.average(d.cases_above80))})
-            -
+            
             .derive({deaths_under50: d=> d['0-9'].deaths+ d['10-19'].deaths+ d['20-29'].deaths+ d['30-39'].deaths+ d['40-49'].deaths })
             .derive({deaths_50to59: d=> d['50-59'].deaths})
             .derive({deaths_60to69: d=> d['60-69'].deaths})
@@ -254,7 +254,7 @@ Promise.all(
             .derive({hosp_50to59: d=> d['50-59'].hosp})
             .derive({hosp_60to69: d=> d['60-69'].hosp})
             .derive({hosp_70to79: d=> d['70-79'].hosp})
-            .derive({hosp_above80: d=> d['80+'].hosp})r
+            .derive({hosp_above80: d=> d['80+'].hosp})
 
             .derive({uci_under50: d=> d['0-9'].uci+ d['10-19'].uci+ d['20-29'].uci+ d['30-39'].uci+ d['40-49'].uci })
             .derive({uci_50to59: d=> d['50-59'].uci})

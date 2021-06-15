@@ -5,15 +5,20 @@
 	import Card, { Content } from "@smui/card";
 	import Select, { Option } from "@smui/select";
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
-	let value = "Orange";
-
+	let value = "Orange"
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Home";
 	
-	// comes from main.js processing
+	// GET APP DATA FROM MAIN.JS
 	export let data
-	console.log(data)
+	// console.log(data)
+	
+	// GET DATA FROM STATIC FILE
+	import * as json from "../public/data.json";
+	import * as csv from "../public/data.csv";
+	console.log(csv)
+	// console.log(json)
 
 </script>
 
