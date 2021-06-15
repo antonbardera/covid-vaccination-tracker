@@ -20,7 +20,7 @@
 	import * as csv from "../public/data.csv";
 	// console.log(csv)
 	$: ccaas = [...new Set(json.default.map(d=>d.ccaa))]
-	console.log(ccaas)
+	// console.log(ccaas)
 
 </script>
 
