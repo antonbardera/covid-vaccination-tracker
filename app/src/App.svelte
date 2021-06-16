@@ -8,19 +8,53 @@
 	let value = "Orange"
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
-	import LayoutGrid, { Cell } from '@smui/layout-grid'
 	let active = "Home";
+	import LayoutGrid, { Cell } from '@smui/layout-grid'
+	import locale from '@reuters-graphics/d3-locale';
+	import {curveMonotoneX} from 'd3-shape'
 	
-	// GET APP DATA FROM MAIN.JS
+	const loc = new locale('es');
+	const format = {
+		x: loc.formatTime('%b %e'),
+        y: loc.format(',.1d'),
+    }
+
+	///////////// LOAD DATA INTO SVELTE //////////
+	// GET APP DATA FROM main.js || main.js -> ensure url matches branch 
 	export let data
 	// console.log(data)
 	
 	// GET DATA FROM STATIC FILE
-	import * as json from "../public/data.json";
 	import * as csv from "../public/data.csv";
+	import * as json from "../public/data.json";
+	
+	// console.log(json)
 	// console.log(csv)
+	///////////////--------------------------------
+	
+	
 	$: ccaas = [...new Set(json.default.map(d=>d.ccaa))]
-	// console.log(ccaas)
+	// console.log(ccaas)	
+	
+	
+	import {groups} from 'd3-array';
+	import Multiline from './components/charts/Multiline.svelte'
+	var nested_data = groups(data, d => d.fecha, d => d.ccaa)
+		.map(d=>{
+			let date = d[0] 
+			let ccaa = d[1].map(i=> i[0])
+			let values = {}
+			for (let i in ccaa) {
+				var value = d[1].map(j=> j[1].map(j=>j.ra_cases_under50))
+				values[ccaa[i]] = value[i]
+			}	
+
+			return {
+				date,values
+			}
+		});
+	
+	console.log(nested_data)
 
 </script>
 
@@ -57,11 +91,24 @@
 
 <!-- CONTENT -->
 <main>
-
+	<Multiline 
+	data={nested_data}
+	options={
+		{
+			key:{x: 'fecha', y: [nested_data.map(d=>d.values)]},
+			format: format,
+			color: ['#fc0', '#036', '#f0c'],
+			layout: 'col',
+			title:'Title',
+			desc:'Description',
+			curve: curveMonotoneX
+		}
+	}
+/>
 	<LayoutGrid>
-		{#each ccaas as ccaa, i}
+		{#each ccaas as ccaa}
 		  <Cell>
-			<div class="demo-cell">{ccaa}</div>
+			<div class="grid-cell">{ccaa}</div>
 		  </Cell>
 		{/each}
 	  </LayoutGrid>
@@ -154,12 +201,12 @@
 		padding-left: 1rem !important;
 	} */
 
-	.demo-cell {
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--mdc-theme-secondary, #333);
-    color: var(--mdc-theme-on-secondary, #fff);
+	.grid-cell {
+		height: 160px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: var(--mdc-theme-secondary, rgb(156, 156, 156));
+		color: var(--mdc-theme-on-secondary, rgb(214, 254, 255));
   }
 </style>
