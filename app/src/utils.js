@@ -1,4 +1,5 @@
 import { csvParse, autoType } from 'd3-dsv';
+import { d3, autoType } from 'd3-';
 
 export function setColors(themes, theme) {
   for (let color in themes[theme]) {
@@ -13,3 +14,7 @@ export async function getData(url) {
   return data;
 }
 
+export async function multiLinesData(data) {
+	let data = data.map(d=>d);
+  return data;
+}
