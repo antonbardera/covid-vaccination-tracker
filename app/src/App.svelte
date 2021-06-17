@@ -56,6 +56,29 @@
 	
 	console.log(nested_data)
 
+	import GapChart from './components/charts/GapChart.svelte'
+
+	// import * as ccaaData from "../public/gap-chart-ca-demo.json";
+	let ccaaData = [{"date":"2021-03-30T00:00:00.000Z","dateStr":"2021-03-30","ccaa":"Cataluña","value0":0.13,"value1":0.13},
+    {"date":"2021-03-31T00:00:00.000Z","dateStr":"2021-03-31","ccaa":"Cataluña","value0":0.14,"value1":0.14},
+    {"date":"2021-03-31T00:00:00.000Z","dateStr":"2021-04-01","ccaa":"Cataluña","value0":0.16,"value1":0.14},
+    {"date":"2021-04-02T00:00:00.000Z","dateStr":"2021-04-02","ccaa":"Cataluña","value0":0.14,"value1":0.14},
+    {"date":"2021-04-02T00:00:00.000Z","dateStr":"2021-04-03","ccaa":"Cataluña","value0":0.13,"value1":0.14},
+    {"date":"2021-04-04T00:00:00.000Z","dateStr":"2021-04-04","ccaa":"Cataluña","value0":0.15,"value1":0.15},
+    {"date":"2021-04-05T00:00:00.000Z","dateStr":"2021-04-05","ccaa":"Cataluña","value0":0.16,"value1":0.15},
+    {"date":"2021-04-06T00:00:00.000Z","dateStr":"2021-04-06","ccaa":"Cataluña","value0":0.16,"value1":0.16},
+    {"date":"2021-04-07T00:00:00.000Z","dateStr":"2021-04-07","ccaa":"Cataluña","value0":0.18,"value1":0.17},
+    {"date":"2021-04-08T00:00:00.000Z","dateStr":"2021-04-08","ccaa":"Cataluña","value0":0.19,"value1":0.18}];
+	console.log(ccaaData)
+
+	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
+	let colorDiff = ['rgba(92,198,178, 0.5)', 'rgba(0,0,0, 0.5)']
+	ccaaData.forEach(d => d.dateStr = new Date(d.dateStr));
+	// const loc2 = new locale('en');
+	// const format = {
+	// 	x: loc2.formatTime('%B %e'),
+    //     y: loc2.format(',.2f'),
+    // }
 </script>
 
 <!-- HEAD -->
@@ -91,7 +114,7 @@
 
 <!-- CONTENT -->
 <main>
-	<Multiline 
+	<!-- <Multiline 
 	data={nested_data}
 	options={
 		{
@@ -104,14 +127,34 @@
 			curve: curveMonotoneX
 		}
 	}
+/> -->
+<GapChart 
+data={ccaaData}
+title='Title' desc='Description'
+key={{x: 'dateStr', y: ['value0', 'value1']}}
+{format}
+{color}
+{colorDiff}
+layout='col'
 />
-	<LayoutGrid>
+	<LayoutGrid class="grid">
 		{#each ccaas as ccaa}
 		  <Cell>
-			<div class="grid-cell">{ccaa}</div>
+			<!-- <div class="grid-cell">{ccaa}
+			</div> -->
+			<GapChart 
+			class="grid-cell"
+			data={ccaaData}
+			title='Title' desc='Description'
+			key={{x: 'dateStr', y: ['value0', 'value1']}}
+			{format}
+			{color}
+			{colorDiff}
+			layout='col'
+			/>
 		  </Cell>
 		{/each}
-	  </LayoutGrid>
+	</LayoutGrid>
 
 
 	<Card style="width: 360px; margin: 2em auto;">
@@ -203,10 +246,15 @@
 
 	.grid-cell {
 		height: 160px;
+		width: 160px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		background-color: var(--mdc-theme-secondary, rgb(156, 156, 156));
 		color: var(--mdc-theme-on-secondary, rgb(214, 254, 255));
   }
+  :global(.graphic) {
+		height:200px;
+		margin-bottom:3rem;
+	}
 </style>
