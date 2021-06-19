@@ -175,7 +175,7 @@ Promise.all(
                 // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose1_under50 = d.dose1_25 + d.dose1_18 + d.dose1_16;
-                d.dose1_perc_under50 = d.perc_25 + d.perc_18 + d.perc_16;
+                d.dose1_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 return {...d}
               })
               
@@ -185,7 +185,7 @@ Promise.all(
                 // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
-                d.dose2_perc_under50 = d.perc_25 + d.perc_18 + d.perc_16;
+                d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
                 return {...d}
               })
