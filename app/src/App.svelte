@@ -12,6 +12,11 @@
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Cases";
+
+	/* Samll multiple map */	
+	import Grid from './components/Grid.svelte';
+	let grid = [4, 6];
+
 </script>
 
 <!-- HEAD -->
@@ -76,6 +81,7 @@
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
+			<Grid {grid} />
 			<img
 				src="img/topicA-smallMultiples.png"
 				alt="placeholder"
