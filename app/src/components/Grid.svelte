@@ -10,10 +10,10 @@
 	// first vaccination date March 31
 	let DataLong = data_raw.default.filter(d => new Date(d.fecha) > new Date("2021-03-30"));
 
-	// console.log(DataLong);
 	// console.log(DataLong.filter(d => d.ccaa === 'Cantabria'));
 	let uniqueCCAA = [...new Set(DataLong.map(item => item.ccaa))]
 	// console.log(DataLong.filter(d => d.ccaa === "Cataluña"))
+	console.log(uniqueCCAA);
 
 	// Totales is missing. so use "Cataluña" for now
 	let dataGlobal = DataLong.filter(d => d.ccaa === "Cataluña").map(d => {return{
@@ -55,7 +55,7 @@ function getVaxDataByCCAA(ccaaName){
 }
 
 // console.log('Cantabria====')
-console.log(getVaxDataByCCAA('Cantabria'));
+console.log(getVaxDataByCCAA('Castilla y Leon'));
 
 	// console.log(ccaaData2)	
 	let ccaaData = ccaaData2.default
@@ -75,10 +75,19 @@ console.log(getVaxDataByCCAA('Cantabria'));
 	$: col = `repeat(${grid[1]}, 1fr)`;
 	$: row = `repeat(${grid[0]}, 1fr)`;	
 	
-	var items = [
+	// accent
+	var items_ = [
     ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
     [0, 'Castilla y León', 'La Rioja', 'Navarra', 'Com. Valenciana', 0],
     [0, 'Extremadura', 'Madrid', 'Castilla-La Mancha', 'Murcia', 0],
+    ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
+    ];
+
+	// to loosely match naming in data.json. some unicode problems
+	var items = [
+    ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
+    [0, 'Castilla y Leon', 'La Rioja', 'Navarra', 'Com Valenciana', 0],
+    [0, 'Extremadura', 'Madrid', 'Castilla - La Mancha', 'Murcia', 0],
     ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
     ];
 	
