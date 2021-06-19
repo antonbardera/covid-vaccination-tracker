@@ -79,7 +79,7 @@ const schema_ages_1dose = [
         'dose1_25', 'pop_25','perc_25',
         'dose1_18', 'pop_18','perc_18',
         'dose1_16', 'pop_16','perc_16',
-        'dose1_total', 'pop_total','dose1_perc_total'
+        'dose1_total', 'pop_total','dose1_pct_total'
       ]
   }];
 
@@ -95,7 +95,7 @@ const schema_ages_complete = [
         'dose2_25', 'pop_25','perc_25',
         'dose2_18', 'pop_18','perc_18',
         'dose2_16', 'pop_16','perc_16',
-        'dose2_total', 'pop_total','dose2_perc_total'
+        'dose2_total', 'pop_total','dose2_pct_total'
       ]
 
   }
