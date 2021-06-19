@@ -28,7 +28,7 @@
 	import * as csv from "../public/data.csv";
 	import * as json from "../public/data.json";
 	
-	// console.log(json)
+	console.log(json)
 	// console.log(csv)
 	///////////////--------------------------------
 	
