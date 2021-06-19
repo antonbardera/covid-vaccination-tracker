@@ -6,7 +6,7 @@
 	import Button from "@smui/button";
 	import Card, { Content } from "@smui/card";
 	import Select, { Option } from "@smui/select";
-	import DiffMultiline from "./components/charts/DiffMultiline.svelte";
+	import Scatter from "./components/charts/Scatter2.svelte";
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
 
@@ -14,6 +14,14 @@
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Cases";
+
+	/* Samll multiple map */	
+	import Grid from './components/Grid.svelte';
+	let grid = [4, 6];
+
+	// Scatter
+	// import weather3 from './data/weather3.json';
+
 </script>
 
 <!-- HEAD -->
@@ -88,11 +96,14 @@
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
-			<img
+			<div>
+				<Grid {grid} />
+			</div>
+			<!-- <img
 				src="img/topicA-smallMultiples.png"
 				alt="placeholder"
 				class="wideColumn"
-			/>
+			/> -->
 			<p class="mdc-typography--caption">
 				Share of the population that has received two doses
 			</p>
@@ -163,6 +174,14 @@
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
 			</p>
+			<!-- <Scatter 
+				data={weather3}
+				title='Title' desc='Description'
+				key={{x: 'pressure', y: 'temperatureHigh', size:'moonPhase'}}
+				{format}
+				{color}
+				layout='col'
+			/> -->
 			<img
 				src="img/topicC-scatterplot.png"
 				alt="placeholder"
