@@ -1,5 +1,7 @@
 <!-- scripts and imports -->
 <script>
+	/* import Speedometer from "svelte-speedometer" */
+	import Speedometer from "./components/charts/Speedometer.svelte";
 	import Menu from "./components/common/Menu.svelte";
 	import Button from "@smui/button";
 	import Card, { Content } from "@smui/card";
@@ -37,13 +39,23 @@
 				17% of the population with the complete schedule of the vaccine
 				in Spain
 			</p>
-			<img
+			<!-- <img
 				src="img/placeholder.jpg"
 				alt="placeholder"
 				width="360"
 				height="202"
 				class="center"
-			/>
+			/> -->
+			<div
+				style=" 
+				width: auto; 
+				height: 360px; 
+				margin-left: 5%;
+				margin-right: 5%;
+				"
+			>
+				<Speedometer />
+			</div>
 			<p class="mdc-typography--body2">
 				17% 1 dose Lorem ipsum dolor sit amet, consectetur adipiscing
 				elit. Volutpat donec pretium, proin metus. At the current rate,
@@ -167,16 +179,18 @@
 		<!-- Credits -->
 		<div class="credits">
 			<p class="mdc-typography--subtitle2">Credits</p>
-			<p class="mdc-typography--body1">Spe Chen, Xavier Bolló and Santiago Salcido</p>
+			<p class="mdc-typography--body1">
+				Spe Chen, Xavier Bolló and Santiago Salcido
+			</p>
 		</div>
 	</div>
-
 </main>
 
 <!-- EXTRA CSS & STYLES -->
 <style>
 	:global(body, html) {
 		margin: 0;
+		font-family: Inter, Arial, Helvetica, sans-serif;
 	}
 
 	.center {
