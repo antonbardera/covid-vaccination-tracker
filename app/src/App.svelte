@@ -81,12 +81,14 @@
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
-			<Grid {grid} />
-			<img
+			<div>
+				<Grid {grid} />
+			</div>
+			<!-- <img
 				src="img/topicA-smallMultiples.png"
 				alt="placeholder"
 				class="wideColumn"
-			/>
+			/> -->
 			<p class="mdc-typography--caption">
 				Share of the population that has received two doses
 			</p>
