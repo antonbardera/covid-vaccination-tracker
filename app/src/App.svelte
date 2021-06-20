@@ -7,6 +7,8 @@
 	import Card, { Content } from "@smui/card";
 	import Select, { Option } from "@smui/select";
 	import Scatter from "./components/charts/Scatter2.svelte";
+	import locale from "@reuters-graphics/d3-locale";
+
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
 
@@ -20,7 +22,20 @@
 	let grid = [4, 6];
 
 	// Scatter
-	// import weather3 from './data/weather3.json';
+	import ScatterWapper from './components/ScatterWapper.svelte';
+
+
+
+	import weather3 from './data/weather3.json';
+	const loc = new locale('en');
+	const format = {
+		x: loc.formatTime('%B %e'),
+		y: loc.format(',.2f'),
+	}
+	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
+
+	console.log('weather3------------')
+	console.log(weather3);
 
 </script>
 
@@ -174,14 +189,10 @@
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
 			</p>
-			<!-- <Scatter 
-				data={weather3}
-				title='Title' desc='Description'
-				key={{x: 'pressure', y: 'temperatureHigh', size:'moonPhase'}}
-				{format}
-				{color}
-				layout='col'
-			/> -->
+
+			<p>x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p>
+			<ScatterWapper />
+
 			<img
 				src="img/topicC-scatterplot.png"
 				alt="placeholder"
@@ -240,4 +251,5 @@
 		border-top: 1px solid rgb(124, 124, 124);
 		margin: 48px 0px 24px 0px;
 	}
+
 </style>

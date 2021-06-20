@@ -15,8 +15,8 @@
 	let DataLong = data_raw.default.filter(d => new Date(d.fecha) > new Date("2021-03-30"));
 
 	let uniqueCCAA = [...new Set(DataLong.map(item => item.ccaa))]
-	console.log("CCAAs in the dataset----------");
-	console.log(uniqueCCAA);
+	// console.log("CCAAs in the dataset----------");
+	// console.log(uniqueCCAA);
 
 	// Totales is missing in xavi's dataset, so use "Cataluña" as value1 for now
 	let dataGlobal = DataLong.filter(d => d.ccaa === "Cataluña").map(d => {return{
@@ -41,7 +41,7 @@
 	};})
 
 	/* --------------------  
-	   Set up for <main> 
+	   Set up for <div> 
 	-----------------------*/
 	
 	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']

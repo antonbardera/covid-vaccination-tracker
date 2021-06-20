@@ -1,5 +1,5 @@
 <script>
-	import Axis from '../common/Axis.svelte';
+	import Axis from '../common/AxisScatter.svelte';
 	import Tooltip from '../common/Tooltip.svelte'
 	import {scaleSqrt, scaleTime, scaleLinear} from 'd3-scale';
 	import {extent} from 'd3-array'
@@ -7,9 +7,12 @@
     
     export let data;
 	export let margin = {top: 20, right: 5, bottom: 20, left: 5};
-	export let options;
-	
-	let {key, format, color, layout, title, desc } = options;
+	export let format;
+	export let key;
+    export let color;
+    export let title;
+	export let desc;
+	export let layout;
 
 	let datum, width, height, tooltipOptions, tip;
 
@@ -67,8 +70,8 @@
 		<circle 
 			cx={x(d[key.x])}
 			cy={y(d[key.y])}
-			r={size(d[key.size])}
-			fill-opacity=.1
+			r=5
+			fill-opacity=.5
 			fill={color}
 			stroke={color}
 			stroke-width=.3
@@ -79,7 +82,7 @@
 		<circle 
 			cx={x(d[key.x])}
 			cy={y(d[key.y])}
-			r={size(d[key.size])}
+			r=5
 			class='hover'
 			class:selected={d === datum}
 		/>
@@ -113,5 +116,9 @@
 	.selected {
 		stroke-opacity:1;
 		transition: all .3s;
+	}
+
+	.graphic{
+		height:40vh;
 	}
 </style>
