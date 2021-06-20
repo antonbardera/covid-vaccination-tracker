@@ -13,6 +13,7 @@
 	import locale from '@reuters-graphics/d3-locale';
 	import {curveMonotoneX} from 'd3-shape'
 	
+	
 	const loc = new locale('es');
 	const format = {
 		x: loc.formatTime('%b %e'),
@@ -28,7 +29,7 @@
 	import * as csv from "../public/data.csv";
 	import * as json from "../public/data.json";
 	
-	console.log(json)
+	// console.log(json)
 	// console.log(csv)
 	///////////////--------------------------------
 	
@@ -37,22 +38,27 @@
 	// console.log(ccaas)	
 	
 	
-	import {groups} from 'd3-array';
-	import Multiline from './components/charts/Multiline.svelte'
-	var nested_data = groups(data, d => d.fecha, d => d.ccaa)
-		.map(d=>{
-			let date = d[0] 
-			let ccaa = d[1].map(i=> i[0])
-			let values = {}
-			for (let i in ccaa) {
-				var value = d[1].map(j=> j[1].map(j=>j.ra_cases_under50))
-				values[ccaa[i]] = value[i]
-			}	
+	import {groups} from 'd3-array';  
+	// import {aq,op} from '@arquero'
 
-			return {
-				date,values
-			}
-		});
+	import Multiline from './components/charts/Multiline.svelte'
+	const ra_keys = Object.keys(data[0]).filter(key=> key.includes('ra_'))//.filter(({key})=> !key.includes('_1'))))
+	console.log(ra_keys)
+	// var nested_data = groups(data, d => d.fecha, d => d.ra_cases_above80)
+
+		// .map(d=>{
+		// 	let date = d[0] 
+		// 	let ccaa = d[1].map(i=> i[0])
+		// 	let values = {}
+		// 	for (let i in ccaa) {
+		// 		var value = d[1].map(j=> j[1].map(j=>j.ra_cases_under50))
+		// 		values[ccaa[i]] = value[i]
+		// 	}	
+
+		// 	return {
+		// 		date,values
+		// 	}
+		// });
 	
 	console.log(nested_data)
 
@@ -69,7 +75,7 @@
     {"date":"2021-04-06T00:00:00.000Z","dateStr":"2021-04-06","ccaa":"Cataluña","value0":0.16,"value1":0.16},
     {"date":"2021-04-07T00:00:00.000Z","dateStr":"2021-04-07","ccaa":"Cataluña","value0":0.18,"value1":0.17},
     {"date":"2021-04-08T00:00:00.000Z","dateStr":"2021-04-08","ccaa":"Cataluña","value0":0.19,"value1":0.18}];
-	console.log(ccaaData)
+	// console.log(ccaaData)
 
 	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
 	let colorDiff = ['rgba(92,198,178, 0.5)', 'rgba(0,0,0, 0.5)']
