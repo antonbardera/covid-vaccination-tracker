@@ -1,7 +1,7 @@
 <script>
 	import Axis from '../common/Axis.svelte';
 	import PointInteractive from '../common/PointInteractive.svelte';
-	import {line, curveStep,area} from 'd3-shape';
+	import {line, curveStep,area, curveBasis} from 'd3-shape';
 	import {scaleTime, scaleLinear} from 'd3-scale';
 	import {max, extent, bisector} from 'd3-array'
     
@@ -18,7 +18,8 @@
 	let height2 = 150;	
 	let width2 = 150;
 
-		
+	let selectedCurve = curveBasis;
+
 	$: x = scaleTime()
 		.domain(extent(data, d => d[key.x]))
 		.range([margin.left, width - margin.right]);
@@ -29,33 +30,33 @@
 	$: path = line()
 		.x(d => x(d[key.x]))
 		.y(d => y(d[key.y[0]]))
-		.curve(curveStep);
+		.curve(selectedCurve);
 	$: path2 = line()
 		.x(d => x(d[key.x]))
 		.y(d => y(d[key.y[1]]))
-		.curve(curveStep);
+		.curve(selectedCurve);
 	$: aboveAreaPath1 = area()
 		.x(d => x(d[key.x]))
 		.y0(0)
 		.y1(d => y(d[key.y[0]]))
-		.curve(curveStep);
+		.curve(selectedCurve);
 	
 	$: belowAreaPath1 = area()
 		.x(d => x(d[key.x]))
 		.y0(d => y(d[key.y[0]]))
 		.y1(height)
-		.curve(curveStep);
+		.curve(selectedCurve);
 	$: aboveAreaPath2 = area()
 		.x(d => x(d[key.x]))
 		.y0(0)
 		.y1(d => y(d[key.y[1]]))
-		.curve(curveStep);
+		.curve(selectedCurve);
 	
 	$: belowAreaPath2 = area()
 		.x(d => x(d[key.x]))
 		.y0(d => y(d[key.y[1]]))
 		.y1(height)
-		.curve(curveStep);
+		.curve(selectedCurve);
 	const mouseMove = (m) => {
 		const mX = (m.offsetX) ? m.offsetX : m.clientX;
 		const _data = [...data];
@@ -122,10 +123,10 @@
 		/>
 	</g>
 
-	<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
+	 <Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
 	<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
 
-	<PointInteractive {datum} {format} {x} {y} {key} {width} />
+	<!-- <PointInteractive {datum} {format} {x} {y} {key} {width} />  -->
 	
 </svg>
 {/if}
