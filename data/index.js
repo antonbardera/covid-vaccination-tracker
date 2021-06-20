@@ -1,12 +1,15 @@
 const fetch = require('node-fetch');
 const xlsx = require('xlsx');
+
 const d3time = require('d3-time-format');
 const fs = require('fs');
-const {writeCSV, writeJSON} = require('./utils/write');
+const {writeCSV, writeJSON, writeRaw} = require('./utils/write');
 const {listDates, find, download, dateDiff} = require('./utils/utils');
 
 const aq = require('arquero')
+const op = require('arquero')
 const d2lIntl = require('d2l-intl');
+
 
 
 // CONSTANTS
@@ -27,7 +30,7 @@ days.reverse().forEach(date => {
   const filename = `${date.replace(/-/g,'')}.ods`
 
   if(fs.existsSync(`${outdir}/informe_${filename}`)) {
-    console.log(`🛑 informe_${filename} already exists!`)
+    console.log(`ℹ️ informe_${filename} already exists!`)
   } else {
     download(`${baseUrl}${filename}`, `${outdir}/informe_${filename}`, () => {
       console.log('✅ Done!')
@@ -35,7 +38,7 @@ days.reverse().forEach(date => {
   }
 })
 
-//SANITIZE SPREADSHEETS
+//////// SANITIZE SPREADSHEETS
 //Unfortunately different days have different numbers of columns (worksheet ranges)
 //TODO => make it more resiliant to changes in headers. 
 const schema = [
@@ -77,7 +80,7 @@ const schema_ages_1dose = [
         'dose1_25', 'pop_25','perc_25',
         'dose1_18', 'pop_18','perc_18',
         'dose1_16', 'pop_16','perc_16',
-        'dose1_total', 'pop_total','dose1_perc_total'
+        'dose1_total', 'pop_total','dose1_pct_total'
       ]
   }];
 
@@ -93,12 +96,13 @@ const schema_ages_complete = [
         'dose2_25', 'pop_25','perc_25',
         'dose2_18', 'pop_18','perc_18',
         'dose2_16', 'pop_16','perc_16',
-        'dose2_total', 'pop_total','dose2_perc_total'
+        'dose2_total', 'pop_total','dose2_pct_total'
       ]
 
   }
 ];
 
+////// PARSE VALUES AND DATA TYPES
 //Some regions' names have extra spaces, missing accents, hyphens ... We should write a better function :/
 const sanitizeName = (ccaa) => {
   const original = ['Aragón','Murcia ','Castilla y Leon ','Canarias','Castilla La Mancha','Asturias ','Galicia','Andalucía','Ceuta','Melilla','Baleares','Extremadura','Madrid','Cantabria','C. Valenciana','Navarra','Cataluña','La Rioja','País Vasco', 'Totales']
@@ -137,16 +141,15 @@ const sanitizeObject = (datum, date) => {
 //Number parser for Spanish numbers like -> 1.000,00
 const parser = new d2lIntl.NumberParse('es-ES');
 
-//FETCH THE SPREADSHEETS
 //Output folder in the Svelte app
 const pathTo = '../app/public/'
 
 ////// PARSE SPREADSHEETS
 Promise.all(
+  // loop into the date list and for each fetch the url with the vaccines ods file
     days.reverse().map(date => 
         fetch(`${baseUrl}${date.replace(/-/g,'')}.ods`)
             .then(res => res.buffer())
-
             .then(data => {
               const workbook = xlsx.read(data, {type:'buffer'});
               
@@ -159,9 +162,9 @@ Promise.all(
               ////// PROCESS COLUMNS
               vacTotals.map(d=> {
                 d = sanitizeObject(d, date);
-                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1)
-                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date))
+                // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 
                 return {...d}
               })
@@ -169,110 +172,51 @@ Promise.all(
               
               vacDose1.map(d=>{
                 d = sanitizeObject(d, date);
-                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
-                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
+                // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose1_under50 = d.dose1_25 + d.dose1_18 + d.dose1_16;
-                d.dose1_perc_under50 = d.perc_25 + d.perc_18 + d.perc_16;
+                d.dose1_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 return {...d}
               })
               
               vacDose2.map(d=>{
                 d = sanitizeObject(d, date);
-                d.fecha = new Date(d3time.timeParse('%Y-%m-%d')(date)+1);
-                d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
-                d.hasta = sanitizeDate(d.hasta, d.fecha);
+                d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
+                // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
+                // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
-                d.dose2_perc_under50 = d.perc_25 + d.perc_18 + d.perc_16;
+                d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
                 return {...d}
               })
               // console.log(vacDose2)
               
-              ////// CREATE ARQUERO OBJECTS 
-              const fecha = days
-              aqVacDate = aq.fromJSON({fecha: fecha});
-              // aqVacDate.print()
-              // console.log(aqVacDate.objects())
-              aqVacTotals = aq.from(vacTotals);
-              const cn_totals = aqVacTotals.columnNames();
-              // aqVacTotals.print()
-              aqVacDose1 = aq.from(vacDose1);
-              const cn_Dose1 = aqVacDose1.columnNames();
-              // aqVacDose1.print()
-              aqVacDose2 = aq.from(vacDose2);
-              const cn_Dose2 = aqVacDose2.columnNames();
 
-              // cn_totals[0] === cn_Dose1[0] ? console.log("son iguals"+cn_totals[0]) :console.log("son diferent"+cn_totals[0]);
-              // cn_totals[0] === cn_Dose2[0] ? console.log("son iguals"+cn_totals[0]) :console.log("son diferent"+cn_totals[0]);
-
-              // cn_totals[0] === 'ccaa' ? console.log("sson iguals"+cn_totals[0]) :console.log("sson diferent"+cn_totals[0]);
-              var  aqJoin = []
-              
-              ////// JOIN OBJECTS
-              if(cn_totals[0] === cn_Dose1[0]  &&cn_totals[0] === 'ccaa'){
-                aqJoin = aqVacTotals/* .join(aqVacTotals, 'fecha') */
-                  .join(aqVacDose1
-                  .select(aq.not('perc_25','perc_18','perc_16','pop_25','pop_18','pop_16','dose1_25','dose1_18','dose1_16'))
-                  ,'ccaa')
-                  // .derive({pop_under50: d => d.pop_25 + d.pop_18 + d.pop_16})
-                  .join(
-                        aqVacDose2
-                        .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total','perc_25','perc_18','perc_16','dose2_25','dose2_18','dose2_16')),
-                        'ccaa')
-                  .select(aq.not('fecha_1','fecha_2','hasta_1','hasta_2'))
-                  // .select(aq.not('pop_25','pop_18','pop_16'))
-                  // .derive({dose1_under50: d => d.dose1_25 + d.dose1_18 + d.dose1_16})
-                  // .select(aq.not('dose1_25','dose1_18','dose1_16'))
-                  // .select(aq.not('fecha_2','hasta_2'))
-
-                  // .join(
-                  //   aqVacDose2
-                  //   .select(aq.not('pop_25','pop_18','pop_16','pop_above80','pop_70to79','pop_60to69','pop_50to59', 'pop_total')),'ccaa')
-                  // .derive({dose2_under50: d => d.dose2_25 + d.dose2_18 + d.dose2_16})
-                  // .select(aq.not('dose2_25','dose2_18','dose2_16'))
-                  // .select(aq.not('pop_25','pop_18','pop_16'))
-                  // .select(aq.not('fecha_1','hasta_1'))
-                  .objects()
-
-                  //aqVacTotals.print();
-                }
-                // else{
-
-              //   console.log("*******")
-              //   console.log(date)
-              //   console.log("Not equal")
-              //   console.log(cn_totals)
-              //   console.log("--")
-              //   console.log(cn_Dose1)
-              //   console.log(cn_Dose2)
-              //   console.log("*******")
-              // }
-              
-              // console.log(aqJoin);
-              
-              // const a = {date,aqJoin}
               const a = {date:date,values:{vacTotals,vacDose1,vacDose2}}
               // console.log(a)
+              // take the data outside the date loop to have it as a whole. 
               return a
           })
   )).then(json => {
     const joined_vacc = json.map(d=> {
+      //////// Merge entries for each objecgt objects
       // https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key
       arr = d.values.vacTotals.map((item, i) => Object.assign({}, item, d.values.vacDose1[i]));
       const grouped = arr.map((item, i) => Object.assign({}, item, d.values.vacDose2[i]));
           
       return grouped
     })
-
-    // const aq_ages = aq.from(age_data)
+// console.log(joined_vacc)
     // const keys = Object.keys(data[0]).filter(key=> !key.includes('_2'))//.filter(({key})=> !key.includes('_1'))))
+    // const ra_keys = Object.keys(data[0]).filter(key=> key.includes('ra_'))//.filter(({key})=> !key.includes('_1'))))
     
 
     ////// COVID INDICES DATA
+    // Uses Arquero to fetch the csv and pivot age factors as columns. Renames age columns. Calculates under50group
     const main = async () => {
       let url ='https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv'
-        const covid_data = aq.fromCSV(await fetch(url).then(res => res.text()))
+      const covid_src = aq.fromCSV(await fetch(url).then(res => res.text()), { parse: { fecha: d3time.utcParse('%Y-%m-%d') }})
             .derive({ccaa: d => { 
               const provToCcaa = { 
                 A :'Com. Valenciana', AB: 'Castilla-La Mancha', AL:	'Andalucía', AV: 'Castilla y León', B : 'Cataluña',
@@ -287,56 +231,149 @@ Promise.all(
               };
               return provToCcaa[d.provincia_iso]||"no_ccaa";
             }})
+        
+      const covid_data = covid_src
             .groupby('ccaa','fecha')
             .pivot('grupo_edad', { value: d => ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })})
-            .derive({cases_under50: d=> d['0-9'].cases+ d['10-19'].cases+ d['20-29'].cases+ d['30-39'].cases+ d['40-49'].cases })
+
+          //// cases //
             .derive({cases_50to59: d=> d['50-59'].cases})
             .derive({cases_60to69: d=> d['60-69'].cases})
             .derive({cases_70to79: d=> d['70-79'].cases})
-            .derive({cases_above80: d=> d['80+'].cases})
+            .derive({cases_above80: d=> d['80+'].cases})  
+            .derive({cases_under50: d=> d['0-9'].cases+ d['10-19'].cases+ d['20-29'].cases+ d['30-39'].cases+ d['40-49'].cases })
+
+                // Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
+            .derive({ra_cases_under50: aq.rolling(d=> op.average(d.cases_under50))})
+            .derive({ra_cases_50to59: aq.rolling(d=> op.average(d.cases_50to59))})
+            .derive({ra_cases_60to69: aq.rolling(d=> op.average(d.cases_60to69))})
+            .derive({ra_cases_70to79: aq.rolling(d=> op.average(d.cases_70to79))})
+            .derive({ra_cases_above80: aq.rolling(d=> op.average(d.cases_above80))})
+            
+          //// deaths //
             .derive({deaths_under50: d=> d['0-9'].deaths+ d['10-19'].deaths+ d['20-29'].deaths+ d['30-39'].deaths+ d['40-49'].deaths })
             .derive({deaths_50to59: d=> d['50-59'].deaths})
             .derive({deaths_60to69: d=> d['60-69'].deaths})
             .derive({deaths_70to79: d=> d['70-79'].deaths})
             .derive({deaths_above80: d=> d['80+'].deaths})
+
+            .derive({ra_deaths_under50: aq.rolling(d=> op.average(d.deaths_under50))})
+            .derive({ra_deaths_50to59: aq.rolling(d=> op.average(d.deaths_50to59))})
+            .derive({ra_deaths_60to69: aq.rolling(d=> op.average(d.deaths_60to69))})
+            .derive({ra_deaths_70to79: aq.rolling(d=> op.average(d.deaths_70to79))})
+            .derive({ra_deaths_above80: aq.rolling(d=> op.average(d.deaths_above80))})
+           
+          //// hospitals //      
             .derive({hosp_under50: d=> d['0-9'].hosp+ d['10-19'].hosp+ d['20-29'].hosp+ d['30-39'].hosp+ d['40-49'].hosp })
             .derive({hosp_50to59: d=> d['50-59'].hosp})
             .derive({hosp_60to69: d=> d['60-69'].hosp})
             .derive({hosp_70to79: d=> d['70-79'].hosp})
             .derive({hosp_above80: d=> d['80+'].hosp})
+            
+            .derive({ra_hosp_under50: aq.rolling(d=> op.average(d.hosp_under50))})
+            .derive({ra_hosp_50to59: aq.rolling(d=> op.average(d.hosp_50to59))})
+            .derive({ra_hosp_60to69: aq.rolling(d=> op.average(d.hosp_60to69))})
+            .derive({ra_hosp_70to79: aq.rolling(d=> op.average(d.hosp_70to79))})
+            .derive({ra_hosp_above80: aq.rolling(d=> op.average(d.hosp_above80))})
+
+          //// uci //
             .derive({uci_under50: d=> d['0-9'].uci+ d['10-19'].uci+ d['20-29'].uci+ d['30-39'].uci+ d['40-49'].uci })
             .derive({uci_50to59: d=> d['50-59'].uci})
             .derive({uci_60to69: d=> d['60-69'].uci})
             .derive({uci_70to79: d=> d['70-79'].uci})
             .derive({uci_above80: d=> d['80+'].uci})
+            
+            .derive({ra_uci_under50: aq.rolling(d=> op.average(d.uci_under50))})
+            .derive({ra_uci_50to59: aq.rolling(d=> op.average(d.uci_50to59))})
+            .derive({ra_uci_60to69: aq.rolling(d=> op.average(d.uci_60to69))})
+            .derive({ra_uci_70to79: aq.rolling(d=> op.average(d.uci_70to79))})
+            .derive({ra_uci_above80: aq.rolling(d=> op.average(d.uci_above80))})
+          ////            
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
-            
-          ////// GATHER OUTPUT DATA
-        const covid = covid_data.objects().flat()
-        // console.log(joined_vacc)
         
-        ////// CONVERT TO ARQUERO OBJECT
-        const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        // console.log(aq_covid)
-        // console.log(aq_vacc)
+          const withTotals = covid_src
+          // .columnNames()
+              .groupby('fecha')
+              .rollup({
+                totals : d=> ({
+                  cases: op.sum(d.num_casos),
+                  hosp: op.sum(d.num_hosp),
+                  uci: op.sum(d.num_uci),
+                  deaths: op.sum(d.num_def)
+                })
+              })
+          // .pivot('ccaa', { value: d => ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })})
+          // .groupby('fecha')
+          .print()
+        // console.log(withTotals)
+          
+
+          // ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })}).print({offset:100})
+        ////// GATHER OUTPUT DATA
+        // Only 2021 because vaccination data only covers that period
+        const flatvac = joined_vacc.flat()
+       
+        // console.log(flatvac)
+        const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2021)
         
-        ////// JOIN OUTPUT DATA
-        // full_data = aq_covid.join_full(aq_vacc,['fecha','ccaa'])
-          // .select(aq.not(aq.endswith('_2')))
-        // .objects()
+        ////// JOIN VACCINES AND INDICES DATA. 
+        //This is necessary since covid and flatvac arrays haven't the same order
+        //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
+        const full_data = covid
+          .map(item => ({
+              ...item, 
+              ...flatvac.find(item2 => 
+                    item2.ccaa ===  item.ccaa  
+                    &&   item2.fecha.getTime() === item.fecha.getTime())
+              })
+          )
+        
+//TODO: delete unused elements
+//TODO: simplify supplier data
+//TODO: make .ods headers more resiliant
+
+              // delete unused elements
+        //  .map(d=> {
+        //   d.dose2_25 === null ? '' : delete d.dose2_25,
+        //   d.dose2_18 === null ? '' : delete d.dose2_18,
+        //   d.dose2_16 === null ? '' : delete d.dose2_16,
+        //   d.perc_25 === null ? '' : delete d.perc_25,
+        //   d.perc_18 === null ? '' : delete d.perc_18,
+        //   d.perc_16 === null ? '' : delete d.perc_16,
+        //   d.pop_25 === null ? '' : delete d.pop_25,
+        //   d.pop_18 === null ? '' : delete d.pop_18,
+        //   d.pop_16 === null ? '' : delete d.pop_16,
+        //   d.dose1_25 === null ? '' : delete d.dose1_25,
+        //   d.dose1_18 === null ? '' : delete d.dose1_18,
+        //   d.dose1_16 === null ? '' : delete d.dose1_16
+        // })
+        function rollingAvg(data){
+          let aqdata =  aq.from(data.reverse())
+          aqdata
+              .groupby('fecha')
+              .rollup(op.sum(aq.endswith('80')))             
+              .print()
+        }
+        
+        // rollingAvg(flatvac)
+
+        
+
         // console.log(full_data)
         
-        writeJSON(full_data, 'data', pathTo);
-        console.log('json data created')
-        writeCSV(full_data, 'data', pathTo);
-        console.log('csv data created')
-        return full_data
-          }
-          main().then(data => { 
+        /* all the data, without totals */ 
+        function writeFiles(data){
+          writeJSON(data, 'data', pathTo);
+          console.log('json data created')
+          writeRaw(aq.from(data.reverse()).toCSV(), 'data', pathTo, 'csv');
+          console.log('csv data created')
+        }
+        /* computed rolling average */
+        writeFiles(full_data)
+        
 
-    
-  }) 
-  
-
+        // return full_data
+        }
+      main().then(data => { }) 
 });
