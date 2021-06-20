@@ -3,10 +3,11 @@
 	import locale from "@reuters-graphics/d3-locale";
 	import GapChart from "./charts/GapChart.svelte"
 
-	import * as ccaaData2 from "../../public/gap-chart-ca.json";
-	import * as allCCAA from "../../public/gap-chart-demo.json";
-	import * as data_raw from "../../public/data_xavier.json"; // downloaded from Xavier's branch
-	
+	import * as ccaaData2 from "../../public/gap-chart-ca.json"; //dose2_perc_total
+	import * as allCCAA from "../../public/gap-chart-demo.json"; //dose2_perc_total
+	// import * as data_raw from "../../public/data_xavier.json"; // downloaded from Xavier's branch //dose2_perc_total
+	import * as data_raw from "../../public/data.json"; // dose2_pct_total
+
 	/* --------------------  
 	   DATA PREPROCESSING 
 	-----------------------*/
@@ -22,19 +23,20 @@
 		date: new Date(d.fecha.split("T")[0]),
 		dateStr: d.fecha.split("T")[0],
 		ccaa: d.ccaa,
-		value1: Math.round(+d["dose2_perc_total"]) / 100
+		value1: Math.round(+d["dose2_pct_total"]) / 100
 	};})
 
 	function findValueByDate(dateStr){
 		let result = dataGlobal.filter(d => d.dateStr === dateStr).map(d => d.value1)[0]
-		// fill nan with 0 for value0 
+		// fill nan with 0 for value1 
 		if (isNaN(result)){ return 0} else {return result} 
 	}
 	let data2 = DataLong.map(d => {return{
 		date: new Date(d.fecha.split("T")[0]),
 		dateStr: new Date(d.fecha.split("T")[0]),
 		ccaa: d.ccaa,
-		value0: (isNaN(d["dose2_perc_total"]))? 0 : Math.round(+d["dose2_perc_total"]) / 100,
+		// fill nan with 0 for value0 
+		value0: (isNaN(d["dose2_pct_total"]))? 0 : Math.round(+d["dose2_pct_total"]) / 100,
 		value1: findValueByDate(d.fecha.split("T")[0])
 	};})
 
