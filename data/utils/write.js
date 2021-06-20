@@ -6,7 +6,14 @@ const writeJSON = (data, filename, dest) => {
         if (err) throw err;
         console.log(`Yay!! You can find ${filename}.json in ${dest}`);
     });
-  }
+}
+
+const writeRaw = (data, filename, dest, extension) => {
+  fs.writeFile(`${dest}${filename}.${extension}`, data, (err) => {
+      if (err) throw err;
+      console.log(`Yay!! You can find ${filename}.${extension} in ${dest}`);
+  });
+}
 
 const writeCSV = (data, filename, dest) => {
   const items = Object.values(data).flat();
@@ -22,4 +29,4 @@ const writeCSV = (data, filename, dest) => {
   });
 }
 
-module.exports = { writeJSON, writeCSV }
+module.exports = { writeJSON, writeCSV, writeRaw }
