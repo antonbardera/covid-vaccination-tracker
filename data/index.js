@@ -24,7 +24,6 @@ const baseUrl = 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/aler
 const outdir = './spreadsheets';
 if (!fs.existsSync(outdir)) fs.mkdirSync(outdir);
 
-let all_data = []
 
 days.reverse().forEach(date => {
   const filename = `${date.replace(/-/g,'')}.ods`
@@ -244,11 +243,11 @@ Promise.all(
             .derive({cases_under50: d=> d['0-9'].cases+ d['10-19'].cases+ d['20-29'].cases+ d['30-39'].cases+ d['40-49'].cases })
 
                 // Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
-            .derive({ra_cases_under50: aq.rolling(d=> op.average(d.cases_under50))})
-            .derive({ra_cases_50to59: aq.rolling(d=> op.average(d.cases_50to59))})
-            .derive({ra_cases_60to69: aq.rolling(d=> op.average(d.cases_60to69))})
-            .derive({ra_cases_70to79: aq.rolling(d=> op.average(d.cases_70to79))})
-            .derive({ra_cases_above80: aq.rolling(d=> op.average(d.cases_above80))})
+            // .derive({ra_cases_under50: aq.rolling(d=> op.average(d.cases_under50))})
+            // .derive({ra_cases_50to59: aq.rolling(d=> op.average(d.cases_50to59))})
+            // .derive({ra_cases_60to69: aq.rolling(d=> op.average(d.cases_60to69))})
+            // .derive({ra_cases_70to79: aq.rolling(d=> op.average(d.cases_70to79))})
+            // .derive({ra_cases_above80: aq.rolling(d=> op.average(d.cases_above80))})
             
           //// deaths //
             .derive({deaths_under50: d=> d['0-9'].deaths+ d['10-19'].deaths+ d['20-29'].deaths+ d['30-39'].deaths+ d['40-49'].deaths })
@@ -257,11 +256,11 @@ Promise.all(
             .derive({deaths_70to79: d=> d['70-79'].deaths})
             .derive({deaths_above80: d=> d['80+'].deaths})
 
-            .derive({ra_deaths_under50: aq.rolling(d=> op.average(d.deaths_under50))})
-            .derive({ra_deaths_50to59: aq.rolling(d=> op.average(d.deaths_50to59))})
-            .derive({ra_deaths_60to69: aq.rolling(d=> op.average(d.deaths_60to69))})
-            .derive({ra_deaths_70to79: aq.rolling(d=> op.average(d.deaths_70to79))})
-            .derive({ra_deaths_above80: aq.rolling(d=> op.average(d.deaths_above80))})
+            // .derive({ra_deaths_under50: aq.rolling(d=> op.average(d.deaths_under50))})
+            // .derive({ra_deaths_50to59: aq.rolling(d=> op.average(d.deaths_50to59))})
+            // .derive({ra_deaths_60to69: aq.rolling(d=> op.average(d.deaths_60to69))})
+            // .derive({ra_deaths_70to79: aq.rolling(d=> op.average(d.deaths_70to79))})
+            // .derive({ra_deaths_above80: aq.rolling(d=> op.average(d.deaths_above80))})
            
           //// hospitals //      
             .derive({hosp_under50: d=> d['0-9'].hosp+ d['10-19'].hosp+ d['20-29'].hosp+ d['30-39'].hosp+ d['40-49'].hosp })
@@ -270,11 +269,11 @@ Promise.all(
             .derive({hosp_70to79: d=> d['70-79'].hosp})
             .derive({hosp_above80: d=> d['80+'].hosp})
             
-            .derive({ra_hosp_under50: aq.rolling(d=> op.average(d.hosp_under50))})
-            .derive({ra_hosp_50to59: aq.rolling(d=> op.average(d.hosp_50to59))})
-            .derive({ra_hosp_60to69: aq.rolling(d=> op.average(d.hosp_60to69))})
-            .derive({ra_hosp_70to79: aq.rolling(d=> op.average(d.hosp_70to79))})
-            .derive({ra_hosp_above80: aq.rolling(d=> op.average(d.hosp_above80))})
+            // .derive({ra_hosp_under50: aq.rolling(d=> op.average(d.hosp_under50))})
+            // .derive({ra_hosp_50to59: aq.rolling(d=> op.average(d.hosp_50to59))})
+            // .derive({ra_hosp_60to69: aq.rolling(d=> op.average(d.hosp_60to69))})
+            // .derive({ra_hosp_70to79: aq.rolling(d=> op.average(d.hosp_70to79))})
+            // .derive({ra_hosp_above80: aq.rolling(d=> op.average(d.hosp_above80))})
 
           //// uci //
             .derive({uci_under50: d=> d['0-9'].uci+ d['10-19'].uci+ d['20-29'].uci+ d['30-39'].uci+ d['40-49'].uci })
@@ -283,29 +282,29 @@ Promise.all(
             .derive({uci_70to79: d=> d['70-79'].uci})
             .derive({uci_above80: d=> d['80+'].uci})
             
-            .derive({ra_uci_under50: aq.rolling(d=> op.average(d.uci_under50))})
-            .derive({ra_uci_50to59: aq.rolling(d=> op.average(d.uci_50to59))})
-            .derive({ra_uci_60to69: aq.rolling(d=> op.average(d.uci_60to69))})
-            .derive({ra_uci_70to79: aq.rolling(d=> op.average(d.uci_70to79))})
-            .derive({ra_uci_above80: aq.rolling(d=> op.average(d.uci_above80))})
+            // .derive({ra_uci_under50: aq.rolling(d=> op.average(d.uci_under50))})
+            // .derive({ra_uci_50to59: aq.rolling(d=> op.average(d.uci_50to59))})
+            // .derive({ra_uci_60to69: aq.rolling(d=> op.average(d.uci_60to69))})
+            // .derive({ra_uci_70to79: aq.rolling(d=> op.average(d.uci_70to79))})
+            // .derive({ra_uci_above80: aq.rolling(d=> op.average(d.uci_above80))})
           ////            
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
         
-          const withTotals = covid_src
-          // .columnNames()
-              .groupby('fecha')
-              .rollup({
-                totals : d=> ({
-                  cases: op.sum(d.num_casos),
-                  hosp: op.sum(d.num_hosp),
-                  uci: op.sum(d.num_uci),
-                  deaths: op.sum(d.num_def)
-                })
-              })
-          // .pivot('ccaa', { value: d => ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })})
-          // .groupby('fecha')
-          .print()
+          // const withTotals = covid_src
+          // // .columnNames()
+          //     .groupby('fecha')
+          //     .rollup({
+          //       totals : d=> ({
+          //         cases: op.sum(d.num_casos),
+          //         hosp: op.sum(d.num_hosp),
+          //         uci: op.sum(d.num_uci),
+          //         deaths: op.sum(d.num_def)
+          //       })
+          //     })
+          // // .pivot('ccaa', { value: d => ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })})
+          // // .groupby('fecha')
+          // .print()
         // console.log(withTotals)
           
 
@@ -315,52 +314,29 @@ Promise.all(
         const flatvac = joined_vacc.flat()
        
         // console.log(flatvac)
-        const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2021)
+        const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2020 || d.fecha.getFullYear() === 2021)
         
         ////// JOIN VACCINES AND INDICES DATA. 
         //This is necessary since covid and flatvac arrays haven't the same order
         //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        const full_data = covid
-          .map(item => ({
-              ...item, 
-              ...flatvac.find(item2 => 
-                    item2.ccaa ===  item.ccaa  
-                    &&   item2.fecha.getTime() === item.fecha.getTime())
-              })
-          )
+        let full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
+        
+        
         
 //TODO: delete unused elements
 //TODO: simplify supplier data
 //TODO: make .ods headers more resiliant
 
-              // delete unused elements
-        //  .map(d=> {
-        //   d.dose2_25 === null ? '' : delete d.dose2_25,
-        //   d.dose2_18 === null ? '' : delete d.dose2_18,
-        //   d.dose2_16 === null ? '' : delete d.dose2_16,
-        //   d.perc_25 === null ? '' : delete d.perc_25,
-        //   d.perc_18 === null ? '' : delete d.perc_18,
-        //   d.perc_16 === null ? '' : delete d.perc_16,
-        //   d.pop_25 === null ? '' : delete d.pop_25,
-        //   d.pop_18 === null ? '' : delete d.pop_18,
-        //   d.pop_16 === null ? '' : delete d.pop_16,
-        //   d.dose1_25 === null ? '' : delete d.dose1_25,
-        //   d.dose1_18 === null ? '' : delete d.dose1_18,
-        //   d.dose1_16 === null ? '' : delete d.dose1_16
-        // })
-        function rollingAvg(data){
-          let aqdata =  aq.from(data.reverse())
-          aqdata
-              .groupby('fecha')
-              .rollup(op.sum(aq.endswith('80')))             
-              .print()
-        }
+// delete unused elements
+        full_data = aq.from(full_data.reverse()).select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))).objects() 
+
+        //print({offset:9000})
         
-        // rollingAvg(flatvac)
+        
 
         
 
-        // console.log(full_data)
+        console.log(full_data[1000])
         
         /* all the data, without totals */ 
         function writeFiles(data){
