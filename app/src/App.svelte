@@ -37,6 +37,12 @@
 	console.log('weather3------------')
 	console.log(weather3);
 
+	/* Function testing */
+	import {rollingAvg} from './utils.js'
+	console.log(rollingAvg(data))
+
+import { utcMillisecond } from "d3-time";
+
 </script>
 
 <!-- HEAD -->
