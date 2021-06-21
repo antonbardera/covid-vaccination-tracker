@@ -81,7 +81,22 @@ const schema_ages_1dose = [
         'dose1_16', 'pop_16','perc_16',
         'dose1_total', 'pop_total','dose1_pct_total'
       ]
-  }];
+  },
+  {
+    date: new Date('2021-06-04'),
+    header: [
+      'ccaa',
+      'dose1_above80','dose1_pct_above80',
+      'dose1_70to79','dose1_pct_70to79',
+      'dose1_60to69','dose1_pct_60to69', 
+      'dose1_50to59','dose1_pct_50to59',
+      'dose1_25','perc_25',
+      'dose1_18','perc_18',
+      'dose1_16','perc_16',
+      'dose1_total', 'pop_total','dose1_pct_total'
+    ]
+  }
+  ];
 
 const schema_ages_complete = [
   {
@@ -98,6 +113,20 @@ const schema_ages_complete = [
         'dose2_total', 'pop_total','dose2_pct_total'
       ]
 
+  },
+  {
+    date: new Date('2021-06-04'),
+    header: [
+      'ccaa',
+      'dose2_above80','dose2_pct_above80',
+      'dose2_70to79', 'dose2_pct_70to79',
+      'dose2_60to69', 'dose2_pct_60to69', 
+      'dose2_50to59', 'dose2_pct_50to59',
+      'dose2_25', 'perc_25',
+      'dose2_18', 'perc_18',
+      'dose2_16', 'perc_16',
+      'dose2_total', 'pop_total','dose2_pct_total'
+    ]
   }
 ];
 
@@ -206,7 +235,7 @@ Promise.all(
           
       return grouped
     })
-// console.log(joined_vacc)
+    // console.log(joined_vacc)
     // const keys = Object.keys(data[0]).filter(key=> !key.includes('_2'))//.filter(({key})=> !key.includes('_1'))))
     // const ra_keys = Object.keys(data[0]).filter(key=> key.includes('ra_'))//.filter(({key})=> !key.includes('_1'))))
     
@@ -291,22 +320,6 @@ Promise.all(
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
         
-          // const withTotals = covid_src
-          // // .columnNames()
-          //     .groupby('fecha')
-          //     .rollup({
-          //       totals : d=> ({
-          //         cases: op.sum(d.num_casos),
-          //         hosp: op.sum(d.num_hosp),
-          //         uci: op.sum(d.num_uci),
-          //         deaths: op.sum(d.num_def)
-          //       })
-          //     })
-          // // .pivot('ccaa', { value: d => ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })})
-          // // .groupby('fecha')
-          // .print()
-        // console.log(withTotals)
-          
 
           // ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })}).print({offset:100})
         ////// GATHER OUTPUT DATA
