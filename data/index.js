@@ -319,7 +319,7 @@ Promise.all(
         ////// JOIN VACCINES AND INDICES DATA. 
         //This is necessary since covid and flatvac arrays haven't the same order
         //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        const full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
+        let full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
         
         
         
@@ -327,21 +327,10 @@ Promise.all(
 //TODO: simplify supplier data
 //TODO: make .ods headers more resiliant
 
-              // delete unused elements
-        //  .map(d=> {
-          //   d.dose2_25 === null ? '' : delete d.dose2_25,
-          //   d.dose2_18 === null ? '' : delete d.dose2_18,
-          //   d.dose2_16 === null ? '' : delete d.dose2_16,
-          //   d.perc_25 === null ? '' : delete d.perc_25,
-          //   d.perc_18 === null ? '' : delete d.perc_18,
-          //   d.perc_16 === null ? '' : delete d.perc_16,
-          //   d.pop_25 === null ? '' : delete d.pop_25,
-          //   d.pop_18 === null ? '' : delete d.pop_18,
-          //   d.pop_16 === null ? '' : delete d.pop_16,
-          //   d.dose1_25 === null ? '' : delete d.dose1_25,
-          //   d.dose1_18 === null ? '' : delete d.dose1_18,
-          //   d.dose1_16 === null ? '' : delete d.dose1_16
-        // })
+// delete unused elements
+        full_data = aq.from(full_data.reverse()).select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))).objects() 
+
+        //print({offset:9000})
         
         
 
