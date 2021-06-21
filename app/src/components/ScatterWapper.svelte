@@ -23,6 +23,7 @@
     // filter out undefined or null dose2_pct_70to79; will need an rolling avg as well
     let data = DataLong.map(d => {return{
 		date: new Date(d.fecha.split("T")[0]),
+        dateStr: d.fecha.split("T")[0],
 		ccaa: d.ccaa,
         dose2_pct_70to79: d.dose2_pct_70to79 /100,
         ra_cases_70to79: d.ra_cases_70to79,
