@@ -10,7 +10,7 @@
 	$: nTicks = (position === 'bottom' || position === 'top' ) 
 		? width / 50
     : height / 50;
-
+    	
   $: transform = position === 'bottom'
     ? `translate(0, ${height - margin.bottom - margin.top})`
 		: position === 'top'

@@ -1,15 +1,19 @@
 <script>
-	import Axis from '../common/Axis.svelte';
+	import Axis from '../common/AxisScatter.svelte';
 	import Tooltip from '../common/Tooltip.svelte'
 	import {scaleSqrt, scaleTime, scaleLinear} from 'd3-scale';
 	import {extent} from 'd3-array'
     import { Delaunay } from 'd3-delaunay'
-    
+    import { fade } from 'svelte/transition';
+
     export let data;
 	export let margin = {top: 20, right: 5, bottom: 20, left: 5};
-	export let options;
-	
-	let {key, format, color, layout, title, desc } = options;
+	export let format;
+	export let key;
+    export let color;
+    export let title;
+	export let desc;
+	export let layout;
 
 	let datum, width, height, tooltipOptions, tip;
 
@@ -44,10 +48,43 @@
 	const leave = (m) => {
 		tooltipOptions = {x: -1000, y: -1000, tip: '', visible: false}
 	}
-	
+
+	let visible = false;
+	function handleClick() {
+		visible = !visible;
+		console.log(visible)
+	}
+
+	function fade2(node, { duration, delay }){
+	const o = +getComputedStyle(node).opacity;
+	return {
+		delay,
+		duration,
+		css: t => { 
+			console.log('t=======')
+			console.log(t)
+			// return `opacity: ${t * o}`
+			if( t <= 0.5){
+				return `opacity: ${t * 2 * o}`
+			} else {
+				return `opacity: ${(1-t) * 2 * o}`
+			}
+		}		
+	};
+	}
 </script>
 
 <div class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}>
+
+<!-- <label>
+	<input type="checkbox" bind:checked={visible}>
+	visible
+</label> -->
+
+<button on:click={handleClick}>
+	Play by date
+</button>
+
 {#if width}
 <svg xmlns:svg='https://www.w3.org/2000/svg' 
 	viewBox='0 0 {width} {height}'
@@ -62,31 +99,40 @@
 	>
 	<title id='title'>{title}</title>
 	<desc id='desc'>{desc}</desc>
+	{#if visible}
 	<g>
-		{#each data as d}
+		{#each data as d, i}
+			<text
+				x={x(d[key.x])}
+				y={y(d[key.y])}
+				transition:fade='{{ delay:500 * i}}'
+				fill="rgba(232, 232, 232, 0.5)"
+			>
+				{d.dateStr}
+			</text>
 		<circle 
 			cx={x(d[key.x])}
 			cy={y(d[key.y])}
-			r={size(d[key.size])}
-			fill-opacity=.1
+			r=5
+			fill-opacity=.5
 			fill={color}
 			stroke={color}
 			stroke-width=.3
-
+			transition:fade='{{ delay:500 * i, intro: true }}'
 		/>
 		{/each}
 		{#each data as d}
 		<circle 
 			cx={x(d[key.x])}
 			cy={y(d[key.y])}
-			r={size(d[key.size])}
+			r=5
 			class='hover'
 			class:selected={d === datum}
 		/>
 		{/each}
 
 	</g>
-
+	{/if}
 	<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
 	<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
 
@@ -113,5 +159,9 @@
 	.selected {
 		stroke-opacity:1;
 		transition: all .3s;
+	}
+
+	.graphic{
+		height:40vh;
 	}
 </style>
