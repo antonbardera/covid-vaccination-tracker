@@ -11,7 +11,7 @@
 
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
-	export let data
+	
 
 	/* TopicB Tab */
 	import Tab, { Label } from "@smui/tab";
@@ -41,6 +41,9 @@
 	
 	//// FUNCTION-TESTING ////
 	/* rolling average */
+	// import * as csv from "../public/data.csv";
+	// console.log(csv)
+	export let data
 	import {rollingAvg} from './utils.js'
 	console.log( rollingAvg(data) )
 

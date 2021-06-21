@@ -1,7 +1,7 @@
 import * as aq from 'arquero';
 
 export function rollingAvg(_data){
-    let data = aq.from(_data)
+    let data = aq.from(_data.reverse())
         .fold(aq.not(['ccaa','fecha']))
         .derive({value: aq.rolling(d=> op.average(d.value))})
         // .reify()
