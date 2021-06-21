@@ -1,6 +1,6 @@
 <script>
 	import Scatter from "./charts/Scatter2.svelte"
-	import * as data_raw from "../../public/data.json"; // dose2_pct_total
+	import * as data_raw from "../../public/data_xavier.json"; // dose2_perc_total
 	import {max} from 'd3-array'
     import locale from "@reuters-graphics/d3-locale";
 
@@ -25,7 +25,7 @@
     console.log(DataLongFull)
     console.log(max(DataLongFull.map(d=>d.ra_cases_70to79)))
 
-    let ra_case_peak_70to79 = max(DataLongFull.map(d=>d.ra_cases_70to79))
+    let ra_case_peak_70to79 = max(DataLongFull.map(d=>d.ra_cases_70to79)) // needs ra func
 
     // take only needed data
     // filter out undefined or null dose2_pct_70to79; will need an rolling avg as well
@@ -34,8 +34,8 @@
         dateStr: loc.formatTime('%B %d')(new Date(d.fecha)),
 		ccaa: d.ccaa,
         dose2_pct_70to79: d.dose2_pct_70to79 /100,
-        ra_cases_70to79: d.ra_cases_70to79,
-        ra_case_peak_pct_70to79: d.ra_cases_70to79 / ra_case_peak_70to79
+        ra_cases_70to79: d.ra_cases_70to79, // needs func
+        ra_case_peak_pct_70to79: d.ra_cases_70to79 / ra_case_peak_70to79 // needs ra func
 		// fill nan with 0 for value0 
 		// value0: (isNaN(d["dose2_pct_total"]))? 0 : Math.round(+d["dose2_pct_total"]) / 100,
 		// value1: findValueByDate(d.fecha.split("T")[0])
