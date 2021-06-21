@@ -48,7 +48,7 @@
 
 		// .map(d=>{
 		// 	let date = d[0] 
-		// 	let ccaa = d[1].map(i=> i[0])
+		// 	let ccaa = d[1].map(i=> i[0])	
 		// 	let values = {}
 		// 	for (let i in ccaa) {
 		// 		var value = d[1].map(j=> j[1].map(j=>j.ra_cases_under50))
