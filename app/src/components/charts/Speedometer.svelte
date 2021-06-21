@@ -2,26 +2,23 @@
 	import Speedometer from "svelte-speedometer";
 </script>
 
-<!-- <Speedometer
-  maxValue={100}
-  value={40}
-  needleColor="#CFD8DC"
-  startColor="green"
-  segments={10}
-  endColor="white"
-/> -->
-
 <Speedometer
+	minValue={0}
+	maxValue={1.0}
+	value={0.4}
+	valueFormat={".0%"}
+	currentValueText={"${value} vaccinated"}
 	fluidWidth={true}
 	forceRender={true}
+	labelFontSize={"12px"}
+	valueTextFontSize={"19px"}
+	textColor="{'#1E1E1E'}ª"
 	maxSegmentLabels={1}
-	customSegmentStops={[0, 40, 100]}
-	segmentColors={["#64DD17", "#f5f5f5"]}
-	needleColor={"#CFD8DC"}
-	currentValueText={"Current Value: ${value}"}
-	minValue={0}
-	maxValue={100}
-	value={40}
-	needleTransitionDuration={4000}
+	customSegmentStops={[0, 0.4, 1.0]}
+	segmentColors={["#04D94F", "#CFD8DC"]}
+	ringWidth={55}
+	needleColor={"#455A64"}
+	needleTransitionDuration={4500}
 	needleTransition="easeElastic"
+	needleHeightRatio={0.9}
 />

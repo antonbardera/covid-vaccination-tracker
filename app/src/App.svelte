@@ -15,13 +15,12 @@
 	import TabBar from "@smui/tab-bar";
 	let active = "Cases";
 
-	/* Samll multiple map */	
-	import Grid from './components/Grid.svelte';
+	/* Small multiple map */
+	import Grid from "./components/Grid.svelte";
 	let grid = [4, 6];
 
 	// Scatter
 	// import weather3 from './data/weather3.json';
-
 </script>
 
 <!-- HEAD -->
@@ -43,27 +42,16 @@
 	<div class="narrowColumn">
 		<!-- GaugeChart -->
 		<div>
-			<p class="mdc-typography--body2">
-				17% of the population with the complete schedule of the vaccine
-				in Spain
+			<p class="mdc-typography--headline6" style="text-align: center;">
+				Percentage of the population with complete vaccination
 			</p>
-			<!-- <img
-				src="img/placeholder.jpg"
-				alt="placeholder"
-				width="360"
-				height="202"
-				class="center"
-			/> -->
-			<div
-				style=" 
-				width: auto; 
-				height: 360px; 
-				margin-left: 5%;
-				margin-right: 5%;
-				"
-			>
-				<Speedometer />
+
+			<div class="center">
+				<div style="width: 500px; height: 281px;">
+					<Speedometer />
+				</div>
 			</div>
+
 			<p class="mdc-typography--body2">
 				17% 1 dose Lorem ipsum dolor sit amet, consectetur adipiscing
 				elit. Volutpat donec pretium, proin metus. At the current rate,
@@ -205,26 +193,69 @@
 	</div>
 </main>
 
+<!-- TypeScale HiddenByDeafult // Just to check the TypeScale -->
+<div>
+	<p class="mdc-typography--headline1">
+		This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--headline2">
+		This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--headline3">
+		This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--headline4">
+		This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--headline5">
+		This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--headline6">
+		This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--subtitle1">
+		Subtitle1. This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--subtitle2">
+		Subtitle2. This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--body1">
+		Body 1. This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--body2">
+		Body 2. This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--caption">
+		Caption. This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--button">
+		Button. This is how vaccination progresses in Spain
+	</p>
+	<p class="mdc-typography--overline">
+		Overline. This is how vaccination progresses in Spain
+	</p>
+</div>
+
 <!-- EXTRA CSS & STYLES -->
 <style>
 	:global(body, html) {
 		margin: 0;
-		font-family: Inter, Arial, Helvetica, sans-serif;
+		font-family: Merriweather Sans, Arial, Helvetica, sans-serif;
 	}
 
 	.center {
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		width: 50%;
+		display: flex;
+		justify-content: center;
 	}
 
 	main {
 		margin: 0 auto;
 		padding-top: 24px;
 		padding-bottom: 24px;
-		max-width: 1048px;
-		background-color: #fff;
+		border-left: 1px solid #757575;
+		border-right: 1px solid #757575;
+		max-width: 1024px;
+		background-color: #f2f2f2;
 	}
 
 	.narrowColumn {
