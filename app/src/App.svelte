@@ -11,6 +11,7 @@
 
 	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
 	let value = "Orange";
+	export let data
 
 	/* TopicB Tab */
 	import Tab, { Label } from "@smui/tab";
@@ -34,12 +35,14 @@
 	}
 	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
 
-	console.log('weather3------------')
-	console.log(weather3);
+	// console.log('weather3------------')
+	// console.log(weather3);
 
-	/* Function testing */
+	
+	//// FUNCTION-TESTING ////
+	/* rolling average */
 	import {rollingAvg} from './utils.js'
-	console.log(rollingAvg(data))
+	console.log( rollingAvg(data) )
 
 import { utcMillisecond } from "d3-time";
 

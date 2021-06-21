@@ -314,19 +314,14 @@ Promise.all(
         const flatvac = joined_vacc.flat()
        
         // console.log(flatvac)
-        const covid = covid_data.objects().flat()//.filter(d=>d.fecha.getFullYear() === 2021)
+        const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2020 || d.fecha.getFullYear() === 2021)
         
         ////// JOIN VACCINES AND INDICES DATA. 
         //This is necessary since covid and flatvac arrays haven't the same order
         //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
-        const full_data = covid
-          .map(item => ({
-              ...item, 
-              ...flatvac.find(item2 => 
-                    item2.ccaa ===  item.ccaa  
-                    &&   item2.fecha.getTime() === item.fecha.getTime())
-              })
-          )
+        const full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
+        
+        
         
 //TODO: delete unused elements
 //TODO: simplify supplier data
@@ -347,19 +342,12 @@ Promise.all(
           //   d.dose1_18 === null ? '' : delete d.dose1_18,
           //   d.dose1_16 === null ? '' : delete d.dose1_16
         // })
-        function rollingAvg(data){
-          let aqdata =  aq.from(data.reverse())
-          aqdata
-              .groupby('fecha')
-              .rollup(op.sum(aq.endswith('80')))             
-              .print()
-        }
         
-        // rollingAvg(flatvac)
+        
 
         
 
-        // console.log(full_data)
+        console.log(full_data[1000])
         
         /* all the data, without totals */ 
         function writeFiles(data){
