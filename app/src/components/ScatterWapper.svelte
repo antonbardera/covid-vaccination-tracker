@@ -4,6 +4,14 @@
 	import {max} from 'd3-array'
     import locale from "@reuters-graphics/d3-locale";
 
+    const loc = new locale('en');
+    const format = {
+		// x: loc.formatTime('%B %e'),
+        x: loc.format(',.1f'),
+		y: loc.format(',.2f'),
+        // dateText: loc.formatTime('%B %e'),
+
+	}
 	/* --------------------  
 	   DATA PREPROCESSING 
 	-----------------------*/
@@ -23,7 +31,7 @@
     // filter out undefined or null dose2_pct_70to79; will need an rolling avg as well
     let data = DataLong.map(d => {return{
 		date: new Date(d.fecha.split("T")[0]),
-        dateStr: d.fecha.split("T")[0],
+        dateStr: loc.formatTime('%B %d')(new Date(d.fecha)),
 		ccaa: d.ccaa,
         dose2_pct_70to79: d.dose2_pct_70to79 /100,
         ra_cases_70to79: d.ra_cases_70to79,
@@ -39,12 +47,7 @@
 
     console.log('ScatterWrapper-----')
     console.log(data)
-    const loc = new locale('en');
-    const format = {
-		// x: loc.formatTime('%B %e'),
-        x: loc.format(',.1f'),
-		y: loc.format(',.2f'),
-	}
+ 
 	// let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
     let color = '#59C28E';
 </script>

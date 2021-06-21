@@ -1,12 +1,10 @@
 <script>
-
 	import Axis from '../common/AxisScatter.svelte';
 	import Tooltip from '../common/Tooltip.svelte'
 	import {scaleSqrt, scaleTime, scaleLinear} from 'd3-scale';
 	import {extent} from 'd3-array'
     import { Delaunay } from 'd3-delaunay'
     import { fade } from 'svelte/transition';
-	import IntersectionObserver from "svelte-intersection-observer";
 
     export let data;
 	export let margin = {top: 20, right: 5, bottom: 20, left: 5};
@@ -51,6 +49,12 @@
 		tooltipOptions = {x: -1000, y: -1000, tip: '', visible: false}
 	}
 
+	// let visible = false;
+	// function handleClick() {
+	// 	visible = !visible;
+	// 	console.log(visible)
+	// }
+
 	function fade2(node, { duration, delay }){
 	const o = +getComputedStyle(node).opacity;
 	return {
@@ -69,28 +73,22 @@
 		}		
 	};
 	}
-	let element;
-  	let intersecting;
-	let abc = [ 'a', 'b', 'c', 'd', 'e' ]
+	let visible = false;
 
 </script>
 
+<div class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}>
 
-<IntersectionObserver once {element} bind:intersecting>
-	<div class='placeholder' id="detected" bind:this={element}> Detect this element
-	  </div>
-</IntersectionObserver>
-<div class:intersecting>
-	{intersecting ? 'Element is in view' : 'Element is not in view'}
-	  {#if intersecting}
-		  {#each abc as d, i}
-			  <span in:fade2='{{ delay:700 * i, duration: 700, test : i}}' class='blah'>{d}</span>
-		  {/each}
-	  {/if}	  
-</div>
+<label>
+	<input type="checkbox" bind:checked={visible}>
+	visible
+</label>
 
-<div  class:intersecting class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}>
-{#if width && intersecting }
+<!-- <button on:click={handleClick}>
+	Play by date
+</button> -->
+
+{#if width}
 <svg xmlns:svg='https://www.w3.org/2000/svg' 
 	viewBox='0 0 {width} {height}'
 	{width}
@@ -104,6 +102,7 @@
 	>
 	<title id='title'>{title}</title>
 	<desc id='desc'>{desc}</desc>
+	{#if visible}
 	<g>
 		{#each data as d, i}
 			<text
@@ -136,6 +135,7 @@
 		{/each}
 
 	</g>
+	{/if}
 	<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
 	<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
 

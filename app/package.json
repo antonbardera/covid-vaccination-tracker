@@ -19,7 +19,8 @@
     "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "smui-theme": "^4.2.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "svelte-intersection-observer": "^0.7.0"
   },
   "dependencies": {
     "@okrad/svelte-progressbar": "^1.11.2",
