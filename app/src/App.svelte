@@ -41,12 +41,11 @@
 	
 	//// FUNCTION-TESTING ////
 	/* rolling average */
-	import * as csv from "../public/data.csv";
-	// console.log(csv.default)
-	let csv_data = csv.default
-	// export let data
-	import {rollingAvg,nationalValues,allAges} from './utils.js'
-	console.log( rollingAvg(csv_data) )
+	// import * as csv from "../public/data.csv";
+	// console.log(csv)
+	export let data
+	import {rollingAvg} from './utils.js'
+	console.log( rollingAvg(data) )
 
 import { utcMillisecond } from "d3-time";
 
