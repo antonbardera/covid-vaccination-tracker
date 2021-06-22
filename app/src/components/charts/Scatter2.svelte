@@ -67,14 +67,13 @@
 				{width}
 				{height}
 				role='img'
-
 				>
 				<text x=450 y=50> More people vaccinated ➔</text>
 				<text x=600 y=80> Fewer </text>
 				<text x=600 y=95> cases </text>
 				<text x=620 y=110> ↓</text>
 				<text x=500 y=520>Fully vaccinated rate</text>
-				<text x=5 y=25>Share of peak</text>
+				<text x=0 y=25>Share of peak</text>
 
 				<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
 				<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
@@ -167,4 +166,8 @@
 		/* last date stays  */
 		opacity : 1;
 	}
+
+	svg{
+  	  overflow: visible;
+  	}
 </style>

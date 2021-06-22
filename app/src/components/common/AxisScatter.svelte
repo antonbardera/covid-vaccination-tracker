@@ -87,7 +87,7 @@ import { text } from "svelte/internal";
 			{/if}
     </g>
     {:else if position === 'left'}
-    <g class='tick' transform='translate(0, {tick.offset})'>
+    <g class='tick' transform='translate(-30, {tick.offset})'>
       {#if tick.value === '0'}
       <line x2={width}/>
 			{:else}
@@ -109,4 +109,5 @@ import { text } from "svelte/internal";
 	line {
 		stroke: #DCDCDC;
 	}
+ 
 </style>
