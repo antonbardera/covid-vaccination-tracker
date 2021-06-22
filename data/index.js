@@ -334,15 +334,7 @@ Promise.all(
 //TODO: make .ods headers more resiliant
 
 // delete unused elements
-        // const keys = Object.keys(full_data.reverse()[0]).filter(key=> !key.includes('_18') && !key.includes('_16') && !key.includes('_25') )//.filter(({key})=> !key.includes('_1'))))
-        // full_data = keys.reduce((r, k) => r.concat(full_data[k]), []);
-        // full_data.reverse().map(d=>{
-        //   const keys = Object.keys(full_data[0]).filter(key=> !key.includes('_18'||'_16'||'_25')) //|| !key.includes('_17')||!key.includes('_18'))//.filter(({key})=> !key.includes('_1'))))
-        //   return keys
-        // })
-        // ) = aq.from(full_data.reverse())/* .select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))) */.objects() 
-
-        //print({offset:9000})
+        full_data = aq.from(full_data.reverse()).select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))).objects() 
         
         function createGridData(data){
           let _data = data.filter(d => new Date(d.fecha) > new Date("2021-03-30"))
