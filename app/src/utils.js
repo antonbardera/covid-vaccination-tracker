@@ -1,5 +1,6 @@
 import * as aq from 'arquero';
 
+// Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
 export function rollingAvg(_data){
     let data = aq.from(_data.reverse())
         .fold(aq.not(['ccaa','fecha']))
@@ -7,8 +8,8 @@ export function rollingAvg(_data){
         // .reify()
         .groupby('fecha','ccaa')
         .pivot('key','value')
-        .objects()
-        // .print()
+        // .objects()
+        .print()
     // console.log(data)
     return data
 }
@@ -38,9 +39,9 @@ export function nationalValues(_data){
         .orderby(aq.desc('fecha'))
         .print()    
 
-        // let data = data_pct.join(data_sum)
+    let data = data_pct.join(data_sum)
         // console.log(data)
-        return data_pct
+    return data
 }
 
 // export function allAges(_data){

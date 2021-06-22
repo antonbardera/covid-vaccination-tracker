@@ -90,6 +90,7 @@ const schema_ages_1dose = [
       'dose1_70to79','dose1_pct_70to79',
       'dose1_60to69','dose1_pct_60to69', 
       'dose1_50to59','dose1_pct_50to59',
+      'dose1_40to49','dose1_pct_40to49',
       'dose1_25','perc_25',
       'dose1_18','perc_18',
       'dose1_16','perc_16',
@@ -103,7 +104,7 @@ const schema_ages_complete = [
       date: new Date('2021-03-31'),
       header: [
         'ccaa',
-        'dose2_above80','pop_above80','dose2_pct_above80',
+          'dose2_above80', 'pop_above80','dose2_pct_above80',
         'dose2_70to79', 'pop_70to79','dose2_pct_70to79',
         'dose2_60to69', 'pop_60to69','dose2_pct_60to69', 
         'dose2_50to59', 'pop_50to59','dose2_pct_50to59',
@@ -118,10 +119,11 @@ const schema_ages_complete = [
     date: new Date('2021-06-04'),
     header: [
       'ccaa',
-      'dose2_above80','dose2_pct_above80',
+      'dose2_above80', 'dose2_pct_above80',
       'dose2_70to79', 'dose2_pct_70to79',
-      'dose2_60to69', 'dose2_pct_60to69', 
+      'dose2_60to69', 'dose2_pct_60to69',   
       'dose2_50to59', 'dose2_pct_50to59',
+      'dose2_40to49','dose2_pct_40to49',
       'dose2_25', 'perc_25',
       'dose2_18', 'perc_18',
       'dose2_16', 'perc_16',
@@ -218,7 +220,7 @@ Promise.all(
                 d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
                 return {...d}
               })
-              // console.log(vacDose2)
+              // console.log(vacDose1.reverse()[10])
               
 
               const a = {date:date,values:{vacTotals,vacDose1,vacDose2}}
@@ -237,7 +239,7 @@ Promise.all(
     })
     // console.log(joined_vacc)
     // const keys = Object.keys(data[0]).filter(key=> !key.includes('_2'))//.filter(({key})=> !key.includes('_1'))))
-    // const ra_keys = Object.keys(data[0]).filter(key=> key.includes('ra_'))//.filter(({key})=> !key.includes('_1'))))
+    // const ra_keys = Object.keys(data.reverse()[0]).filter(key=> key.includes('ra_'))//.filter(({key})=> !key.includes('_1'))))
     
 
     ////// COVID INDICES DATA
@@ -271,38 +273,19 @@ Promise.all(
             .derive({cases_above80: d=> d['80+'].cases})  
             .derive({cases_under50: d=> d['0-9'].cases+ d['10-19'].cases+ d['20-29'].cases+ d['30-39'].cases+ d['40-49'].cases })
 
-                // Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
-            // .derive({ra_cases_under50: aq.rolling(d=> op.average(d.cases_under50))})
-            // .derive({ra_cases_50to59: aq.rolling(d=> op.average(d.cases_50to59))})
-            // .derive({ra_cases_60to69: aq.rolling(d=> op.average(d.cases_60to69))})
-            // .derive({ra_cases_70to79: aq.rolling(d=> op.average(d.cases_70to79))})
-            // .derive({ra_cases_above80: aq.rolling(d=> op.average(d.cases_above80))})
-            
           //// deaths //
             .derive({deaths_under50: d=> d['0-9'].deaths+ d['10-19'].deaths+ d['20-29'].deaths+ d['30-39'].deaths+ d['40-49'].deaths })
             .derive({deaths_50to59: d=> d['50-59'].deaths})
             .derive({deaths_60to69: d=> d['60-69'].deaths})
             .derive({deaths_70to79: d=> d['70-79'].deaths})
             .derive({deaths_above80: d=> d['80+'].deaths})
-
-            // .derive({ra_deaths_under50: aq.rolling(d=> op.average(d.deaths_under50))})
-            // .derive({ra_deaths_50to59: aq.rolling(d=> op.average(d.deaths_50to59))})
-            // .derive({ra_deaths_60to69: aq.rolling(d=> op.average(d.deaths_60to69))})
-            // .derive({ra_deaths_70to79: aq.rolling(d=> op.average(d.deaths_70to79))})
-            // .derive({ra_deaths_above80: aq.rolling(d=> op.average(d.deaths_above80))})
            
           //// hospitals //      
             .derive({hosp_under50: d=> d['0-9'].hosp+ d['10-19'].hosp+ d['20-29'].hosp+ d['30-39'].hosp+ d['40-49'].hosp })
             .derive({hosp_50to59: d=> d['50-59'].hosp})
             .derive({hosp_60to69: d=> d['60-69'].hosp})
             .derive({hosp_70to79: d=> d['70-79'].hosp})
-            .derive({hosp_above80: d=> d['80+'].hosp})
-            
-            // .derive({ra_hosp_under50: aq.rolling(d=> op.average(d.hosp_under50))})
-            // .derive({ra_hosp_50to59: aq.rolling(d=> op.average(d.hosp_50to59))})
-            // .derive({ra_hosp_60to69: aq.rolling(d=> op.average(d.hosp_60to69))})
-            // .derive({ra_hosp_70to79: aq.rolling(d=> op.average(d.hosp_70to79))})
-            // .derive({ra_hosp_above80: aq.rolling(d=> op.average(d.hosp_above80))})
+            .derive({hosp_above80: d=> d['80+'].hosp})            
 
           //// uci //
             .derive({uci_under50: d=> d['0-9'].uci+ d['10-19'].uci+ d['20-29'].uci+ d['30-39'].uci+ d['40-49'].uci })
@@ -311,37 +294,35 @@ Promise.all(
             .derive({uci_70to79: d=> d['70-79'].uci})
             .derive({uci_above80: d=> d['80+'].uci})
             
-            // .derive({ra_uci_under50: aq.rolling(d=> op.average(d.uci_under50))})
-            // .derive({ra_uci_50to59: aq.rolling(d=> op.average(d.uci_50to59))})
-            // .derive({ra_uci_60to69: aq.rolling(d=> op.average(d.uci_60to69))})
-            // .derive({ra_uci_70to79: aq.rolling(d=> op.average(d.uci_70to79))})
-            // .derive({ra_uci_above80: aq.rolling(d=> op.average(d.uci_above80))})
           ////            
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
         
 
-          // ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })}).print({offset:100})
         ////// GATHER OUTPUT DATA
-        // Only 2021 because vaccination data only covers that period
         const flatvac = joined_vacc.flat()
-       
         // console.log(flatvac)
+       
         const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2020 || d.fecha.getFullYear() === 2021)
         
         ////// JOIN VACCINES AND INDICES DATA. 
         //This is necessary since covid and flatvac arrays haven't the same order
-        //const full_data = covid.map((item, i) => Object.assign({}, item, joined_vacc.flat()[i]));
         let full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
         
         
-        
+
 //TODO: delete unused elements
 //TODO: simplify supplier data
 //TODO: make .ods headers more resiliant
 
 // delete unused elements
-        full_data = aq.from(full_data.reverse()).select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))).objects() 
+        // const keys = Object.keys(full_data.reverse()[0]).filter(key=> !key.includes('_18') && !key.includes('_16') && !key.includes('_25') )//.filter(({key})=> !key.includes('_1'))))
+        // full_data = keys.reduce((r, k) => r.concat(full_data[k]), []);
+        // full_data.reverse().map(d=>{
+        //   const keys = Object.keys(full_data[0]).filter(key=> !key.includes('_18'||'_16'||'_25')) //|| !key.includes('_17')||!key.includes('_18'))//.filter(({key})=> !key.includes('_1'))))
+        //   return keys
+        // })
+        // ) = aq.from(full_data.reverse())/* .select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))) */.objects() 
 
         //print({offset:9000})
         
@@ -349,7 +330,7 @@ Promise.all(
 
         
 
-        console.log(full_data[1000])
+        // console.log(full_data)
         
         /* all the data, without totals */ 
         function writeFiles(data){

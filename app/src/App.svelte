@@ -44,9 +44,10 @@
 	import * as csv from "../public/data.csv";
 	// console.log(csv.default)
 	let csv_data = csv.default
-	// export let data
-	import {rollingAvg,nationalValues,allAges} from './utils.js'
-	console.log( rollingAvg(csv_data) )
+	export let data
+	import {rollingAvg,nationalValues} from './utils.js'
+	// console.log( rollingAvg(csv_data) )
+	nationalValues(data)
 
 import { utcMillisecond } from "d3-time";
 
