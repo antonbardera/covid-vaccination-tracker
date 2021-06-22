@@ -47,6 +47,7 @@
 	export let data
 	import {rollingAvg,nationalValues} from './utils.js'
 	// console.log( rollingAvg(csv_data) )
+	rollingAvg(data)
 	nationalValues(data)
 
 import { utcMillisecond } from "d3-time";

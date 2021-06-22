@@ -69,6 +69,14 @@ const schema = [
 
 const schema_ages_1dose = [
   {
+    date: new Date('2021-01-01'),
+    header: [
+      'ccaa',
+      'dose_entregadas',
+      'dose_administradas', 'perc_entregadas','last_update'
+    ]
+  },  
+  {
       date: new Date('2021-03-31'),
       header: [
         'ccaa',
@@ -101,10 +109,18 @@ const schema_ages_1dose = [
 
 const schema_ages_complete = [
   {
+    date: new Date('2021-01-01'),
+    header: [
+      'ccaa',
+      'dose_entregadas',
+      'dose_administradas', 'perc_entregadas','last_update'
+    ]
+  },
+  {
       date: new Date('2021-03-31'),
       header: [
         'ccaa',
-          'dose2_above80', 'pop_above80','dose2_pct_above80',
+        'dose2_above80', 'pop_above80','dose2_pct_above80',
         'dose2_70to79', 'pop_70to79','dose2_pct_70to79',
         'dose2_60to69', 'pop_60to69','dose2_pct_60to69', 
         'dose2_50to59', 'pop_50to59','dose2_pct_50to59',
@@ -184,10 +200,12 @@ Promise.all(
               const workbook = xlsx.read(data, {type:'buffer'});
               
               const headers = find(schema, d => d.date <= new Date(date)).header;
+              const headers_ages_dose1 = find(schema_ages_1dose, d => d.date <= new Date(date)).header;
+              const headers_ages_dose2 = find(schema_ages_complete, d => d.date <= new Date(date)).header;
 
               const vacTotals = xlsx.utils.sheet_to_json(workbook.Sheets.Hoja3||workbook.Sheets.Comunicación, {raw: false, range: 1, header:headers});
-              const vacDose1 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:schema_ages_1dose[0].header})
-              const vacDose2 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:schema_ages_complete[0].header})
+              const vacDose1 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_al_menos_1_dosis, {raw: false, range: 1, header:headers_ages_dose1})
+              const vacDose2 = xlsx.utils.sheet_to_json(workbook.Sheets.Etarios_con_pauta_completa, {raw: false, range: 1, header:headers_ages_dose2})
               
               ////// PROCESS COLUMNS
               vacTotals.map(d=> {
