@@ -344,9 +344,20 @@ Promise.all(
 
         //print({offset:9000})
         
+        function createGridData(data){
+          let _data = data.filter(d => new Date(d.fecha) > new Date("2021-03-30"))
+                          .map(d=>({
+                            date: d.fecha,
+                            ccaa: d.ccaa,
+                            // fill nan with 0 for value0 
+                            value0: (isNaN(d["dose2_pct_total"]))? 0 : Math.round(+d["dose2_pct_total"]) / 100,
+                            //value1: findValueByDate(d.fecha.split("T")[0])
+                          }));
+          writeJSON(_data, 'dataGrid', pathTo);
+          console.log('json grid data created')
+        }
         
-
-        
+        createGridData(flatvac);
 
         // console.log(full_data)
         
