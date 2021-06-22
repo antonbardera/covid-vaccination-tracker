@@ -19,8 +19,12 @@
 	let active = "Cases";
 
 	/* Small multiple map */
+	import gridData from "../public/dataGrid.json";
 	import Grid from "./components/Grid.svelte";
 	let grid = [4, 6];
+
+	let speedData = gridData[gridData.length -1].value0;
+	console.log("speed: "+speedData);
 
 	// Scatter
 	import ScatterWapper from './components/ScatterWapper.svelte';
@@ -43,12 +47,12 @@
 	/* rolling average */
 	import * as csv from "../public/data.csv";
 	// console.log(csv.default)
-	let csv_data = csv.default
+//	let csv_data = csv.default
 	export let data
-	import {rollingAvg,nationalValues} from './utils.js'
+//	import {rollingAvg,nationalValues} from './utils.js'
 	// console.log( rollingAvg(csv_data) )
-	rollingAvg(data)
-	nationalValues(data)
+//	rollingAvg(data)
+//	nationalValues(data)
 
 import { utcMillisecond } from "d3-time";
 
