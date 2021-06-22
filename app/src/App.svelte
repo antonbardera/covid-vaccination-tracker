@@ -19,8 +19,12 @@
 	let active = "Cases";
 
 	/* Small multiple map */
+	import gridData from "../public/dataGrid.json";
 	import Grid from "./components/Grid.svelte";
 	let grid = [4, 6];
+
+	let speedData = gridData[gridData.length -1].value0;
+	console.log("speed: "+speedData);
 
 	// Scatter
 	// import ScatterWapper from './components/ScatterWapper.svelte';
@@ -42,6 +46,7 @@
 	//// FUNCTION-TESTING ////
 	/* rolling average */
 	import * as csv from "../public/data.csv";
+<<<<<<< HEAD
 	let csv_data = csv.default
 	
 	// multiline test
@@ -53,6 +58,15 @@
 	$: mldata = multiline_data(data) 
 	
 	console.log(mldata)
+=======
+	// console.log(csv.default)
+//	let csv_data = csv.default
+	export let data
+//	import {rollingAvg,nationalValues} from './utils.js'
+	// console.log( rollingAvg(csv_data) )
+//	rollingAvg(data)
+//	nationalValues(data)
+>>>>>>> 4f2e6873d3d3e570932c30aaaf3cc3630dc8cfab
 
 import { utcMillisecond } from "d3-time";
 
