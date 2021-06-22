@@ -32,6 +32,7 @@
 				return 'middle'
 		}
 	}
+
 </script>
 
 <g class='axis' {transform} pointer-events='none'>

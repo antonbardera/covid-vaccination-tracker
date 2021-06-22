@@ -27,7 +27,7 @@
 	console.log("speed: "+speedData);
 
 	// Scatter
-	// import ScatterWapper from './components/ScatterWapper.svelte';
+	import ScatterWapper from './components/ScatterWapper.svelte';
 
 
 
@@ -219,8 +219,9 @@ import { utcMillisecond } from "d3-time";
 				consectetur.
 			</p>
 
-			<p>x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p>
-			<!-- <ScatterWapper /> -->
+			<p>Daily cases versus the winter peak in the age group 70 to 79</p>
+			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
+			<ScatterWapper />
 
 			<img
 				src="img/topicC-scatterplot.png"

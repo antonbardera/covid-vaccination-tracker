@@ -2,20 +2,21 @@
 
 	import Axis from '../common/AxisScatter.svelte';
 	import Tooltip from '../common/Tooltip.svelte'
-	import {scaleSqrt, scaleTime, scaleLinear} from 'd3-scale';
+	import {scaleSqrt, scaleTime, scaleLinear, scaleQuantize} from 'd3-scale';
 	import {extent} from 'd3-array'
     import { Delaunay } from 'd3-delaunay'
     import { fade } from 'svelte/transition';
 	import IntersectionObserver from "svelte-intersection-observer";
 
     export let data;
-	export let margin = {top: 20, right: 5, bottom: 20, left: 5};
+	export let margin = {top: 20, right: 10, bottom: 20, left: 10};
 	export let format;
 	export let key;
     export let color;
-    export let title;
-	export let desc;
 	export let layout;
+
+	let element;
+  	let intersecting;
 
 	let datum, width, height, tooltipOptions, tip;
 
@@ -24,7 +25,11 @@
 	$: x = scaleLinear()
 		.domain(extent(data, d => d[key.x]))
 		.range([margin.left, width - margin.right]);
-	
+
+	$: colorScale = scaleLinear()
+		.domain(extent(data, d => d[key.x]))
+		.range(['#657C89','#85DA46']);	
+
 	$: y = scaleLinear()
 		.domain(extent(data, d => d[key.y]))
         .range([height - margin.bottom - margin.top, margin.top]);
@@ -33,122 +38,99 @@
 		.domain(extent(data, d => d[key.size]))
 		.range([3, (width > 640) ? 30 : width / 15]);
 
-	$: delaunay = Delaunay.from(data, d => x(d[key.x]), d => y(d[key.y]));
-
-	const mouseMove = (m) => {
-        const mX = (m.offsetX) ? m.offsetX : m.clientX;
-		const mY = (m.offsetY) ? m.offsetY : m.clientY;
-		let visible = true;
-        const picked = delaunay.find(mX, mY);
-		datum = data[picked];
-		tip = (datum !== undefined)
-			?``
-			:``;
-		tooltipOptions = {x: mX, y: mY, tip: tip, visible: visible}
-	}
-
-	const leave = (m) => {
-		tooltipOptions = {x: -1000, y: -1000, tip: '', visible: false}
-	}
-
-	function fade2(node, { duration, delay }){
+	function fade2(node, { duration, delay}){
 	const o = +getComputedStyle(node).opacity;
 	return {
 		delay,
 		duration,
 		css: t => { 
-			console.log('t=======')
-			console.log(t)
-
 			if( t >= 1){
 				return `opacity: 0`
 			} 
-			
 			return `opacity : ${t*1}`
-		
 		}		
 	};
 	}
-	let element;
-  	let intersecting;
-	let abc = [ 'a', 'b', 'c', 'd', 'e' ]
+
 
 </script>
 
 
 <IntersectionObserver once {element} bind:intersecting>
-	<div class='placeholder' id="detected" bind:this={element}> Detect this element
-	  </div>
+	<!-- <div class='placeholder' id="detected" bind:this={element}> 
+		Detect this element
+	</div> -->
+	<div  bind:this={element} class:intersecting class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}  >
+		{#if width && intersecting }
+			<svg xmlns:svg='https://www.w3.org/2000/svg' 
+				viewBox='0 0 {width} {height}'
+				{width}
+				{height}
+				role='img'
+
+				>
+				<text x=450 y=50> More people vaccinated ➔</text>
+				<text x=600 y=80> Fewer </text>
+				<text x=600 y=95> cases </text>
+				<text x=620 y=110> ↓</text>
+				<text x=500 y=520>Fully vaccinated rate</text>
+				<text x=5 y=25>Share of peak</text>
+
+				<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
+				<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
+				<g>
+					{#each data as d, i}
+						
+						<circle 
+							cx={x(d[key.x])}
+							cy={y(d[key.y])}
+							r=7
+							fill-opacity=0.5
+							fill={colorScale(d[key.x])}
+							stroke='white'
+							stroke-width=0.1
+							transition:fade='{{ delay:700 * i}}'
+						/>
+						<circle 
+							cx={x(d[key.x])}
+							cy={y(d[key.y])}
+							r=7
+							fill-opacity=1
+							fill={colorScale(d[key.x])}
+							stroke='#333'
+							stroke-width=2
+							in:fade2='{{ delay:700 * i, duration:800}}'
+							class='date-text'
+						/>
+						<text
+							x={x(d[key.x])}
+							y={y(d[key.y])}
+							in:fade2='{{ delay:700 * i, duration:800}}'
+							class={ x(d[key.x]) < width/2 ? 'date-text date-text--left' : 'date-text date-text--right'}
+						>
+							{d.dateStr}
+						</text>
+					{/each}
+					<!-- {#each data as d}
+					<circle 
+						cx={x(d[key.x])}
+						cy={y(d[key.y])}
+						r=5
+						class='hover'
+						class:selected={d === datum}
+					/>
+					{/each} -->
+
+				</g>
+
+			</svg>
+		<!-- <Tooltip {... tooltipOptions} {width} {height} /> -->
+		{/if}
+	</div>
 </IntersectionObserver>
-<div class:intersecting>
-	{intersecting ? 'Element is in view' : 'Element is not in view'}
-	  {#if intersecting}
-		  {#each abc as d, i}
-			  <span in:fade2='{{ delay:700 * i, duration: 700, test : i}}' class='blah'>{d}</span>
-		  {/each}
-	  {/if}	  
-</div>
-
-<div  class:intersecting class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}>
-{#if width && intersecting }
-<svg xmlns:svg='https://www.w3.org/2000/svg' 
-	viewBox='0 0 {width} {height}'
-	{width}
-	{height}
-	role='img'
-    aria-labelledby='title desc'
-    on:touchmove|preventDefault
-	on:pointermove|preventDefault={mouseMove}
-	on:mouseleave={leave}
-	on:touchend={leave}
-	>
-	<title id='title'>{title}</title>
-	<desc id='desc'>{desc}</desc>
-	<g>
-		{#each data as d, i}
-			<text
-				x={x(d[key.x])}
-				y={y(d[key.y])}
-				in:fade2='{{ delay:500 * i, duration:800}}'
-				class='date-text'
-			>
-				{d.dateStr}
-			</text>
-		<circle 
-			cx={x(d[key.x])}
-			cy={y(d[key.y])}
-			r=5
-			fill-opacity=.5
-			fill={color}
-			stroke={color}
-			stroke-width=.3
-			transition:fade='{{ delay:500 * i, intro: true }}'
-		/>
-		{/each}
-		{#each data as d}
-		<circle 
-			cx={x(d[key.x])}
-			cy={y(d[key.y])}
-			r=5
-			class='hover'
-			class:selected={d === datum}
-		/>
-		{/each}
-
-	</g>
-	<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
-	<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
-
-</svg>
-
-<Tooltip {... tooltipOptions} {width} {height} />
-
-{/if}
-
-</div>
 
 <style>
-	path {
+	/* path {
 		fill:none;
 		stroke-width: 2;
 	}
@@ -162,16 +144,25 @@
 	.selected {
 		stroke-opacity:1;
 		transition: all .3s;
-	}
+	} */
 
 	.graphic{
-		height:40vh;
+		height:60vh;
 	}
 
 	.date-text{
 		opacity: 0;
 	}
-		
+	
+	.date-text.date-text--left {
+		text-anchor: start;
+		transform: translate(7px,-5px);
+	}
+
+	.date-text.date-text--right {
+		text-anchor: end;
+		transform: translate(-7px , -5px);
+	}	
 	.date-text:last-of-type {
 		/* last date stays  */
 		opacity : 1;

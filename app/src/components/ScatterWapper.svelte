@@ -7,8 +7,8 @@
     const loc = new locale('en');
     const format = {
 		// x: loc.formatTime('%B %e'),
-        x: loc.format(',.1f'),
-		y: loc.format(',.2f'),
+        x: loc.format(',.0f'),
+		y: loc.format(',.0f'),
         // dateText: loc.formatTime('%B %e'),
 
 	}
@@ -33,19 +33,19 @@
 		date: new Date(d.fecha.split("T")[0]),
         dateStr: loc.formatTime('%B %d')(new Date(d.fecha)),
 		ccaa: d.ccaa,
-        dose2_pct_70to79: d.dose2_pct_70to79 /100,
+        dose2_pct_70to79: d.dose2_pct_70to79,
         ra_cases_70to79: d.ra_cases_70to79, // needs func
-        ra_case_peak_pct_70to79: d.ra_cases_70to79 / ra_case_peak_70to79 // needs ra func
+        ra_case_peak_pct_70to79: d.ra_cases_70to79 / ra_case_peak_70to79 * 100// needs ra func
 		// fill nan with 0 for value0 
 		// value0: (isNaN(d["dose2_pct_total"]))? 0 : Math.round(+d["dose2_pct_total"]) / 100,
 		// value1: findValueByDate(d.fecha.split("T")[0])
 	};}).filter(d=>d.dose2_pct_70to79 !== undefined && !isNaN(d.dose2_pct_70to79))
 
-    console.log('checking~~~~~')
-    console.log(data)
+    // console.log('checking~~~~~')
+    // console.log(data)
     console.log(data.filter(d=>d.dose2_pct_70to79 !== undefined))
 
-    console.log('ScatterWrapper-----')
+    console.log('ScatterWrapper data-----')
     console.log(data)
  
 	// let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
@@ -54,7 +54,6 @@
 
 <Scatter 
     data={data}
-    title='Title' desc='Description'
     key={{x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'}}
     {format}
     {color}
