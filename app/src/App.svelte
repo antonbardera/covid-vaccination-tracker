@@ -23,7 +23,7 @@
 	let grid = [4, 6];
 
 	// Scatter
-	import ScatterWapper from './components/ScatterWapper.svelte';
+	// import ScatterWapper from './components/ScatterWapper.svelte';
 
 
 
@@ -42,13 +42,17 @@
 	//// FUNCTION-TESTING ////
 	/* rolling average */
 	import * as csv from "../public/data.csv";
-	// console.log(csv.default)
 	let csv_data = csv.default
+	
+	// multiline test
 	export let data
-	import {rollingAvg,nationalValues} from './utils.js'
-	// console.log( rollingAvg(csv_data) )
-	rollingAvg(data)
-	nationalValues(data)
+	import {rollingAvg, multiline_data} from './utils.js'
+	import Multiline from "./components/charts/Multiline.svelte";
+	import {curveMonotoneX} from 'd3-shape'
+	let mldata = multiline_data(data) 
+	$: mldata = multiline_data(data) 
+	
+	console.log(mldata)
 
 import { utcMillisecond } from "d3-time";
 
@@ -70,6 +74,23 @@ import { utcMillisecond } from "d3-time";
 
 <!-- CONTENT -->
 <main>
+	<div class="narrowColumn">
+	<Multiline 
+	data={mldata}
+	options={
+		{
+			key:{x: 'fecha', y: ['cases_50to59', 'cases_60to69','cases_70to79','cases_above80']},
+			format: format,
+			color: ['#fc0', '#ccc','#dcc011','#cdf011','#1bf011'],
+			layout: 'col',
+			title:'Title',
+			desc:'Description',
+			curve: curveMonotoneX
+		}
+	}
+	/>
+	</div>
+
 	<div class="narrowColumn">
 		<!-- GaugeChart -->
 		<div>
@@ -195,7 +216,7 @@ import { utcMillisecond } from "d3-time";
 			</p>
 
 			<p>x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p>
-			<ScatterWapper />
+			<!-- <ScatterWapper /> -->
 
 			<img
 				src="img/topicC-scatterplot.png"
