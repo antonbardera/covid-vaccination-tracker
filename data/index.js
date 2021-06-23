@@ -9,6 +9,8 @@ const {listDates, find, download, dateDiff} = require('./utils/utils');
 const aq = require('arquero')
 const op = require('arquero')
 const d2lIntl = require('d2l-intl');
+const { map, max } = require('lodash');
+
 
 
 
@@ -356,57 +358,133 @@ Promise.all(
           ////            
             .select(aq.not('0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80+','NC'))
             //.print({ offset: 5000 })
-        
 
-        ////// GATHER OUTPUT DATA
+////// GATHER OUTPUT DATA
         const flatvac = joined_vacc.flat()
         // console.log(flatvac)
        
         const covid = covid_data.objects().flat().filter(d=>d.fecha.getFullYear() === 2020 || d.fecha.getFullYear() === 2021)
         
-        ////// JOIN VACCINES AND INDICES DATA. 
+////// JOIN VACCINES AND INDICES DATA. 
         //This is necessary since covid and flatvac arrays haven't the same order
         let full_data = covid.map(item => ({...item, ...flatvac.find(item2 => item2.ccaa === item.ccaa && item2.fecha.getTime() === item.fecha.getTime())}))
         
         
 
-//TODO: delete unused elements
-//TODO: simplify supplier data
-//TODO: make .ods headers more resiliant
 
-// delete unused elements
+        //TODO: simplify supplier data
+        //TODO: make .ods headers more resiliant
+
+        // delete unused elements
         full_data = aq.from(full_data.reverse()).select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))).objects() 
+
         
+////// CHART SPECIFIC OBJECTS 
+// https://blog.oliverjumpertz.dev/the-moving-average-simple-and-exponential-theory-math-and-implementation-in-javascript
+function simpleMovingAverage(data, window = 5) {
+  if (!data || data.length < window) {
+    return [];
+  }
+
+  let index = window - 1;
+  const length = data.length + 1;
+
+  const simpleMovingAverages = [];
+
+  while (++index < length) {
+    const windowSlice = data.slice(index - window, index);
+    const sum = windowSlice.reduce((prev, curr) => prev + curr, 0);
+    simpleMovingAverages.push(sum / window);
+  }
+
+  return simpleMovingAverages;
+}
+
+
+        //////// Grid Data
         function createGridData(data){
           const invalidDate = new Date("2021-06-04");
           let _data = data.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
-                          .map(d=>({
-                            date: d.fecha,
-                            ccaa: d.ccaa,
-                            // fill nan with 0 for value0 
-                            value0: (isNaN(d["dose2_pct_total"]))? 0 : Math.round(+d["dose2_pct_total"]) / 100,
-                            //value1: findValueByDate(d.fecha.split("T")[0])
-                          }));
+          .map(d=>({
+            date: d.fecha,
+            ccaa: d.ccaa,
+            // fill nan with 0 for value0 
+            value0: (isNaN(d["dose2_pct_total"]))? 0 : Math.round(+d["dose2_pct_total"]) / 100,
+            //value1: findValueByDate(d.fecha.split("T")[0])
+          }));
           writeJSON(_data, 'dataGrid', pathTo);
           console.log('json grid data created')
         }
         
         createGridData(flatvac);
+        
 
+        //////// Scatterplot Data
+        function createScatterData(cov,vacc){
+          const invalidDate = new Date("2021-06-04");
+          
+          // National values
+          cov = cov.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
+          const covid_totals = aq.from(cov.reverse())
+              .select(['ccaa','fecha',aq.matches('cases'), aq.matches('deat'), aq.matches('hosp'),aq.matches('uci')])
+              .fold(aq.not('fecha','ccaa'))
+              .groupby('fecha')
+              .pivot('key',{value:d => op.sum(d.value) })
+              .orderby(aq.desc('fecha'))
+              // .objects()
+          
+          vacc = vacc.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() && d.ccaa === "Total España" )
+          const data = aq.from(vacc.reverse())
+              .orderby(aq.desc('fecha'))
+              .join(covid_totals,'fecha')
+              .select(['ccaa','fecha',aq.matches('cases'), aq.matches('deat'), aq.matches('hosp'),aq.matches('uci'),aq.matches('dose1'),aq.matches('dose2')])
+              .derive({ra_cases_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-3,3])})
+              .derive({ra_cases_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-3,3])})
+              .derive({ra_cases_70to79 : aq.rolling(d=> op.average(d.cases_70to79), [-3,3])})
+              
+              .derive({ra_cases_above80 : aq.rolling(d=> op.average(d.cases_above80), [-3,3])})
+              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-3,3])})
+              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-3,3])})
+              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.cases_70to79), [-3,3])})
+              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.cases_above80), [-3,3])})
+              
+              .derive({ra_cases_peak_50to59 : d=> (d.ra_cases_50to59/op.max(d.ra_cases_50to59))})
+              .derive({ra_cases_peak_60to69 : d=> (d.ra_cases_60to69/op.max(d.ra_cases_60to69))})
+              .derive({ra_cases_peak_70to79 : d=> (d.ra_cases_70to79/op.max(d.ra_cases_70to79))})
+              .derive({ra_cases_peak_above80 : d=> (d.ra_cases_above80/op.max(d.ra_cases_above80))})
+
+              .select(['fecha',aq.matches('ra_cases_peak'), aq.matches('ra_dose2_pct')])
+              .fold(aq.not('fecha'))
+              .spread({ key: d => op.split(d.key, '_') }, { as: ['roll', 'var', 'calc',  'age_group'] })
+              .derive({var: d=> d.var+'_'+d.calc})
+              .select(aq.not('roll','calc'))
+              .groupby('fecha','age_group')
+              .pivot('var','value')
+              // .print()
+              .objects()
+              writeJSON(data, 'dataScatter', pathTo);
+              console.log('json scatter data created')
+        }
+
+        createScatterData(covid,flatvac);
+        
+        
+        ////// WRITE FULL DATA FILES
         // console.log(full_data)
         
-        /* all the data, without totals */ 
         function writeFiles(data){
           writeJSON(data, 'data', pathTo);
           console.log('json data created')
           writeRaw(aq.from(data.reverse()).toCSV(), 'data', pathTo, 'csv');
           console.log('csv data created')
         }
-        /* computed rolling average */
+
         writeFiles(full_data)
         
 
-        // return full_data
-        }
-      main().then(data => { }) 
+
+      }     // end of covid async function
+      main()      // run the async function
+      .then(data => { })   // finalize the promise operation 
 });
+ 
