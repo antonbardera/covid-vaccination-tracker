@@ -1,18 +1,12 @@
 <!-- scripts and imports -->
 <script>
-	/* import Speedometer from "svelte-speedometer" */
 	import Speedometer from "./components/charts/Speedometer.svelte";
 	import Menu from "./components/common/Menu.svelte";
-	import Button from "@smui/button";
-	import Card, { Content } from "@smui/card";
-	import Select, { Option } from "@smui/select";
-	import Scatter from "./components/charts/Scatter2.svelte";
-	import locale from "@reuters-graphics/d3-locale";
-
-	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
-	let value = "Orange";
+	// import Button from "@smui/button";
+	// import Card, { Content } from "@smui/card";
+	// import Select, { Option } from "@smui/select";
+	// import Scatter from "./components/charts/Scatter2.svelte";
 	
-
 	/* TopicB Tab */
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
@@ -23,43 +17,19 @@
 	import Grid from "./components/Grid.svelte";
 	let grid = [4, 6];
 
+	/* Gauge */
 	let speedData = gridData[gridData.length -1].value0;
 	console.log("speed: "+speedData);
-
-	// Scatter
-	// import ScatterWapper from './components/ScatterWapper.svelte';
-
-
-
-	import weather3 from './data/weather3.json';
-	const loc = new locale('en');
-	const format = {
-		x: loc.formatTime('%B %e'),
-		y: loc.format(',.2f'),
-	}
+	
+	/* Scatterplot */
+	import ScatterWapper from './components/ScatterWapper.svelte';
+	
+	/* Multiline */
+	import MultilineWrapper from './components/MultilineWrapper.svelte';
+	
+	
 	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
-
-	// console.log('weather3------------')
-	// console.log(weather3);
-
 	
-	//// FUNCTION-TESTING ////
-	/* rolling average */
-	import * as csv from "../public/data.csv";
-	let csv_data = csv.default
-	
-	// multiline test
-	export let data
-	import {rollingAvg, multiline_data} from './utils.js'
-	import Multiline from "./components/charts/Multiline.svelte";
-	import {curveMonotoneX} from 'd3-shape'
-	let mldata = multiline_data(data) 
-	$: mldata = multiline_data(data) 
-	
-	console.log(mldata)
-
-import { utcMillisecond } from "d3-time";
-
 </script>
 
 <!-- HEAD -->
@@ -78,23 +48,6 @@ import { utcMillisecond } from "d3-time";
 
 <!-- CONTENT -->
 <main>
-	<div class="narrowColumn">
-	<Multiline 
-	data={mldata}
-	options={
-		{
-			key:{x: 'fecha', y: ['cases_50to59', 'cases_60to69','cases_70to79','cases_above80']},
-			format: format,
-			color: ['#fc0', '#ccc','#dcc011','#cdf011','#1bf011'],
-			layout: 'col',
-			title:'Title',
-			desc:'Description',
-			curve: curveMonotoneX
-		}
-	}
-	/>
-	</div>
-
 	<div class="narrowColumn">
 		<!-- GaugeChart -->
 		<div>
@@ -186,16 +139,12 @@ import { utcMillisecond } from "d3-time";
 				</TabBar>
 			</div>
 			<br />
-			<img
-				src="img/topicB-DailyCases1.png"
-				alt="placeholder"
-				class="wideColumn"
-			/>
-			<img
+			<MultilineWrapper />
+			<!-- <img
 				src="img/topicB-DailyCases2.png"
 				alt="placeholder"
 				class="wideColumn"
-			/>
+			/> -->
 			<p class="mdc-typography--body1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
@@ -290,7 +239,8 @@ import { utcMillisecond } from "d3-time";
 
 <!-- EXTRA CSS & STYLES -->
 <style>
-	:global(body, html) {
+/* Modified :global(body,html) produce error deploying on Vercel -> 'ValidationError: :global(...) must contain a single selector'  */
+ :global(html) {
 		margin: 0;
 		font-family: Merriweather Sans, Arial, Helvetica, sans-serif;
 	}
