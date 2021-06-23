@@ -441,12 +441,12 @@ function simpleMovingAverage(data, window = 5) {
               .derive({ra_cases_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-3,3])})
               .derive({ra_cases_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-3,3])})
               .derive({ra_cases_70to79 : aq.rolling(d=> op.average(d.cases_70to79), [-3,3])})
-              
               .derive({ra_cases_above80 : aq.rolling(d=> op.average(d.cases_above80), [-3,3])})
-              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-3,3])})
-              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-3,3])})
-              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.cases_70to79), [-3,3])})
-              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.cases_above80), [-3,3])})
+
+              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.dose2_pct_50to59), [-3,3])})
+              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.dose2_pct_60to69), [-3,3])})
+              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.dose2_pct_70to79), [-3,3])})
+              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.dose2_pct_above80), [-3,3])})
               
               .derive({ra_cases_peak_50to59 : d=> (d.ra_cases_50to59/op.max(d.ra_cases_50to59))})
               .derive({ra_cases_peak_60to69 : d=> (d.ra_cases_60to69/op.max(d.ra_cases_60to69))})
