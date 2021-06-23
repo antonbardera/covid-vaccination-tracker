@@ -270,29 +270,16 @@ Promise.all(
                 d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
                 // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 // d.hasta = sanitizeDate(d.hasta, d.fecha);
+                d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
+                d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 
-                // age groups only from 50y
-                date <= new Date('2021-06-04') ? 
-                  (
-                  d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16,
-                  d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16,
-                  console.log(date)
-                  )
-                // age groups from 40y
-                : date <= new Date('2021-06-21') ?
-                  (
-                  d.dose2_under50 = d.dose2_40to49 + d.dose2_25 + d.dose2_18 + d.dose2_16,
-                  d.dose2_pct_under50 = d.dose2_pct_40to49 + d.perc_25 + d.perc_18 + d.perc_16
-                  )
-                // almost all age groups
-                : (
-                  d.dose2_under50 = d.dose_40to49 + d.dose2_30to39 + d.dose2_20to29 + d.dose2_12to19 ,
-                  d.dose2_pct_under50 = d.dose2_pct_40to49 + dose2_pct_30to39 + d.dose2_pct_20to29 + d.dose2_pct_12to19
-                  )
-              
+                // SI  DATA < DATA(2021,6,4)
+                d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
+                // SI DATA >=  --->  d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16 + pop_
+
                 return {...d}
               })
-              console.log(vacDose2)
+              // console.log(vacDose1.reverse()[10])
               
 
               const a = {date:date,values:{vacTotals,vacDose1,vacDose2}}
