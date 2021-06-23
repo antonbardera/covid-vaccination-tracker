@@ -93,6 +93,7 @@
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
+			
 			<div>
 				<Grid {grid} />
 			</div>
