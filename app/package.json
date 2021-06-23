@@ -10,6 +10,8 @@
   "devDependencies": {
     "@material/typography": "^11.0.0",
     "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-dsv": "^2.0.1",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@smui/icon-button": "^4.2.0",
     "rollup": "^2.3.4",

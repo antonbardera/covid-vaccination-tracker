@@ -20,3 +20,6 @@ npm-debug.log*
 
 # Package lock
 package-lock.json
+app/public/build/bundle.css
+app/public/build/bundle.js
+app/public/build/bundle.js.map

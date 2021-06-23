@@ -3,8 +3,10 @@
 
 // Svelte Colors!
 @use '@material/theme/index' as theme with (
-  $primary: #232226,
-  $secondary: #BF7D56,
+  /* $primary: #232226,
+  $secondary: #BF7D56, */
+  $primary: #BF7D56,
+  $secondary: #232226,
   $surface: #fff,
   $background: #CFD8DC,
   $error: color-palette.$red-900,
@@ -23,8 +25,14 @@ body {
 }
 
 a {
-  color: #40b3ff;
+  color: #BF7D56;
 }
+
 a:visited {
-  color: color.scale(#40b3ff, $lightness: -35%);
+  color: color.scale(#BF7D56);
 }
+
+/* REDUCED LIGHTNESS FOR VISITED LINKS */
+/* a:visited {
+  color: color.scale(#BF7D56, $lightness: -35%);
+} */
