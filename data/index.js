@@ -341,7 +341,8 @@ Promise.all(
         full_data = aq.from(full_data.reverse()).select(aq.not(aq.endswith('_16'),aq.endswith('_18'),aq.endswith('_25'))).objects() 
         
         function createGridData(data){
-          let _data = data.filter(d => new Date(d.fecha) > new Date("2021-03-30"))
+          const invalidDate = new Date("2021-06-04");
+          let _data = data.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
                           .map(d=>({
                             date: d.fecha,
                             ccaa: d.ccaa,
