@@ -86,7 +86,7 @@
 
 <style>
 	.graphic {
-		height: 500px;
+		height: 450px;
 		font-size:40%;
 
 
