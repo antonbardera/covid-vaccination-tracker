@@ -191,7 +191,7 @@ const schema_ages_complete = [
 //Some regions' names have extra spaces, missing accents, hyphens ... We should write a better function :/
 const sanitizeName = (ccaa) => {
   const original = ['Aragón','Murcia ','Castilla y Leon ','Canarias','Castilla La Mancha','Asturias ','Galicia','Andalucía','Ceuta','Melilla','Baleares','Extremadura','Madrid','Cantabria','C. Valenciana','Navarra','Cataluña','La Rioja','País Vasco', 'Totales']
-  const sanitized = ['Aragón','Murcia','Castilla y León','Canarias','Castilla-La Mancha','Asturias','Galicia','Andalucía','Ceuta','Melilla','Baleares','Extremadura','Madrid','Cantabria','Com. Valenciana','Navarra','Cataluña','La Rioja','País Vasco','Totales']
+  const sanitized = ['Aragón','Murcia','C.León','Canarias','C.Mancha','Asturias','Galicia','Andalucía','Ceuta','Melilla','Baleares','Extremadura','Madrid','Cantabria','C.Valenciana','Navarra','Cataluña','La Rioja','País Vasco','Totales']
   const i = original.findIndex(d => d === ccaa)
   return (sanitized[i] !== undefined) ? sanitized[i] : ccaa;
 }
@@ -310,15 +310,15 @@ Promise.all(
       const covid_src = aq.fromCSV(await fetch(url).then(res => res.text()), { parse: { fecha: d3time.utcParse('%Y-%m-%d') }})
             .derive({ccaa: d => { 
               const provToCcaa = { 
-                A :'Com. Valenciana', AB: 'Castilla-La Mancha', AL:	'Andalucía', AV: 'Castilla y León', B : 'Cataluña',
-                BA:	'Extremadura', BI:	'País Vasco', BU:	'Castilla y León', C : 'Galicia', CA:	'Andalucía', CE:	'Ceuta',
-                CC:	'Extremadura', CO: 'Andalucía', CR:	'Castilla-La Mancha', CS: 'Com. Valenciana', CU:	'Castilla-La Mancha',
-                GC:	'Canarias', GI:	'Cataluña', GR: 'Andalucía', GU:	'Castilla-La Mancha', H :'Andalucía', HU:	'Aragón', J : 'Andalucía',
-                L :	'Cataluña', LE:	'Castilla y León', LO: 'La Rioja', LU:	'Galicia', M :	'Madrid', MA:	'Andalucía', ML: 'Melilla',
-                MU:	'Murcia', NA:	'Navarra', O : 'Asturias', OR:	'Galicia', P : 'Castilla y León', PM: 'Baleares',
-                PO: 'Galicia', S : 'Cantabria', SA: 'Castilla y León', SE: 'Andalucía', SG: 'Castilla y León', SO: 'Castilla y León',
-                SS: 'País Vasco', T : 'Cataluña', TE: 'Aragón', TF:	'Canarias', TO: 'Castilla-La Mancha', V :	'Com. Valenciana', VA: 'Castilla y León',
-                VI: 'País Vasco', Z : 'Aragón', ZA:	'Castilla y León'
+                A :'C.Valenciana', AB: 'C.Mancha', AL:	'Andalucía', AV: 'C.León', B : 'Cataluña',
+                BA:	'Extremadura', BI:	'País Vasco', BU:	'C.León', C : 'Galicia', CA:	'Andalucía', CE:	'Ceuta',
+                CC:	'Extremadura', CO: 'Andalucía', CR:	'C.Mancha', CS: 'C.Valenciana', CU:	'C.Mancha',
+                GC:	'Canarias', GI:	'Cataluña', GR: 'Andalucía', GU:	'C.Mancha', H :'Andalucía', HU:	'Aragón', J : 'Andalucía',
+                L :	'Cataluña', LE:	'C.León', LO: 'La Rioja', LU:	'Galicia', M :	'Madrid', MA:	'Andalucía', ML: 'Melilla',
+                MU:	'Murcia', NA:	'Navarra', O : 'Asturias', OR:	'Galicia', P : 'C.León', PM: 'Baleares',
+                PO: 'Galicia', S : 'Cantabria', SA: 'C.León', SE: 'Andalucía', SG: 'C.León', SO: 'C.León',
+                SS: 'País Vasco', T : 'Cataluña', TE: 'Aragón', TF:	'Canarias', TO: 'C.Mancha', V :	'C.Valenciana', VA: 'C.León',
+                VI: 'País Vasco', Z : 'Aragón', ZA:	'C.León'
               };
               return provToCcaa[d.provincia_iso]||"no_ccaa";
             }})
