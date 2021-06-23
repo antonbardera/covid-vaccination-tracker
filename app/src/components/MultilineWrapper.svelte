@@ -2,7 +2,7 @@
 	import locale from "@reuters-graphics/d3-locale";
 	import Multiline from "../components/charts/Multiline.svelte";
 	import {curveMonotoneX} from 'd3-shape'
-	import {multiline_data, test_aq} from '../utils.js'
+	import {multiline_data} from '../utils.js'
 	
 	import * as csv from "../../public/data.csv"
 	let data = csv.default
