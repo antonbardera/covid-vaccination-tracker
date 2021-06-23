@@ -235,7 +235,11 @@ Promise.all(
                 // d.hasta = sanitizeDate(d.hasta, d.fecha);
                 d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
                 d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
+                
+                // SI  DATA < DATA(2021,6,4)
                 d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
+                // SI DATA >=  --->  d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16 + pop_
+
                 return {...d}
               })
               // console.log(vacDose1.reverse()[10])
@@ -283,7 +287,7 @@ Promise.all(
       const covid_data = covid_src
             .groupby('ccaa','fecha')
             .pivot('grupo_edad', { value: d => ({cases:op.sum(d.num_casos),hosp:op.sum(d.num_hosp), uci:op.sum(d.num_uci), deaths:op.sum(d.num_def) })})
-
+            
           //// cases //
             .derive({cases_50to59: d=> d['50-59'].cases})
             .derive({cases_60to69: d=> d['60-69'].cases})
