@@ -18,12 +18,13 @@ const days = listDates(new Date('2021-01-04'), new Date());
 
 //Base URL of the OpenDocument Spreadsheets
 const baseUrl = 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/documentos/Informe_Comunicacion_'
+const covidUrl = 'https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv'
+
 
 //BACKUP SPREADSHEETS
 //Only if there's a spreadsheet on that day and check if it exists already in the folder
 const outdir = './spreadsheets';
 if (!fs.existsSync(outdir)) fs.mkdirSync(outdir);
-
 
 days.reverse().forEach(date => {
   const filename = `${date.replace(/-/g,'')}.ods`
@@ -32,9 +33,14 @@ days.reverse().forEach(date => {
     console.log(`ℹ️ informe_${filename} already exists!`)
   } else {
     download(`${baseUrl}${filename}`, `${outdir}/informe_${filename}`, () => {
-      console.log('✅ Done!')
+      console.log('✅ New report added!')
     })
   }
+})
+
+//BACKUP COVID CSV
+download(`${covidUrl}`, `${outdir}/covid_data.csv`, () => {
+  console.log('✅ Covid CSV data updated!')
 })
 
 //////// SANITIZE SPREADSHEETS
@@ -104,6 +110,21 @@ const schema_ages_1dose = [
       'dose1_16','perc_16',
       'dose1_total', 'pop_total','dose1_pct_total'
     ]
+  },
+  {
+    date: new Date('2021-06-21'),
+    header: [
+      'ccaa',
+      'dose1_above80','dose1_pct_above80',
+      'dose1_70to79','dose1_pct_70to79',
+      'dose1_60to69','dose1_pct_60to69', 
+      'dose1_50to59','dose1_pct_50to59',
+      'dose1_40to49','dose1_pct_40to49',
+      'dose1_30to39','dose1_pct_30to39',
+      'dose1_20to29','dose1_pct_20to29',
+      'dose1_12to19','dose1_pct_12to19',
+      'dose1_total', 'pop_total','dose1_pct_total'
+    ]
   }
   ];
 
@@ -143,6 +164,22 @@ const schema_ages_complete = [
       'dose2_25', 'perc_25',
       'dose2_18', 'perc_18',
       'dose2_16', 'perc_16',
+      'dose2_total', 'pop_total','dose2_pct_total'
+    ]
+  },
+
+  {
+    date: new Date('2021-06-21'),
+    header: [
+      'ccaa',
+      'dose2_above80', 'dose2_pct_above80',
+      'dose2_70to79', 'dose2_pct_70to79',
+      'dose2_60to69', 'dose2_pct_60to69',   
+      'dose2_50to59', 'dose2_pct_50to59',
+      'dose2_40to49','dose2_pct_40to49',
+      'dose2_30to39','dose2_pct_30to39',
+      'dose2_20to29','dose2_pct_20to29',
+      'dose2_12to19','dose2_pct_12to19',
       'dose2_total', 'pop_total','dose2_pct_total'
     ]
   }
@@ -233,16 +270,29 @@ Promise.all(
                 d.fecha = new Date(d3time.utcParse('%Y-%m-%d')(date));
                 // d.hasta = d3time.timeParse('%d/%m/%Y')(d.hasta);
                 // d.hasta = sanitizeDate(d.hasta, d.fecha);
-                d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16;
-                d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16;
                 
-                // SI  DATA < DATA(2021,6,4)
-                d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16
-                // SI DATA >=  --->  d.pop_under50 = d.pop_25 + d.pop_18 + d.pop_16 + pop_
-
+                // age groups only from 50y
+                date <= new Date('2021-06-04') ? 
+                  (
+                  d.dose2_under50 = d.dose2_25 + d.dose2_18 + d.dose2_16,
+                  d.dose2_pct_under50 = d.perc_25 + d.perc_18 + d.perc_16,
+                  console.log(date)
+                  )
+                // age groups from 40y
+                : date <= new Date('2021-06-21') ?
+                  (
+                  d.dose2_under50 = d.dose2_40to49 + d.dose2_25 + d.dose2_18 + d.dose2_16,
+                  d.dose2_pct_under50 = d.dose2_pct_40to49 + d.perc_25 + d.perc_18 + d.perc_16
+                  )
+                // almost all age groups
+                : (
+                  d.dose2_under50 = d.dose_40to49 + d.dose2_30to39 + d.dose2_20to29 + d.dose2_12to19 ,
+                  d.dose2_pct_under50 = d.dose2_pct_40to49 + dose2_pct_30to39 + d.dose2_pct_20to29 + d.dose2_pct_12to19
+                  )
+              
                 return {...d}
               })
-              // console.log(vacDose1.reverse()[10])
+              console.log(vacDose2)
               
 
               const a = {date:date,values:{vacTotals,vacDose1,vacDose2}}
@@ -266,8 +316,8 @@ Promise.all(
 
     ////// COVID INDICES DATA
     // Uses Arquero to fetch the csv and pivot age factors as columns. Renames age columns. Calculates under50group
+    let url = covidUrl
     const main = async () => {
-      let url ='https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv'
       const covid_src = aq.fromCSV(await fetch(url).then(res => res.text()), { parse: { fecha: d3time.utcParse('%Y-%m-%d') }})
             .derive({ccaa: d => { 
               const provToCcaa = { 
