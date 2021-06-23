@@ -1,55 +1,47 @@
 <!-- scripts and imports -->
 <script>
-	/* import Speedometer from "svelte-speedometer" */
+	import Footer from "./components/common/Footer.svelte";
 	import Speedometer from "./components/charts/Speedometer.svelte";
 	import Menu from "./components/common/Menu.svelte";
-	import Button from "@smui/button";
-	import Card, { Content } from "@smui/card";
-	import Select, { Option } from "@smui/select";
+	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
 	import Scatter from "./components/charts/Scatter2.svelte";
 	import locale from "@reuters-graphics/d3-locale";
 
-	let fruits = ["Pomme", "Orange", "Banana", "Mango"];
-	let value = "Orange";
-	
-
-	/* TopicB Tab */
+	/* TopicB Tab BAR */
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Cases";
 
 	/* Small multiple map */
+	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
 	import Grid from "./components/Grid.svelte";
 	let grid = [4, 6];
 
 	// Scatter
-	import ScatterWapper from './components/ScatterWapper.svelte';
-
-
-
-	import weather3 from './data/weather3.json';
-	const loc = new locale('en');
+	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
+	import ScatterWapper from "./components/ScatterWapper.svelte";
+	import weather3 from "./data/weather3.json";
+	const loc = new locale("en");
 	const format = {
-		x: loc.formatTime('%B %e'),
-		y: loc.format(',.2f'),
-	}
-	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
+		x: loc.formatTime("%B %e"),
+		y: loc.format(",.2f"),
+	};
+	let color = ["rgba(92,198,178, 1)", "rgba(0,0,0, 1)"];
 
 	// console.log('weather3------------')
 	// console.log(weather3);
 
-	
 	//// FUNCTION-TESTING ////
+	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
 	/* rolling average */
 	import * as csv from "../public/data.csv";
 	// console.log(csv.default)
-	let csv_data = csv.default
+	let csv_data = csv.default;
 	// export let data
-	import {rollingAvg,nationalValues,allAges} from './utils.js'
-	console.log( rollingAvg(csv_data) )
+	import { rollingAvg, nationalValues, allAges } from "./utils.js";
+	console.log(rollingAvg(csv_data));
 
-import { utcMillisecond } from "d3-time";
-
+	import { utcMillisecond } from "d3-time";
 </script>
 
 <!-- HEAD -->
@@ -68,7 +60,7 @@ import { utcMillisecond } from "d3-time";
 
 <!-- CONTENT -->
 <main>
-	<div class="narrowColumn">
+	<div class="contentContainer">
 		<!-- GaugeChart -->
 		<div>
 			<p class="mdc-typography--headline6" style="text-align: center;">
@@ -89,13 +81,22 @@ import { utcMillisecond } from "d3-time";
 			</p>
 		</div>
 
-		<!-- Hero -->
+		<!-- Intro -->
 		<div>
-			<p class="mdc-typography--headline2">
+			<p class="mdc-typography--headline2" style="text-align: center;">
 				This is how vaccination progresses in Spain
 			</p>
-			<p class="mdc-typography--body1">
-				By Spe Chen, Xavier Bolló and Santiago Salcido June 26, 2021
+			<div class="mdc-typography--subtitle1" style="text-align: center;">
+				By Spe Chen, Xavier Bolló and Santiago Salcido
+			</div>
+			<div class="mdc-typography--overline" style="text-align: center;">
+				June 26, 2021
+			</div>
+			<p class="mdc-typography--subtitle1">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
+				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
+				consectetur.
 			</p>
 			<p class="mdc-typography--body1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -108,22 +109,23 @@ import { utcMillisecond } from "d3-time";
 		<!-- TopicA -->
 		<br />
 		<div>
-			<p class="mdc-typography--body2">[TopicA]</p>
 			<p class="mdc-typography--headline4">
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
+
 			<div>
+				<!-- TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE -->
 				<Grid {grid} />
 			</div>
 			<!-- <img
 				src="img/topicA-smallMultiples.png"
 				alt="placeholder"
-				class="wideColumn"
+				class="extendedContentContainer"
 			/> -->
-			<p class="mdc-typography--caption">
+			<!-- <p class="mdc-typography--caption">
 				Share of the population that has received two doses
-			</p>
+			</p> -->
 			<p class="mdc-typography--body1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
@@ -136,7 +138,7 @@ import { utcMillisecond } from "d3-time";
 		<br />
 		<div>
 			<br />
-			<p class="mdc-typography--body2">[TopicB]</p>
+
 			<p class="mdc-typography--headline4">
 				Vaccine effect shown by age group
 			</p>
@@ -146,28 +148,34 @@ import { utcMillisecond } from "d3-time";
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
 			</p>
+
 			<!-- TopicB Tabs -->
 			<div>
+				<!--
+				  Note: tabs must be unique. (They cannot === each other.)
+				-->
 				<TabBar
 					tabs={["Cases", "Hospitalized", "Deaths", "ICU"]}
 					let:tab
 					bind:active
 				>
-					<Tab {tab} minWidth>
+					<!-- Note: the `tab` property is required! -->
+					<Tab {tab}>
 						<Label>{tab}</Label>
 					</Tab>
 				</TabBar>
 			</div>
+
 			<br />
 			<img
 				src="img/topicB-DailyCases1.png"
 				alt="placeholder"
-				class="wideColumn"
+				class="extendedContentContainer"
 			/>
 			<img
 				src="img/topicB-DailyCases2.png"
 				alt="placeholder"
-				class="wideColumn"
+				class="extendedContentContainer"
 			/>
 			<p class="mdc-typography--body1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -181,7 +189,6 @@ import { utcMillisecond } from "d3-time";
 		<!-- TopicC -->
 		<br />
 		<div>
-			<p class="mdc-typography--body2">[TopicC]</p>
 			<p class="mdc-typography--headline4">
 				How each age group compare to the others
 			</p>
@@ -193,12 +200,13 @@ import { utcMillisecond } from "d3-time";
 			</p>
 
 			<p>x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p>
+			<!-- TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE -->
 			<ScatterWapper />
 
 			<img
 				src="img/topicC-scatterplot.png"
 				alt="placeholder"
-				class="wideColumn"
+				class="extendedContentContainer"
 			/>
 			<p class="mdc-typography--body1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -207,59 +215,9 @@ import { utcMillisecond } from "d3-time";
 				consectetur.
 			</p>
 		</div>
-
-		<!-- Credits -->
-		<div class="credits">
-			<p class="mdc-typography--subtitle2">Credits</p>
-			<p class="mdc-typography--body1">
-				Spe Chen, Xavier Bolló and Santiago Salcido
-			</p>
-		</div>
 	</div>
 </main>
-
-<!-- TypeScale HiddenByDeafult // Just to check the TypeScale -->
-<div>
-	<p class="mdc-typography--headline1">
-		This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--headline2">
-		This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--headline3">
-		This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--headline4">
-		This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--headline5">
-		This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--headline6">
-		This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--subtitle1">
-		Subtitle1. This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--subtitle2">
-		Subtitle2. This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--body1">
-		Body 1. This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--body2">
-		Body 2. This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--caption">
-		Caption. This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--button">
-		Button. This is how vaccination progresses in Spain
-	</p>
-	<p class="mdc-typography--overline">
-		Overline. This is how vaccination progresses in Spain
-	</p>
-</div>
+<Footer />
 
 <!-- EXTRA CSS & STYLES -->
 <style>
@@ -276,19 +234,19 @@ import { utcMillisecond } from "d3-time";
 	main {
 		margin: 0 auto;
 		padding-top: 24px;
-		padding-bottom: 24px;
+		padding-bottom: 84px;
 		border-left: 1px solid #757575;
 		border-right: 1px solid #757575;
 		max-width: 1024px;
 		background-color: #f2f2f2;
 	}
 
-	.narrowColumn {
+	.contentContainer {
 		margin: 0 auto;
 		max-width: 680px;
 	}
 
-	.wideColumn {
+	.extendedContentContainer {
 		margin-left: -160px;
 	}
 
@@ -296,5 +254,4 @@ import { utcMillisecond } from "d3-time";
 		border-top: 1px solid rgb(124, 124, 124);
 		margin: 48px 0px 24px 0px;
 	}
-
 </style>
