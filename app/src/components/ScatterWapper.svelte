@@ -9,7 +9,7 @@
 		// x: loc.formatTime('%B %e'),
         x: loc.format(',.0f'),
 		y: loc.format(',.0f'),
-        // dateText: loc.formatTime('%B %e'),
+        z: loc.formatTime('%B %e')
 
 	}
 	/* --------------------  
@@ -33,6 +33,7 @@
 		date: new Date(d.fecha.split("T")[0]),
         dateStr: loc.formatTime('%B %d')(new Date(d.fecha)),
 		ccaa: d.ccaa,
+        dateDiff: new Date(d.fecha) - new Date('2021-03-30'),
         dose2_pct_70to79: d.dose2_pct_70to79,
         ra_cases_70to79: d.ra_cases_70to79, // needs func
         ra_case_peak_pct_70to79: d.ra_cases_70to79 / ra_case_peak_70to79 * 100// needs ra func
@@ -54,7 +55,7 @@
 
 <Scatter 
     data={data}
-    key={{x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'}}
+    key={{x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79', z: 'dateDiff'}}
     {format}
     {color}
     layout='col'

@@ -27,7 +27,7 @@
 		.range([margin.left, width - margin.right]);
 
 	$: colorScale = scaleLinear()
-		.domain(extent(data, d => d[key.x]))
+		.domain(extent(data, d => d[key.z]))
 		.range(['#657C89','#85DA46']);	
 
 	$: y = scaleLinear()
@@ -85,7 +85,7 @@
 							cy={y(d[key.y])}
 							r=7
 							fill-opacity=0.5
-							fill={colorScale(d[key.x])}
+							fill={colorScale(d[key.z])}
 							stroke='white'
 							stroke-width=0.1
 							transition:fade='{{ delay:700 * i}}'
@@ -95,7 +95,7 @@
 							cy={y(d[key.y])}
 							r=7
 							fill-opacity=1
-							fill={colorScale(d[key.x])}
+							fill={colorScale(d[key.z])}
 							stroke='#333'
 							stroke-width=2
 							in:fade2='{{ delay:700 * i, duration:800}}'
