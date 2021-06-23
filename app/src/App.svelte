@@ -3,45 +3,34 @@
 	import Footer from "./components/common/Footer.svelte";
 	import Speedometer from "./components/charts/Speedometer.svelte";
 	import Menu from "./components/common/Menu.svelte";
-	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
-	import Scatter from "./components/charts/Scatter2.svelte";
 	import locale from "@reuters-graphics/d3-locale";
+	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
+	// import Scatter from "./components/charts/Scatter2.svelte";
+	
 
-	/* TopicB Tab BAR */
+	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
 	let active = "Cases";
 
 	/* Small multiple map */
-	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
+	import gridData from "../public/dataGrid.json";
 	import Grid from "./components/Grid.svelte";
 	let grid = [4, 6];
 
-	// Scatter
-	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
-	import ScatterWapper from "./components/ScatterWapper.svelte";
-	import weather3 from "./data/weather3.json";
-	const loc = new locale("en");
-	const format = {
-		x: loc.formatTime("%B %e"),
-		y: loc.format(",.2f"),
-	};
-	let color = ["rgba(92,198,178, 1)", "rgba(0,0,0, 1)"];
-
-	// console.log('weather3------------')
-	// console.log(weather3);
-
-	//// FUNCTION-TESTING ////
-	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
-	/* rolling average */
-	import * as csv from "../public/data.csv";
-	// console.log(csv.default)
-	let csv_data = csv.default;
-	// export let data
-	import { rollingAvg, nationalValues, allAges } from "./utils.js";
-	console.log(rollingAvg(csv_data));
-
-	import { utcMillisecond } from "d3-time";
+	/* Gauge */
+	let speedData = gridData[gridData.length -1].value0;
+	console.log("speed: "+speedData);
+	
+	/* Scatterplot */
+	import ScatterWapper from './components/ScatterWapper.svelte';
+	
+	/* Multiline */
+	import MultilineWrapper from './components/MultilineWrapper.svelte';
+	
+	
+	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
+	
 </script>
 
 <!-- HEAD -->
@@ -113,7 +102,7 @@
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
-
+			
 			<div>
 				<!-- TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE -->
 				<Grid {grid} />
@@ -167,16 +156,12 @@
 			</div>
 
 			<br />
-			<img
-				src="img/topicB-DailyCases1.png"
-				alt="placeholder"
-				class="extendedContentContainer"
-			/>
-			<img
+			<MultilineWrapper />
+			<!-- <img
 				src="img/topicB-DailyCases2.png"
 				alt="placeholder"
-				class="extendedContentContainer"
-			/>
+				class="wideColumn"
+			/> -->
 			<p class="mdc-typography--body1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
@@ -199,8 +184,8 @@
 				consectetur.
 			</p>
 
-			<p>x: 'dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p>
-			<!-- TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE -->
+			<p>Daily cases versus the winter peak in the age group 70 to 79</p>
+			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
 			<ScatterWapper />
 
 			<img
@@ -221,7 +206,8 @@
 
 <!-- EXTRA CSS & STYLES -->
 <style>
-	:global(body, html) {
+/* Modified :global(body,html) produce error deploying on Vercel -> 'ValidationError: :global(...) must contain a single selector'  */
+ :global(html) {
 		margin: 0;
 		font-family: Merriweather Sans, Arial, Helvetica, sans-serif;
 	}

@@ -1,11 +1,11 @@
 {
-    "name": "Evolución de la vacunación contra el COVID-19 en España",
+    "name": "Vaccination effects for the Spanish people",
     "short_name": "Vac COVID",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#f2f2f2",
     "theme_color": "#00bbc4",
-    "description": "Evolución diaria de la vacunación contra la COVID-19 en España",
+    "description": "We analyze official data sources to and visualize the effects of COVID-19 vaccines in Spain",
     "icons": [{
       "src": "img/poster_48.png",
       "sizes": "48x48",

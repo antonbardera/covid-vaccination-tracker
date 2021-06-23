@@ -7,26 +7,28 @@
 	import * as allCCAA from "../../public/gap-chart-demo.json"; //dose2_perc_total
 	// import * as data_raw from "../../public/data_xavier.json"; // downloaded from Xavier's branch //dose2_perc_total
 	// import * as data_raw from "../../public/data.json"; // dose2_pct_total
-	import * as data_raw from "../../public/data_xavier.json"; // dose2_perc_total
+	// import * as data_raw from "../../public/data_xavier.json"; // dose2_perc_total
+	import * as data_raw from "../../public/dataGrid.json"; // dose2_perc_total
 
 
 	/* --------------------  
 	   DATA PREPROCESSING 
 	-----------------------*/
 	// first vaccination date March 31
-	let DataLong = data_raw.default.filter(d => new Date(d.fecha) > new Date("2021-03-30"));
+	let DataLong = data_raw.default.filter(d => new Date(d.date) > new Date("2021-03-30"));
 
 	let uniqueCCAA = [...new Set(DataLong.map(item => item.ccaa))]
-	// console.log("CCAAs in the dataset----------");
-	// console.log(uniqueCCAA);
 
 	// Totales is missing in xavi's dataset, so use "Cataluña" as value1 for now
-	let dataGlobal = DataLong.filter(d => d.ccaa === "Cataluña").map(d => {return{
-		date: new Date(d.fecha.split("T")[0]),
-		dateStr: d.fecha.split("T")[0],
+	let dataGlobal = DataLong.filter(d => d.ccaa === "Total España").map(d => {return{
+		date: new Date(d.date.split("T")[0]),
+		dateStr: d.date.split("T")[0],
 		ccaa: d.ccaa,
-		value1: Math.round(+d["dose2_perc_total"]) / 100
+		value1: d.value0
 	};})
+
+	console.log("dataGlobal--------")
+	console.log(dataGlobal)
 
 	function findValueByDate(dateStr){
 		let result = dataGlobal.filter(d => d.dateStr === dateStr).map(d => d.value1)[0]
@@ -34,14 +36,15 @@
 		if (isNaN(result)){ return 0} else {return result} 
 	}
 	let data2 = DataLong.map(d => {return{
-		date: new Date(d.fecha.split("T")[0]),
-		dateStr: new Date(d.fecha.split("T")[0]),
+		date: new Date(d.date.split("T")[0]),
+		dateStr: new Date(d.date.split("T")[0]),
 		ccaa: d.ccaa,
 		// fill nan with 0 for value0 
-		value0: (isNaN(d["dose2_perc_total"]))? 0 : Math.round(+d["dose2_perc_total"]) / 100,
-		value1: findValueByDate(d.fecha.split("T")[0])
+		value0: (isNaN(d["value0"]))? 0 : d["value0"],
+		value1: findValueByDate(d.date.split("T")[0])
 	};})
-
+	console.log('data2=========')
+	console.log(data2)
 	/* --------------------  
 	   Set up for <div> 
 	-----------------------*/
@@ -51,7 +54,7 @@
 	const loc = new locale('en');
 	const format = {
 		x: loc.formatTime('%B %e'),
-		y: loc.format(',.2f'),
+		y: loc.format(',.1f'),
 	}
 
 	$: col = `repeat(${grid[1]}, 1fr)`;
@@ -59,21 +62,21 @@
 	
 	// accent
 	// for xavier's dataset
-	var items = [
-    ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
-    [0, 'Castilla y León', 'La Rioja', 'Navarra', 'Com. Valenciana', 0],
-    [0, 'Extremadura', 'Madrid', 'Castilla-La Mancha', 'Murcia', 0],
-    ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
-    ];
+	// var items = [
+    // ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
+    // [0, 'Castilla y León', 'La Rioja', 'Navarra', 'Com. Valenciana', 0],
+    // [0, 'Extremadura', 'Madrid', 'Castilla-La Mancha', 'Murcia', 0],
+    // ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
+    // ];
 
 	// to loosely match naming in data.json. some unicode problems
 	// for demo dataset
-	// var items_ = [
-    // ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
-    // [0, 'Castilla y Leon', 'La Rioja', 'Navarra', 'Com Valenciana', 0],
-    // [0, 'Extremadura', 'Madrid', 'Castilla - La Mancha', 'Murcia', 0],
-    // ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
-    // ];
+	var items = [
+    ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
+    [0, 'Castilla y Leon', 'La Rioja', 'Navarra', 'Com. Valenciana', 0],
+    [0, 'Extremadura', 'Madrid', 'Castilla - La Mancha', 'Murcia', 0],
+    ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
+    ];
 
 	function getVaxDataByCCAA(ccaaName){
 		let selected = data2.filter(d => d.ccaa === ccaaName)

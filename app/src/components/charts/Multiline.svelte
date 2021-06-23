@@ -13,12 +13,13 @@
 
 	let datum, width, height;
     
-    const _data = key.y.map( (key, i) => data.map(d => ({x: d.time, y: d[key], key:key, color: color[i]} )))
-		
+    const _data = key.y.map( (key, i) => data.map(d => ({x: new Date(d.fecha), y: d[key], key:key, color: color[i]} )))
+	console.log(_data)
+	// console.log(_data[0][0].x.getMonth())
 	$: x = scaleTime()
 		.domain(extent(_data.flat(), d => d.x))
 		.range([margin.left, width - margin.right]);
-	
+	// console.log(_data)
 	$: y = scaleLinear()
 		.domain([0, max(_data.flat(), d => d.y)])
 		.range([height - margin.bottom - margin.top, margin.top]);
@@ -84,6 +85,12 @@
 </div>
 
 <style>
+	.graphic {
+		height: 450px;
+		font-size:40%;
+
+
+	} 
     path {
         transition: opacity .3s;
     }

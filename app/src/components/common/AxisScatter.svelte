@@ -1,4 +1,6 @@
 <script>
+import { text } from "svelte/internal";
+
 	export let width;
   export let height;
   export let margin;
@@ -9,7 +11,7 @@
 	
 	$: nTicks = (position === 'bottom' || position === 'top' ) 
 		? width / 100
-    : height / 50;
+    : height / 100;
 
   $: transform = position === 'bottom'
     ? `translate(0, ${height - margin.bottom - margin.top})`
@@ -20,7 +22,7 @@
     : `translate(0, ${margin.right})`
 
   $: ticks = scale.ticks((!time)? nTicks : time)
-    .map(d => ({value: format(d), offset: scale(d)}));
+    .map(d => ({value: format(d), offset: scale(d), valueUnit: format(d).toString().concat('%') }));
     
   $: anchor = (x) => {
 		switch(true) {
@@ -35,19 +37,38 @@
 </script>
 
 <g class='axis' {transform} pointer-events='none'>
-  {#each ticks as tick}
+  <!-- <text x=450 y=50> More people vaccinated ➔</text>
+  <text x=600 y=80> Fewer </text>
+  <text x=600 y=95> cases </text>
+  <text x=620 y=110> ↓</text> -->
+
+
+  {#each ticks as tick, i}
     {#if position === 'bottom'}
     <g class='tick' transform='translate({tick.offset}, 0)'>
       <line y2=6 />
-      <text class='label' y=20 text-anchor={anchor(tick.offset)}>
-        {tick.value}
-      </text>
+          {#if i === ticks.length - 1}
+          <text class='label' y=20 text-anchor={anchor(tick.offset)}>
+            {tick.valueUnit}
+          </text>
+          <!-- <text class='label' y=-20 text-anchor={anchor(tick.offset)}>
+            fully vaccinated rate
+          </text> -->
+          {:else}
+          <text class='label' y=20 text-anchor={anchor(tick.offset)}>
+            {tick.value}
+          </text>
+          {/if}
     </g>
 		{:else if position === 'top'}
     <g class='tick' transform='translate({tick.offset}, 0)'>
       <line y2=-6 />
       <text class='label' y=-10 text-anchor={anchor(tick.offset)}>
-        {tick.value}
+        {#if i === ticks.length - 1}
+         {tick.valueUnit}
+        {:else}
+         {tick.value}
+        {/if}
       </text>
     </g>
     {:else if position === 'right'}
@@ -57,18 +78,26 @@
 			{:else}
       <line x2={width} stroke-dasharray="2 3" />
       <text class='label' x={width} y=-5 text-anchor='end'>
-        {tick.value}
+        {#if i === ticks.length - 1}
+          {tick.valueUnit}
+        {:else}
+          {tick.value}
+        {/if}
       </text>
 			{/if}
     </g>
     {:else if position === 'left'}
-    <g class='tick' transform='translate(0, {tick.offset})'>
+    <g class='tick' transform='translate(-30, {tick.offset})'>
       {#if tick.value === '0'}
       <line x2={width}/>
 			{:else}
       <line x2={width} stroke-dasharray="2 3" />
       <text class='label' x=0 y=-5 text-anchor='start'>
-        {tick.value}
+        {#if i === ticks.length - 1}
+         {tick.valueUnit}
+        {:else}
+         {tick.value}
+        {/if}
       </text>
 			{/if}
     </g>
@@ -80,4 +109,5 @@
 	line {
 		stroke: #DCDCDC;
 	}
+ 
 </style>
