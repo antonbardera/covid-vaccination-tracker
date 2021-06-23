@@ -4,9 +4,7 @@
 	import Speedometer from "./components/charts/Speedometer.svelte";
 	import Menu from "./components/common/Menu.svelte";
 	import locale from "@reuters-graphics/d3-locale";
-	/* TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE */
 	// import Scatter from "./components/charts/Scatter2.svelte";
-	
 
 	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
@@ -19,18 +17,16 @@
 	let grid = [4, 6];
 
 	/* Gauge */
-	let speedData = gridData[gridData.length -1].value0;
-	console.log("speed: "+speedData);
-	
+	let speedData = gridData[gridData.length - 1].value0;
+	console.log("speed: " + speedData);
+
 	/* Scatterplot */
-	import ScatterWapper from './components/ScatterWapper.svelte';
-	
+	import ScatterWapper from "./components/ScatterWapper.svelte";
+
 	/* Multiline */
-	import MultilineWrapper from './components/MultilineWrapper.svelte';
-	
-	
-	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
-	
+	import MultilineWrapper from "./components/MultilineWrapper.svelte";
+
+	let color = ["rgba(92,198,178, 1)", "rgba(0,0,0, 1)"];
 </script>
 
 <!-- HEAD -->
@@ -102,7 +98,7 @@
 				How does each CCAA compare to the national share of vaccinated
 				people?
 			</p>
-			
+
 			<div>
 				<!-- TEMP DEACTIVATE IMPROVE LOCAL PERFORMANCE -->
 				<Grid {grid} />
@@ -206,8 +202,8 @@
 
 <!-- EXTRA CSS & STYLES -->
 <style>
-/* Modified :global(body,html) produce error deploying on Vercel -> 'ValidationError: :global(...) must contain a single selector'  */
- :global(html) {
+	/* Modified :global(body,html) produce error deploying on Vercel -> 'ValidationError: :global(...) must contain a single selector'  */
+	:global(body) {
 		margin: 0;
 		font-family: Merriweather Sans, Arial, Helvetica, sans-serif;
 	}
