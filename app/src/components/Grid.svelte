@@ -76,7 +76,7 @@
 	// for demo dataset
 	var items = [
     ['Galicia', 'Asturias', 'Cantabria', 'País Vasco', 'Aragón', 'Cataluña'],
-    [0, 'Castilla y Leon', 'La Rioja', 'Navarra', 'Com. Valenciana', 0],
+    [0, 'Castilla y Leon', 'La Rioja', 'Navarra', 'C.Valenciana', 0],
     [0, 'Extremadura', 'Madrid', 'Castilla - La Mancha', 'Murcia', 0],
     ['Canarias',0, 'Andalucía', 0,0,'Baleares'],
     ];
