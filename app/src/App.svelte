@@ -141,7 +141,9 @@ import { utcMillisecond } from "d3-time";
 				people?
 			</p>
 			<div>
-				<Grid {grid} />
+				<Grid {grid} 
+				layout="wideColumn2"
+				/>
 			</div>
 			<!-- <img
 				src="img/topicA-smallMultiples.png"
@@ -319,7 +321,6 @@ import { utcMillisecond } from "d3-time";
 	.wideColumn {
 		margin-left: -160px;
 	}
-
 	.credits {
 		border-top: 1px solid rgb(124, 124, 124);
 		margin: 48px 0px 24px 0px;

@@ -2,6 +2,7 @@
 	export let grid = [2, 6];
 	import locale from "@reuters-graphics/d3-locale";
 	import GapChart from "./charts/GapChart.svelte"
+	import {max} from 'd3-array'
 
 	import * as ccaaData2 from "../../public/gap-chart-ca.json"; //dose2_perc_total
 	import * as allCCAA from "../../public/gap-chart-demo.json"; //dose2_perc_total
@@ -10,6 +11,8 @@
 	// import * as data_raw from "../../public/data_xavier.json"; // dose2_perc_total
 	import * as data_raw from "../../public/dataGrid.json"; // dose2_perc_total
 
+	export let layout;
+	let width, height;
 
 	/* --------------------  
 	   DATA PREPROCESSING 
@@ -53,7 +56,7 @@
 	let colorDiff = ['rgba(92,198,178, 0.5)', 'rgba(0,0,0, 0.5)']
 	const loc = new locale('en');
 	const format = {
-		x: loc.formatTime('%B %e'),
+		x: loc.formatTime('%B'),
 		y: loc.format(',.1f'),
 	}
 
@@ -80,6 +83,7 @@
 
 	function getVaxDataByCCAA(ccaaName){
 		let selected = data2.filter(d => d.ccaa === ccaaName)
+		
 		return selected
 		// for other demo dataset
 		// let selected = allCCAA.default.filter(d => d.ccaa === ccaaName)
@@ -92,6 +96,12 @@
 		// };})
 	}
 
+	function getMaxVaxByCCAA(ccaaName){
+		let selected = data2.filter(d => d.ccaa === ccaaName)
+		let maxValue = max(selected.map(d=>d.value0)) * 100
+		return maxValue.toString().concat('%')
+	}
+
     function getItem(i,j){
 		if (items[i][j] === 0){
 			return ' '
@@ -99,64 +109,92 @@
             return items[i][j]
         }
     }
+
+	function sanitizedCCAA(ccaaName){
+		switch(true){
+			case ccaaName === 'Castilla y Leon':
+				return 'C.León';
+			case ccaaName === 'Com. Valenciana':
+				return 'C.Valenciana';
+			case ccaaName === 'Castilla - La Mancha':
+				return 'C.Mancha';
+			default:
+				return ccaaName
+		}
+	}
+
 	
 	function coloring(i,j){
 		if (getItem(i,j) != ' '){
 			return 'colored '.concat(getItem(i,j))
-		} 
+		} else {
+			return 'colorless'
+		}
 	}
 	
 </script>
-
-<div class="container" style="grid-template-rows: {row}; grid-template-columns: {col};">
-
-	{#each {length: grid[0]} as _, i (i)}
-	  {#each {length: grid[1]} as _, j (j)}
-			<div class={coloring(i,j)}> {getItem(i,j)}
-				{#if getItem(i,j) != ' '}      
-					<GapChart 
-						data={getVaxDataByCCAA(getItem(i,j))}
-						title='Title' desc='Description'
-						key={{x: 'dateStr', y: ['value0', 'value1']}}
-						{format}
-						{color}
-						{colorDiff}
-						layout='col'
-					/>
-				{/if}
-            </div>
+<div class="graphic {layout}" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="container" style="grid-template-rows: {row}; grid-template-columns: {col};">
+		{#each {length: grid[0]} as _, i (i)}
+			{#each {length: grid[1]} as _, j (j)}
+				<div class={coloring(i,j)}> 
+					{#if getItem(i,j) != ' '}
+						<span class='ccaa-label'>{sanitizedCCAA(getItem(i,j))}</span>
+						<span class='ccaa-vax-label'>{getMaxVaxByCCAA(getItem(i,j))}</span>
+						<GapChart 
+							data={getVaxDataByCCAA(getItem(i,j))}
+							title='Title' desc='Description'
+							key={{x: 'dateStr', y: ['value0', 'value1']}}
+							{format}
+							{color}
+							{colorDiff}
+							layout='col'
+						/>
+					{/if}
+				</div>
+			{/each}
 		{/each}
-	{/each}
-	
-
+	</div>
 </div>
 
 <style>
+	.graphic {
+		height: 800px;
+		width: 900px;
+		left: -15%;
+	}
+
 	.container {
 		display: grid;
-/* 		border: 1px solid #999; */
-		border-radius: 2px;
-		width: 800px;
-		height: 500px;
-		grid-gap: 1px;
-/* 		background: #999; */
+		/* border-radius: 2px; */
+		/* grid-gap: 2px; */
 	} 
 	
 	.container div {
-		background: #fff;
 		display: block;
 	}	
 	
 	.colored{
-		/* background-color: limegreen !important; */
-		border: 2px solid lightgray;
-	}	
+		border: 1px solid lightgray;
+		background: #fff;
+	}
 	
 	.Canarias{
-		transform: translate(50px, 20px);
+		transform: translate(65px, 20px);
 	}
 	
 	.Baleares{
-		transform: translate(40px, -200px);
+		transform: translate(40px, -250px);
+	}
+
+	.ccaa-label{
+		font-size: 14px;
+	}
+
+	.ccaa-vax-label{
+		font-size: 14px;
+		color: #657C89;
+		opacity: 0.5;
+		margin-left: 5px ;
 	}
 </style>
