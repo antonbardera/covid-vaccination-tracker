@@ -452,7 +452,7 @@ function simpleMovingAverage(data, window = 5) {
               .join_right(aq.from(covid_totals),'fecha')
               .select(['fecha',aq.matches('ra_cases_peak'), aq.matches('dose2_pct')])
               .fold(aq.not('fecha'))
-              .impute( {value: ()=>0})
+              .impute( {value: ()=>null})
               .groupby('fecha')
               .pivot('key','value')
               // rolling average from 31st March to today
