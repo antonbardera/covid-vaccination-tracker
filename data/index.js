@@ -443,20 +443,21 @@ function simpleMovingAverage(data, window = 5) {
               .derive({ra_cases_peak_above80 : d=> (d.ra_cases_above80/op.max(d.ra_cases_above80))})
               .orderby(aq.desc('fecha'))
               .objects()
+              .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
               // .filter(d => new Date(d.fecha) > new Date("2021-06-18")) //&& d.fecha.getTime() !== invalidDate.getTime() )
-          // console.log(covid_totals)
+              // console.log(covid_totals)
           vacc = vacc.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() && d.ccaa === "Total España" )
           const data = aq.from(vacc.reverse())
               
               .join_right(aq.from(covid_totals),'fecha')
               .select('fecha',aq.matches('ra_cases_peak'), aq.matches('dose2_pct'))
               .fold(aq.not('fecha'))
+              .impute( {value: ()=>null})
               // .print({offset:130})
               .groupby('fecha')
-              .impute( {value: ()=>null})
               .pivot('key','value')
-              
               .orderby(aq.desc('fecha'))
+              
               //impute
               .derive({dose2_pct_50to59 : d=> op.fill_down(d.dose2_pct_50to59)})
               .derive({dose2_pct_60to69 : d=> op.fill_down(d.dose2_pct_60to69)})
@@ -470,21 +471,22 @@ function simpleMovingAverage(data, window = 5) {
               
 
               .select(['fecha',aq.matches('ra_cases_peak'), aq.matches('ra_dose2_pct')])
+              .reify()
               .fold(aq.not('fecha'))
               .spread({ key: d => op.split(d.key, '_') }, { as: ['roll', 'var', 'calc',  'age_group'] })
               .derive({var: d=> d.var+'_'+d.calc})
               .select(aq.not('roll','calc'))
               .groupby('fecha','age_group')
               .pivot('var','value')
-              // .print()
+              // .print({offset:9})
               .objects()
-              .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
+              
               .map(d=>({
-                fecha: d.fecha,
+                date: d.fecha,
                 age_group: d.age_group,
                 // fill nan with 0 for value0 
                 cases_peak: d.cases_peak,
-                dose2_pct: (isNaN(d["dose2_pct"])) ? 0 :  d.dose2_pct
+                dose2_pct:  d.dose2_pct
                 }))
               // .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
                 
