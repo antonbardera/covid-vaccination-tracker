@@ -1,12 +1,14 @@
 <script>
 	import Axis from '../common/AxisSmallMultiple.svelte';
+	import SimpleAxis from '../common/AxisSmallMultipleSimple.svelte';
+
 	import PointInteractive from '../common/PointInteractive.svelte';
 	import {line, curveStep,area, curveBasis} from 'd3-shape';
 	import {scaleTime, scaleLinear} from 'd3-scale';
 	import {max, extent, bisector} from 'd3-array'
     
     export let data;
-	export let margin = {top: 15, right: 10, bottom: 15, left: 10};
+	export let margin = {top: 0, right: 10, bottom: 20, left: 10};
 	export let format;
 	export let key;
 	export let color;
@@ -93,8 +95,13 @@
 	>
 	<!-- <title id='title'>{title}</title>
 	<desc id='desc'>{desc}</desc> -->
-	<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
-	<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
+	{#if ['Galicia', 'Castilla y Leon', 'Extremadura', 'Canarias', 'Baleares'].includes(data[0]['ccaa'])}
+		<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
+		<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
+	{:else }
+		<SimpleAxis {width} {height} {margin} scale={y} position='left' format={format.y} />
+		<SimpleAxis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
+	{/if}
 	<g>
 		<clipPath id="abovearea">	
 			<path 
@@ -123,21 +130,21 @@
 			d={path(data)}
 			stroke={color[0]}
 			fill='none'
-			stroke-width=2
+			stroke-width=2.5
 		/>
 		<path 
 			clip-path="url(#belowarea)"
 			d={path(data)}
 			stroke={color[1]}
 			fill='none'
-			stroke-width=2
+			stroke-width=2.5
 		/>
 		<path 
 			d={path2(data)}
-			stroke='grey'
+			stroke='#333'
 			fill='none'
-			stroke-width=1.5
-			stroke-dasharray="4"
+			stroke-width=2
+			stroke-dasharray="2 3"
 		/>
 	</g>
 

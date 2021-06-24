@@ -194,21 +194,22 @@
 	}
 	
 	.Baleares{
-		transform: translate(40px, -250px);
+		transform: translate(20px, -250px);
 	}
 
 	.ccaa-label{
 		font-size: 14px;
 		font-weight: 300;
 		margin-left: 10px;
-		margin-top: 3px;
+		padding-top: 7px;
+		display: inline-block;
 	}
 
 	.ccaa-vax-label{
 		font-size: 14px;
 		font-weight: 300;
 		margin-left: 5px;
-		margin-top: 3px;
+		margin-top: 10px;
 	}
 
 	.larger {

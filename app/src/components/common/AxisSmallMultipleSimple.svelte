@@ -42,7 +42,7 @@
       <!-- show only first and last text-->
       {#if i === 0 || i === ticks.length - 1} 
        <text class='label' y=15 text-anchor='start'>
-        {tick.value}
+        <!-- {tick.value} -->
        </text>
       {/if}
     </g>
@@ -67,12 +67,9 @@
     {:else if position === 'left'}
     <g class='tick' transform='translate(0, {tick.offset})'>
         {#if i !== 0} 
-          <line class='thin-line' x2={width - margin.left - margin.right - 5}/>
-          <text class='label-bg' x=0 y=3 text-anchor='start'> 
-            {tick.value * 100}
-          </text>
-          <text class='label' x=0 y=3 text-anchor='start'> 
-            {tick.value * 100}
+          <line class='thin-line' x2={width - margin.left - margin.right} />
+          <text class='label' x=0 y=-5 text-anchor='start'> 
+            <!-- {tick.value * 100} -->
           </text>
         {:else}
            <line class='thick-line' x2={width - margin.left - margin.right}/>
@@ -91,10 +88,6 @@
   }
   .thick-line{
     stroke-width: 2px;
-  }
-  .label-bg{
-    stroke-width: 13px;
-    stroke: white;
   }
   text{
     font-family: "Merriweather";

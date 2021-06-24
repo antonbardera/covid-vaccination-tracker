@@ -242,7 +242,7 @@
 	}
 
 	.dotted{
-		border-bottom: 1px dashed #999;
+		border-bottom: 2px dotted #999;
  		text-decoration: none; 
 	}
 
@@ -250,13 +250,15 @@
 		color: #569E4B;
 		margin-bottom:2px;
 		position: relative;
-   		top: -2px
+   		top: -2px;
+		margin-right: 2px;
 	}
 
 	.belowNational{
 		color: #F0A81C;
 		margin-left: 15px;
 		position: relative;
-   		top: -2px
+   		top: -2px;
+		margin-right: 2px;
 	}
 </style>
