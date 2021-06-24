@@ -2,6 +2,7 @@
 <script>
 	import Footer from "./components/common/Footer.svelte";
 	import Speedometer from "./components/charts/Speedometer.svelte";
+	import SpeedometerBg from "./components/charts/SpeedometerBg.svelte";
 	import Menu from "./components/common/Menu.svelte";
 	import locale from "@reuters-graphics/d3-locale";
 	// import Scatter from "./components/charts/Scatter2.svelte";
@@ -54,6 +55,7 @@
 
 			<div class="center">
 				<div style="width: 500px; height: 281px;">
+					<SpeedometerBg />
 					<Speedometer />
 				</div>
 			</div>
@@ -235,5 +237,8 @@
 	.credits {
 		border-top: 1px solid rgb(124, 124, 124);
 		margin: 48px 0px 24px 0px;
+	}
+	#speedo-container{
+		position: absolute;
 	}
 </style>
