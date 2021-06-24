@@ -11,9 +11,12 @@
     export let data;
 	export let margin = {top: 20, right: 10, bottom: 20, left: 10};
 	export let format;
+	export let minDate;
+	export let maxDate;
 	export let key;
-    export let color;
 	export let layout;
+
+	console.log(minDate)
 
 	let element;
   	let intersecting;
@@ -22,21 +25,21 @@
 
 	data.sort((a,b) => a[key.size] - b[key.size])
 
-	$: x = scaleLinear()
-		.domain(extent(data, d => d[key.x]))
-		.range([margin.left, width - margin.right]);
+	// $: x = scaleLinear()
+	// 	.domain(extent(data, d => d[key.x]))
+	// 	.range([margin.left, width - margin.right]);
 
-	$: colorScale = scaleLinear()
-		.domain(extent(data, d => d[key.z]))
-		.range(['#657C89','#85DA46']);	
+	$: x = scaleLinear()
+		.domain([0,100])
+		.range([margin.left, width - margin.right]);
 
 	$: y = scaleLinear()
 		.domain(extent(data, d => d[key.y]))
         .range([height - margin.bottom - margin.top, margin.top]);
-        
-    $: size = scaleSqrt()
-		.domain(extent(data, d => d[key.size]))
-		.range([3, (width > 640) ? 30 : width / 15]);
+    
+	$: colorScale = scaleLinear()
+		.domain([minDate, maxDate])
+		.range(['#657C89','#85DA46']);	
 
 	function fade2(node, { duration, delay}){
 	const o = +getComputedStyle(node).opacity;
