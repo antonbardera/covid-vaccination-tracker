@@ -52,8 +52,10 @@
 	   Set up for <div> 
 	-----------------------*/
 	
-	let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
-	let colorDiff = ['rgba(92,198,178, 0.5)', 'rgba(0,0,0, 0.5)']
+	// let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
+
+	let color =['#569E4B', '#F0A81C']
+	// let colorDiff = ['rgba(92,198,178, 0.5)', 'rgba(0,0,0, 0.5)']
 	const loc = new locale('en');
 	const format = {
 		x: loc.formatTime('%B'),
@@ -102,6 +104,15 @@
 		return maxValue.toString().concat('%')
 	}
 
+	function getMaxVaxByCCAAColor(ccaaName){
+		let national = data2.filter(d => d.ccaa === 'Total España')
+		let nationalMaxValue = max(national.map(d=>d.value0))
+		let selected = data2.filter(d => d.ccaa === ccaaName)
+		let maxValue = max(selected.map(d=>d.value0))
+
+		return (maxValue > nationalMaxValue)? 'ccaa-vax-label larger' : 'ccaa-vax-label smaller'
+	}
+
     function getItem(i,j){
 		if (items[i][j] === 0){
 			return ' '
@@ -140,14 +151,13 @@
 				<div class={coloring(i,j)}> 
 					{#if getItem(i,j) != ' '}
 						<span class='ccaa-label'>{sanitizedCCAA(getItem(i,j))}</span>
-						<span class='ccaa-vax-label'>{getMaxVaxByCCAA(getItem(i,j))}</span>
+						<span class={getMaxVaxByCCAAColor(getItem(i,j))}>{getMaxVaxByCCAA(getItem(i,j))}</span>
 						<GapChart 
 							data={getVaxDataByCCAA(getItem(i,j))}
 							title='Title' desc='Description'
 							key={{x: 'dateStr', y: ['value0', 'value1']}}
 							{format}
 							{color}
-							{colorDiff}
 							layout='col'
 						/>
 					{/if}
@@ -167,7 +177,7 @@
 	.container {
 		display: grid;
 		/* border-radius: 2px; */
-		/* grid-gap: 2px; */
+		grid-gap: 2px;
 	} 
 	
 	.container div {
@@ -175,7 +185,7 @@
 	}	
 	
 	.colored{
-		border: 1px solid lightgray;
+		/* border: 1px solid lightgray; */
 		background: #fff;
 	}
 	
@@ -189,12 +199,23 @@
 
 	.ccaa-label{
 		font-size: 14px;
+		font-weight: 300;
+		margin-left: 10px;
+		margin-top: 3px;
 	}
 
 	.ccaa-vax-label{
 		font-size: 14px;
-		color: #657C89;
-		opacity: 0.5;
-		margin-left: 5px ;
+		font-weight: 300;
+		margin-left: 5px;
+		margin-top: 3px;
+	}
+
+	.larger {
+		color: #569E4B;
+	}
+
+	.smaller {
+		color: #F0A81C;
 	}
 </style>

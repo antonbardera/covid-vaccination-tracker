@@ -5,8 +5,8 @@
 	import {scaleSqrt, scaleTime, scaleLinear, scaleQuantize} from 'd3-scale';
 	import {extent} from 'd3-array'
     import { Delaunay } from 'd3-delaunay'
-    import { fade } from 'svelte/transition';
-	import IntersectionObserver from "svelte-intersection-observer";
+    // import { fade } from 'svelte/transition';
+	// import IntersectionObserver from "svelte-intersection-observer";
 
     export let data;
 	export let margin = {top: 20, right: 10, bottom: 20, left: 10};
@@ -37,8 +37,7 @@
     
 	$: colorScale = scaleLinear()
 		.domain([minDate, maxDate])
-		.range(['#285920', '#54FF7F']);	
-
+		.range(['#305C2A', '#B3FF7D']);	
 		// .range(['#657C89','#85DA46']);	
 
 	function fade2(node, { duration, delay}){
@@ -59,12 +58,8 @@
 </script>
 
 
-<IntersectionObserver once {element} bind:intersecting>
-	<!-- <div class='placeholder' id="detected" bind:this={element}> 
-		Detect this element
-	</div> -->
 	<div  bind:this={element} class:intersecting class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}  >
-		{#if width && intersecting }
+		{#if width }
 			<svg xmlns:svg='https://www.w3.org/2000/svg' 
 				viewBox='0 0 {width} {height}'
 				{width}
@@ -89,11 +84,10 @@
 							r=7
 							fill-opacity=0.5
 							fill={colorScale(d[key.z])}
-							stroke='white'
-							stroke-width=0.1
-							transition:fade='{{ delay:700 * i}}'
+							stroke='rgba(0, 0, 0, 0.3)'
+							stroke-width=1
 						/>
-						<circle 
+						<!-- <circle 
 							cx={x(d[key.x])}
 							cy={y(d[key.y])}
 							r=7
@@ -101,13 +95,11 @@
 							fill={colorScale(d[key.z])}
 							stroke='#333'
 							stroke-width=2
-							in:fade2='{{ delay:700 * i, duration:800}}'
 							class='date-text'
-						/>
+						/> -->
 						<text
 							x={x(d[key.x])}
 							y={y(d[key.y])}
-							in:fade2='{{ delay:700 * i, duration:800}}'
 							class={ x(d[key.x]) < width/2 ? 'date-text date-text--left' : 'date-text date-text--right'}
 						>
 							{d.dateStr}
@@ -129,7 +121,6 @@
 		<!-- <Tooltip {... tooltipOptions} {width} {height} /> -->
 		{/if}
 	</div>
-</IntersectionObserver>
 
 <style>
 	/* path {

@@ -1,6 +1,8 @@
 <script>
 	import Scatter from "./charts/Scatter2.svelte"
-	// import * as data_raw from "../../public/data_xavier.json"; // dose2_perc_total
+	import ScatterStatic from "./charts/ScatterStatic.svelte"
+
+    // import * as data_raw from "../../public/data_xavier.json"; // dose2_perc_total
 	import * as data_raw from "../../public/dataScatter.json"; // dose2_perc_total
 
     import {max, min} from 'd3-array'
@@ -64,32 +66,49 @@
     layout='col'
 />
 
+<div class='scatter-container'>
 <p>above80</p>
-<Scatter 
+<ScatterStatic 
     data={data.filter(d => d.age_group === "above80")}
     key={{x: 'dose2_pct', y: 'cases_peak', z: 'dateDiff'}}
     {format}
     {maxDate}
     {minDate}
-    layout='col'
+    class='scatter-item'
 />
 
 <p>60to69</p>
-<Scatter 
+<ScatterStatic 
     data={data.filter(d => d.age_group === "60to69")}
     key={{x: 'dose2_pct', y: 'cases_peak', z: 'dateDiff'}}
     {format}
     {maxDate}
     {minDate}
-    layout='col'
+    class='scatter-item'
 />
 
 <p>50to59</p>
-<Scatter 
+<ScatterStatic 
     data={data.filter(d => d.age_group === "50to59")}
     key={{x: 'dose2_pct', y: 'cases_peak', z: 'dateDiff'}}
     {format}
     {maxDate}
     {minDate}
-    layout='col'
+    class='scatter-item'
 />
+</div>
+
+<style>
+    .scatter-container{
+        display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+
+}
+
+.scatter-item{
+    width: 300px;
+
+}
+
+</style>
