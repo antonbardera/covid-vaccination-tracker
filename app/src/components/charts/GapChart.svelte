@@ -10,13 +10,15 @@
 	export let format;
 	export let key;
 	export let color;
-	export let colorDiff;
-	export let title;
-	export let desc;
+	// export let colorDiff;
+	// export let title;
+	// export let desc;
 	export let layout;
 	let datum, width;
 	let height = 150;	
 	let width2 = 150;
+
+	console.log(color)
 
 	let selectedCurve = curveBasis;
 
@@ -117,16 +119,25 @@
 			d={aboveAreaPath1(data)}
 		/>
 		<path 
+			clip-path="url(#abovearea)"
 			d={path(data)}
 			stroke={color[0]}
 			fill='none'
-			stroke-width=1.5
+			stroke-width=2
+		/>
+		<path 
+			clip-path="url(#belowarea)"
+			d={path(data)}
+			stroke={color[1]}
+			fill='none'
+			stroke-width=2
 		/>
 		<path 
 			d={path2(data)}
-			stroke={color[1]}
+			stroke='grey'
 			fill='none'
 			stroke-width=1.5
+			stroke-dasharray="4"
 		/>
 	</g>
 

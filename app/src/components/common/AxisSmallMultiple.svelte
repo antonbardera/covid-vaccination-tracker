@@ -81,11 +81,14 @@
 
 <style>
 	line {
-		stroke: #757575;
+		stroke: #E0E0E0;
 	}
   text{
+    font-family: "Merriweather";
+    font-style: normal;
+    font-weight: normal;
     font-size: 10px;
-    color: #757575;
+    fill: #e2dfdf;
   }
 
 </style>

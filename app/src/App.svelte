@@ -97,8 +97,12 @@
 		<br />
 		<div>
 			<p class="mdc-typography--headline4">
-				How does each CCAA compare to the national share of vaccinated
+				How does each CCAA compare to the <span class='dotted'>national share</span> of vaccinated
 				people?
+			</p>
+			<p class="mdc-typography--overline center">
+				<span class='aboveNational'>⬤</span> Above national
+				<span class='belowNational'>⬤</span> Below national
 			</p>
 
 			<div>
@@ -235,5 +239,24 @@
 	.credits {
 		border-top: 1px solid rgb(124, 124, 124);
 		margin: 48px 0px 24px 0px;
+	}
+
+	.dotted{
+		border-bottom: 1px dashed #999;
+ 		text-decoration: none; 
+	}
+
+	.aboveNational{
+		color: #569E4B;
+		margin-bottom:2px;
+		position: relative;
+   		top: -2px
+	}
+
+	.belowNational{
+		color: #F0A81C;
+		margin-left: 15px;
+		position: relative;
+   		top: -2px
 	}
 </style>
