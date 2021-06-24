@@ -1,11 +1,12 @@
 <script>
 	import Speedometer from "svelte-speedometer";
+	export let speedValue;
 </script>
 
 <Speedometer
 	minValue={0}
 	maxValue={1.0}
-	value={0.4}
+	value={speedValue}
 	valueFormat={".0%"}
 	currentValueText={"${value} vaccinated"}
 	fluidWidth={true}
@@ -14,8 +15,8 @@
 	valueTextFontSize={"19px"}
 	textColor="{'#1E1E1E'}ª"
 	maxSegmentLabels={1}
-	customSegmentStops={[0, 0.4, 1.0]}
-	segmentColors={["rgba(4, 217, 79, 0.3)", "rgba(207, 216, 220, 0.3)"]}
+	customSegmentStops={[0, speedValue, 1.0]}
+	segmentColors={["#04D94F", "#CFD8DC"]}
 	ringWidth={55}
 	needleColor={"#455A64"}
 	needleTransitionDuration={4500}
