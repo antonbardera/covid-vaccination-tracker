@@ -430,51 +430,60 @@ function simpleMovingAverage(data, window = 5) {
               .fold(aq.not('fecha','ccaa'))
               .groupby('fecha')
               .pivot('key',{value:d => op.sum(d.value) })
-              
+              // .derive({ra_cases_under50 : aq.rolling(d=> op.average(d.cases_under50), [-7,0])})
               .derive({ra_cases_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-7,0])})
               .derive({ra_cases_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-7,0])})
               .derive({ra_cases_70to79 : aq.rolling(d=> op.average(d.cases_70to79), [-7,0])})
               .derive({ra_cases_above80 : aq.rolling(d=> op.average(d.cases_above80), [-7,0])})
               
-
+              // .derive({ra_cases_peak_under50 : d=> (d.ra_cases_50to59/op.max(d.ra_cases_under50))})
               .derive({ra_cases_peak_50to59 : d=> (d.ra_cases_50to59/op.max(d.ra_cases_50to59))})
               .derive({ra_cases_peak_60to69 : d=> (d.ra_cases_60to69/op.max(d.ra_cases_60to69))})
               .derive({ra_cases_peak_70to79 : d=> (d.ra_cases_70to79/op.max(d.ra_cases_70to79))})
               .derive({ra_cases_peak_above80 : d=> (d.ra_cases_above80/op.max(d.ra_cases_above80))})
-              .select(['fecha',aq.matches('ra_cases_peak')])
-              // .orderby(aq.desc('fecha'))
+              .orderby(aq.desc('fecha'))
               .objects()
-              .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() && d.fecha.getTime() !== invalidDate.getTime() )
               // .filter(d => new Date(d.fecha) > new Date("2021-06-18")) //&& d.fecha.getTime() !== invalidDate.getTime() )
-          // console.log(vacc.reverse()[65])
+          // console.log(covid_totals)
           vacc = vacc.filter(d=>d.ccaa === "Total España" )
           const data = aq.from(vacc.reverse())
+              .orderby(aq.desc('fecha'))
               .join_right(aq.from(covid_totals),'fecha')
-              .select(['fecha',aq.matches('ra_cases_peak'), aq.matches('dose2_pct')])
-              .fold(aq.not('fecha'))
-              .impute( {value: ()=>null})
-              .groupby('fecha')
-              .pivot('key','value')
-              // rolling average from 31st March to today
-              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.dose2_pct_50to59), [-7,0])})
-              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.dose2_pct_60to69),[-7,0])})
-              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.dose2_pct_70to79), [-7,0])})
-              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.dose2_pct_above80), [-7,0])})
+              .select('fecha',aq.matches('ra_cases_peak'), aq.matches('dose2_pct'))
+              // .fold(aq.not('fecha'))
+              // // .print({offset:130})
+              // // .impute( {value: ()=>0})
+              // .groupby('fecha')
+              // .pivot('key','value')
+
+              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.dose2_pct_50to59), [-3,3])})
+              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.dose2_pct_60to69), [-3,3])})
+              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.dose2_pct_70to79), [-3,3])})
+              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.dose2_pct_above80), [-3,3])})
+              
+
               .select(['fecha',aq.matches('ra_cases_peak'), aq.matches('ra_dose2_pct')])
-              // .select('fecha',aq.matches('cases'), aq.matches('deat'), aq.matches('hosp'),aq.matches('uci'),aq.matches('dose2'))
               .fold(aq.not('fecha'))
               .spread({ key: d => op.split(d.key, '_') }, { as: ['roll', 'var', 'calc',  'age_group'] })
               .derive({var: d=> d.var+'_'+d.calc})
               .select(aq.not('roll','calc'))
               .groupby('fecha','age_group')
               .pivot('var','value')
-              .orderby(aq.desc('fecha'))
               // .print()
               .objects()
-
-              
-              writeJSON(data, 'dataScatter', pathTo);
-              console.log('json scatter data created')
+              .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
+              .map(d=>({
+                date: d.fecha,
+                age_group: d.age_group,
+                // fill nan with 0 for value0 
+                cases_peak: d.cases_peak,
+                dose2_pct: (isNaN(d["dose2_pct"])) ? d.dose2_pct :  d.dose2_pct
+                }))
+              // .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
+                
+            console.log(data)
+            writeJSON(data, 'dataScatter', pathTo);
+            console.log('json scatter data created')
         }
 
         createScatterData(full_data,flatvac);
