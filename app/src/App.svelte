@@ -54,7 +54,7 @@
 
 			<div class="center">
 				<div style="width: 500px; height: 281px;">
-					<Speedometer />
+					<Speedometer speedValue={speedData} />
 				</div>
 			</div>
 
@@ -100,9 +100,7 @@
 			</p>
 
 			<div>
-				<Grid {grid} 
-				layout="wideColumn2"
-				/>
+				<Grid {grid} />
 			</div>
 			<!-- <img
 				src="img/topicA-smallMultiples.png"
@@ -231,9 +229,5 @@
 
 	.extendedContentContainer {
 		margin-left: -160px;
-	}
-	.credits {
-		border-top: 1px solid rgb(124, 124, 124);
-		margin: 48px 0px 24px 0px;
 	}
 </style>
