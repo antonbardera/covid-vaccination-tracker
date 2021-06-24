@@ -8,7 +8,7 @@
 	import {max, extent, bisector} from 'd3-array'
     
     export let data;
-	export let margin = {top: 0, right: 10, bottom: 20, left: 10};
+	export let margin = {top: 0, right: 10, bottom: 13, left: 10};
 	export let format;
 	export let key;
 	export let color;

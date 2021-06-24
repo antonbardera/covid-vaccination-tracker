@@ -40,8 +40,18 @@
     {#if position === 'bottom'}
     <g class='tick' transform='translate({tick.offset}, 0)'>
       <!-- show only first and last text-->
-      {#if i === 0 || i === ticks.length - 1} 
-       <text class='label' y=15 text-anchor='start'>
+      {#if i === 0} 
+      <text class='label-bg-l' y=3 text-anchor='start'>
+        {tick.value}
+       </text>
+       <text class='label' y=3 text-anchor='start'>
+        {tick.value}
+       </text>
+       {:else if i === ticks.length - 1} 
+       <text class='label-bg-l' x=10 y=3 text-anchor='start'>
+        {tick.value}
+       </text>
+       <text class='label' x=10 y=3 text-anchor='start'>
         {tick.value}
        </text>
       {/if}
@@ -94,6 +104,11 @@
   }
   .label-bg{
     stroke-width: 13px;
+    stroke: white;
+  }
+
+  .label-bg-l{
+    stroke-width: 10px;
     stroke: white;
   }
   text{

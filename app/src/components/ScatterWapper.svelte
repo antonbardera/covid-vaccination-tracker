@@ -22,7 +22,7 @@
     let DataLong = data_raw.default;
    
     let data_ = DataLong.map(d => {return{
-		date: new Date(d.fecha.split("T")[0]),
+		date: new Date(d.fecha),
         dateStr: loc.formatTime('%B %d')(new Date(d.fecha)),
 		age_group: d.age_group,
         dateDiff: new Date(d.fecha) - new Date('2021-03-30'),
