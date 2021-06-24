@@ -445,21 +445,28 @@ function simpleMovingAverage(data, window = 5) {
               .objects()
               // .filter(d => new Date(d.fecha) > new Date("2021-06-18")) //&& d.fecha.getTime() !== invalidDate.getTime() )
           // console.log(covid_totals)
-          vacc = vacc.filter(d=>d.ccaa === "Total España" )
+          vacc = vacc.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() && d.ccaa === "Total España" )
           const data = aq.from(vacc.reverse())
-              .orderby(aq.desc('fecha'))
+              
               .join_right(aq.from(covid_totals),'fecha')
               .select('fecha',aq.matches('ra_cases_peak'), aq.matches('dose2_pct'))
-              // .fold(aq.not('fecha'))
-              // // .print({offset:130})
-              // // .impute( {value: ()=>0})
-              // .groupby('fecha')
-              // .pivot('key','value')
-
-              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.dose2_pct_50to59), [-3,3])})
-              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.dose2_pct_60to69), [-3,3])})
-              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.dose2_pct_70to79), [-3,3])})
-              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.dose2_pct_above80), [-3,3])})
+              .fold(aq.not('fecha'))
+              // .print({offset:130})
+              .groupby('fecha')
+              .impute( {value: ()=>null})
+              .pivot('key','value')
+              
+              .orderby(aq.desc('fecha'))
+              //impute
+              .derive({dose2_pct_50to59 : d=> op.fill_down(d.dose2_pct_50to59)})
+              .derive({dose2_pct_60to69 : d=> op.fill_down(d.dose2_pct_60to69)})
+              .derive({dose2_pct_70to79 : d=> op.fill_down(d.dose2_pct_70to79)})
+              .derive({dose2_pct_above80 : d=> op.fill_down(d.dose2_pct_above80)})
+              //rolling average
+              .derive({ra_dose2_pct_50to59 : aq.rolling(d=> op.average(d.dose2_pct_50to59), [-7,0])})
+              .derive({ra_dose2_pct_60to69 : aq.rolling(d=> op.average(d.dose2_pct_60to69), [-7,0])})
+              .derive({ra_dose2_pct_70to79 : aq.rolling(d=> op.average(d.dose2_pct_70to79), [-7,0])})
+              .derive({ra_dose2_pct_above80 : aq.rolling(d=> op.average(d.dose2_pct_above80), [-7,0])})
               
 
               .select(['fecha',aq.matches('ra_cases_peak'), aq.matches('ra_dose2_pct')])
@@ -473,11 +480,11 @@ function simpleMovingAverage(data, window = 5) {
               .objects()
               .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
               .map(d=>({
-                date: d.fecha,
+                fecha: d.fecha,
                 age_group: d.age_group,
                 // fill nan with 0 for value0 
                 cases_peak: d.cases_peak,
-                dose2_pct: (isNaN(d["dose2_pct"])) ? d.dose2_pct :  d.dose2_pct
+                dose2_pct: (isNaN(d["dose2_pct"])) ? 0 :  d.dose2_pct
                 }))
               // .filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.fecha.getTime() !== invalidDate.getTime() )
                 
