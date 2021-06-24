@@ -14,6 +14,7 @@
 
 // Svelte Typography!
 @use '@material/typography/mdc-typography';
+@use '@material/typography/index' as typography;
 
 // Google Fonts
 @import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,700;0,800;1,700;1,800&family=Merriweather:ital,wght@0,400;1,300&display=swap");
@@ -21,7 +22,6 @@
 html,
 body {
   background-color: theme.$background;
-  /* color: theme.$on-surface; */
 }
 
 a {
@@ -32,7 +32,12 @@ a:visited {
   color: color.scale(#BF7D56);
 }
 
-/* REDUCED LIGHTNESS FOR VISITED LINKS */
-/* a:visited {
-  color: color.scale(#BF7D56, $lightness: -35%);
-} */
+/* NEW TYPE STYLES */
+h1 {
+  @include typography.typography('headline1');
+  font-family: 'Courier New', Courier, monospace
+}
+
+caption {
+  @include typography.typography('caption');
+}

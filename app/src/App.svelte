@@ -55,7 +55,8 @@
 
 			<div class="center">
 				<div style="width: 500px; height: 281px;">
-					<SpeedometerBg />
+					<!-- Disabled Temporarily -->
+					<!-- <SpeedometerBg /> -->
 					<Speedometer speedValue={speedData} />
 				</div>
 			</div>
@@ -70,9 +71,14 @@
 
 		<!-- Intro -->
 		<div>
-			<p class="mdc-typography--headline2" style="text-align: center;">
+			<!-- <p class="mdc-typography--headline2" style="text-align: center;">
 				This is how vaccination progresses in Spain
-			</p>
+			</p> -->
+
+			<h1 style="text-align: center;">
+				This is how vaccination progresses in Spain
+			</h1>
+
 			<div class="mdc-typography--subtitle1" style="text-align: center;">
 				By Spe Chen, Xavier Bolló and Santiago Salcido
 			</div>
@@ -235,10 +241,6 @@
 
 	.extendedContentContainer {
 		margin-left: -160px;
-	}
-	.credits {
-		border-top: 1px solid rgb(124, 124, 124);
-		margin: 48px 0px 24px 0px;
 	}
 
 	.dotted{
