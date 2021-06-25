@@ -41,7 +41,7 @@
 	
 	let mldata = multiline_data(data) 
 
-	console.log('hello',mldata)
+	// console.log('hello',mldata)
 	
 	$: mldata = multiline_data(data) 
 	
