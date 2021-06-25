@@ -84,7 +84,7 @@
 					"peak_cases_70to79",
 					"peak_cases_above80",
 				],
-			},
+			}	,
 			// key:{x: 'fecha', y: ['ra_cases_50to59', 'ra_cases_60to69','ra_cases_70to79','ra_cases_above80']},
 			// key:{x: 'fecha', y: ['cases_50to59', 'cases_60to69','cases_70to79','cases_above80']},
 			format: format,
@@ -93,6 +93,7 @@
 			title: "Title",
 			desc: "Description",
 			curve: curveBasis
+		}}
 	/>
 </div>
 
