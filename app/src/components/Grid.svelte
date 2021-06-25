@@ -205,7 +205,7 @@
 	.graphic {
 		height: 800px;
 		width: 900px;
-		left: -15%;
+		left: -16.5%;
 	}
 
 	.container {

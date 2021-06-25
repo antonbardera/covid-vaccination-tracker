@@ -81,7 +81,7 @@
 			<text x="600" y="80"> Fewer </text>
 			<text x="600" y="95"> cases </text>
 			<text x="620" y="110"> ↓</text> -->
-			<text class='axis-label'x={x(80)} y={y(1)}>Fully vaccinated rate</text>
+			<text class='axis-label'x={x(82)} y={y(-2.8)}>Fully vaccinated rate</text>
 			<text class='axis-label' x={x(1)} y={y(25.3)}>Share of peak</text>
 
 			<Axis
