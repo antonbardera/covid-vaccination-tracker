@@ -1,6 +1,7 @@
 <script>
 	import Axis from '../common/Axis.svelte';
 	import PointInteractive from '../common/PointInteractive.svelte';
+	import Tooltip from '../common/Tooltip.svelte';
 	import {line} from 'd3-shape';
     import {scaleTime, scaleLinear} from 'd3-scale';
     import {max, extent} from 'd3-array'
@@ -11,7 +12,7 @@
 	export let options;
 	let {key, format, color, layout, title, desc, curve } = options;
 
-	let datum, width, height;
+	let datum, width, height,tooltipOptions,tip;
     
     const _data = key.y.map( (key, i) => data.map(d => ({x: new Date(d.fecha), y: d[key], key:key, color: color[i]} )))
 	console.log(_data)
@@ -36,10 +37,16 @@
         const mY = (m.offsetY) ? m.offsetY : m.clientY;
         const picked = delaunay.find(mX, mY);
         datum = _data.flat()[picked];
+		tip = (datum !== undefined)
+			?`console.log(1)`
+			:console.log('askfjñaskdlfj');
+		tooltipOptions = {x: mX, y: mY, tip: tip, visible: visible}
 	}
+	
 
 	const leave = (m) => {
 		datum = null;
+		tooltipOptions = {x: -1000, y: -1000, tip: '', visible: false}
     }
     
     $: hilite = (key) => {
@@ -79,7 +86,7 @@
 	<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
 
 	<PointInteractive {datum} {format} {x} {y} key={{x:'x', y:'y'}} {width} />
-	
+	<Tooltip {... tooltipOptions} {width} {height} />
 </svg>
 {/if}
 </div>
@@ -87,7 +94,7 @@
 <style>
 	.graphic {
 		height: 450px;
-		font-size:40%;
+		font-size:60%;
 
 
 	} 
