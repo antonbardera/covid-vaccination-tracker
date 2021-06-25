@@ -15,7 +15,7 @@ export function textvalues(){
 
     
     const prev_month = loc.formatTime('%B')(d.setMonth(d.getMonth() - 1))
-    const curr_month = loc.formatTime('%B')(d.setMonth(d.getMonth())
+    const curr_month = loc.formatTime('%B')(today_raw)
     console.log(prev_month,curr_month)
 
     const national_data = data.filter(d => d.ccaa === 'Total España'|| d.ccaa === 'Totales')
