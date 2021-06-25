@@ -13,6 +13,7 @@
         x: loc.format(",.0f"),
         y: loc.format(",.0f"),
         z: loc.formatTime("%B %e"),
+        // a: loc.format(),
     };
     /* --------------------  
 	   DATA PREPROCESSING 
@@ -81,7 +82,7 @@
     <p>60to69</p>
     <ScatterStatic
         data={data.filter((d) => d.age_group === "60to69")}
-        key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff" }}
+        key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff", a:"age_group" }}
         {format}
         {maxDate}
         {minDate}
@@ -90,7 +91,7 @@
     <p>50to59</p>
     <ScatterStatic
         data={data.filter((d) => d.age_group === "50to59")}
-        key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff" }}
+        key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff", a:"age_group"}}
         {format}
         {maxDate}
         {minDate}

@@ -219,7 +219,7 @@
 	}
 
 	.colored {
-		/* border: 1px solid lightgray; */
+		border: 1px solid lightgray;
 		background: #fff;
 	}
 

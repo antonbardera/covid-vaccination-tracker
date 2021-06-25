@@ -35,10 +35,17 @@
 		.domain([0,25])
 		.range([height - margin.bottom - margin.top, margin.top]);
 
+	// 60to69
 	$: colorScale = scaleLinear()
 		.domain([minDate, maxDate])
-		.range(["#305C2A", "#B3FF7D"]);
+		.range(["#CED3D6", "#00A7B9"]);
+		// .range(["#305C2A", "#B3FF7D"]);
 	// .range(['#657C89','#85DA46']);
+
+	//50to59
+	$: colorScale2 = scaleLinear()
+		.domain([minDate, maxDate])
+		.range(["#D5F0F3", "#3A505C"]);
 
 	function fade2(node, { duration, delay }) {
 		const o = +getComputedStyle(node).opacity;
@@ -70,12 +77,12 @@
 			{height}
 			role="img"
 		>
-			<text x="450" y="50"> More people vaccinated ➔</text>
+			<!-- <text x="450" y="50"> More people vaccinated ➔</text>
 			<text x="600" y="80"> Fewer </text>
 			<text x="600" y="95"> cases </text>
-			<text x="620" y="110"> ↓</text>
-			<text x="500" y="520">Fully vaccinated rate</text>
-			<text x="0" y="25">Share of peak</text>
+			<text x="620" y="110"> ↓</text> -->
+			<text class='axis-label'x={x(80)} y={y(1)}>Fully vaccinated rate</text>
+			<text class='axis-label' x={x(1)} y={y(25.3)}>Share of peak</text>
 
 			<Axis
 				{width}
@@ -99,10 +106,10 @@
 						cx={x(d[key.x])}
 						cy={y(d[key.y])}
 						r="7"
-						fill-opacity="0.5"
-						fill={colorScale(d[key.z])}
-						stroke="rgba(0, 0, 0, 0.3)"
-						stroke-width="1"
+						fill-opacity="1"
+						fill={(d[key.a] === '60to69')? colorScale(d[key.z]) : colorScale2(d[key.z])}
+						stroke={(i === data.length-1)? '#757575': 'white'}
+						stroke-width={(i === data.length-1)? '2': '1'}
 					/>
 					<!-- <circle 
 							cx={x(d[key.x])}
@@ -117,7 +124,7 @@
 					<text
 						x={x(d[key.x])}
 						y={y(d[key.y])}
-						class={x(d[key.x]) < width / 2
+						class={x(d[key.x]) < width / 1.2
 							? "date-text date-text--left"
 							: "date-text date-text--right"}
 					>
@@ -172,12 +179,12 @@
 
 	.date-text.date-text--left {
 		text-anchor: start;
-		transform: translate(7px, -5px);
+		transform: translate(12px, 4px);
 	}
 
 	.date-text.date-text--right {
 		text-anchor: end;
-		transform: translate(-7px, -5px);
+		transform: translate(-4px, -12px);
 	}
 	.date-text:last-of-type {
 		/* last date stays  */
@@ -186,5 +193,9 @@
 
 	svg {
 		overflow: visible;
+	}
+
+	.axis-label{
+		text-transform: uppercase;
 	}
 </style>

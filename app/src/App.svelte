@@ -211,8 +211,8 @@
 		margin: 0 auto;
 		padding-top: 24px;
 		padding-bottom: 84px;
-		border-left: 1px solid #757575;
-		border-right: 1px solid #757575;
+		/* border-left: 1px solid #757575;
+		border-right: 1px solid #757575; */
 		max-width: 1024px;
 		background-color: #f6f8f9;
 	}

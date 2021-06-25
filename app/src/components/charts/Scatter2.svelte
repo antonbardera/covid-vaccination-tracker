@@ -38,8 +38,9 @@
     
 	$: colorScale = scaleLinear()
 		.domain([minDate, maxDate])
-		.range(['#285920', '#54FF7F']);	
+		.range(['#E3F5EC', '#59C28E']);	
 
+		// .range(['#285920', '#54FF7F']);	
 		// .range(['#657C89','#85DA46']);	
 
 	function fade2(node, { duration, delay}){
@@ -72,12 +73,12 @@
 				{height}
 				role='img'
 				>
-				<text x=450 y=50> More people vaccinated ➔</text>
+				<!-- <text x=450 y=50> More people vaccinated ➔</text>
 				<text x=600 y=80> Fewer </text>
 				<text x=600 y=95> cases </text>
-				<text x=620 y=110> ↓</text>
-				<text x=500 y=520>Fully vaccinated rate</text>
-				<text x=0 y=25>Share of peak</text>
+				<text x=620 y=110> ↓</text> -->
+				<text class='axis-label'x={x(80)} y={y(1)}>Fully vaccinated rate</text>
+				<text class='axis-label' x={x(1)} y={y(25.3)}>Share of peak</text>
 
 				<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
 				<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
@@ -88,10 +89,10 @@
 							cx={x(d[key.x])}
 							cy={y(d[key.y])}
 							r=7
-							fill-opacity=0.5
+							fill-opacity=1
 							fill={colorScale(d[key.z])}
 							stroke='white'
-							stroke-width=0.1
+							stroke-width=1
 							transition:fade='{{ delay:700 * i}}'
 						/>
 						<circle 
@@ -100,7 +101,7 @@
 							r=7
 							fill-opacity=1
 							fill={colorScale(d[key.z])}
-							stroke='#333'
+							stroke='#757575'
 							stroke-width=2
 							in:fade2='{{ delay:700 * i, duration:800}}'
 							class='date-text'
@@ -109,7 +110,7 @@
 							x={x(d[key.x])}
 							y={y(d[key.y])}
 							in:fade2='{{ delay:700 * i, duration:800}}'
-							class={ x(d[key.x]) < width/2 ? 'date-text date-text--left' : 'date-text date-text--right'}
+							class={ x(d[key.x]) < width/ 1.2 ? 'date-text date-text--left' : 'date-text date-text--right'}
 						>
 							{d.dateStr}
 						</text>
@@ -165,12 +166,12 @@
 	
 	.date-text.date-text--left {
 		text-anchor: start;
-		transform: translate(7px,-5px);
+		transform: translate(12px, 3px);
 	}
 
 	.date-text.date-text--right {
 		text-anchor: end;
-		transform: translate(-7px , -5px);
+		transform: translate(-12px, 3px);
 	}	
 	.date-text:last-of-type {
 		/* last date stays  */
@@ -180,4 +181,8 @@
 	svg{
   	  overflow: visible;
   	}
+
+	  .axis-label{
+		text-transform: uppercase;
+	}
 </style>
