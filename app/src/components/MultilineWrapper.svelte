@@ -66,7 +66,7 @@
 			layout: "col",
 			title: "Title",
 			desc: "Description",
-			curve: curveMonotoneX,
+			curve: curveBasis,
 		}}
 	/>
 </div>
@@ -92,8 +92,7 @@
 			layout: "col",
 			title: "Title",
 			desc: "Description",
-			curve: curveMonotoneX,
-		}}
+			curve: curveBasis
 	/>
 </div>
 
