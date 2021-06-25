@@ -11,31 +11,7 @@ export function multiline_data(_data){
         .groupby('fecha')
         .pivot('key',{value:d => op.sum(d.value) })
         
-        /* Old method */
-        // .groupby('fecha')
-        // .rollup({
-        //     cases_50to59 : d=> op.sum(d.cases_50to59),
-        //     cases_60to69 : d=> op.sum(d.cases_60to69),
-        //     cases_70to79 : d=> op.sum(d.cases_70to79),
-        //     cases_above80 : d=> op.sum(d.cases_above80),
-        //     cases_under50 : d=> op.sum(d.cases_under50),
-        //     deaths_50to59 : d=> op.sum(d.deaths_50to59),
-        //     deaths_60to69 : d=> op.sum(d.deaths_60to69),
-        //     deaths_70to79 : d=> op.sum(d.deaths_70to79),
-        //     deaths_above80 : d=> op.sum(d.deaths_above80),
-        //     deaths_under50 : d=> op.sum(d.deaths_under50),
-        //     hosp_50to59 : d=> op.sum(d.hosp_50to59),
-        //     hosp_60to69 : d=> op.sum(d.hosp_60to69),
-        //     hosp_70to79 : d=> op.sum(d.hosp_70to79),
-        //     hosp_above80 : d=> op.sum(d.hosp_above80),
-        //     hosp_under50 : d=> op.sum(d.hosp_under50),
-        //     uci_50to59 : d=> op.sum(d.uci_50to59),
-        //     uci_60to69 : d=> op.sum(d.uci_60to69),
-        //     uci_70to79 : d=> op.sum(d.uci_70to79),
-        //     uci_above80 : d=> op.sum(d.uci_above80),
-        //     uci_under50 : d=> op.sum(d.uci_under50),
-        // })
-        
+    
         ///// ROLLING-AVG /////
         .derive({cases_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-3,3])})
         .derive({cases_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-3,3])})
