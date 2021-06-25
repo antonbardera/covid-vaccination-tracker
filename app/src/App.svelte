@@ -4,8 +4,12 @@
 	import Speedometer from "./components/charts/Speedometer.svelte";
 	import SpeedometerBg from "./components/charts/SpeedometerBg.svelte";
 	import Menu from "./components/common/Menu.svelte";
-	import locale from "@reuters-graphics/d3-locale";
+	// import locale from "@reuters-graphics/d3-locale";
 	// import Scatter from "./components/charts/Scatter2.svelte";
+	import {textvalues} from "./utils.js"
+	export let data
+	let text = textvalues(data)
+	console.log(text.today)
 
 	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
@@ -26,6 +30,7 @@
 
 	/* Multiline */
 	import MultilineWrapper from "./components/MultilineWrapper.svelte";
+
 
 	let color = ["rgba(92,198,178, 1)", "rgba(0,0,0, 1)"];
 </script>

@@ -1,5 +1,27 @@
 import * as aq from 'arquero';
 import { group } from 'd3-array';
+import locale from "@reuters-graphics/d3-locale";
+
+const loc = new locale('en');
+
+
+// import * as csv from "../public/data.csv"
+// let data = csv.default
+
+export function textvalues(_data){
+    let data = _data
+    let today = loc.formatTime('%B %e, %Y')(new Date())
+    
+    
+    let text = { today }
+
+    console.log('TEXT OBJECT -----',text.today)
+    return text   
+}
+    
+
+
+
 
 
 // Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
