@@ -147,19 +147,20 @@
 			</div>
 
 			<br />
+			<p class="overline center">
+				<span class="group5059">⬤</span> 50-59
+				<span class="group6069">⬤</span> 60-69
+				<span class="group7079">⬤</span> 70-79
+				<span class="groupAbove80">⬤</span> 80+
+			</p>
 			<MultilineWrapper />
-			<!-- <img
-				src="img/topicB-DailyCases2.png"
-				alt="placeholder"
-				class="wideColumn"
-			/> -->
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
 			</p>
-			<img src="img/topicB-scatterplot.png" alt="placeholder" />
+			<!-- <img src="img/topicB-scatterplot.png" alt="placeholder" /> -->
 		</div>
 
 		<!-- TopicC -->
@@ -177,11 +178,11 @@
 			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
 			<ScatterWapper />
 
-			<img
+			<!-- <img
 				src="img/topicC-scatterplot.png"
 				alt="placeholder"
 				class="extendedContentContainer"
-			/>
+			/> -->
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
@@ -197,7 +198,7 @@
 <style>
 	:global(body) {
 		margin: 0;
-		font-family: Merriweather Sans, Arial, Helvetica, sans-serif;
+		font-family: "Merriweather", "Merriweather Sans", Arial, 
 	}
 
 	.center {
@@ -244,4 +245,37 @@
 		top: -2px;
 		margin-right: 2px;
 	}
+
+	.group5059 {
+		color: #3A505C;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
+	.group6069 {
+		color: #00A7B9;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
+	.group7079 {
+		color: #59C28E;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
+	.groupAbove80 {
+		color: #85DA46;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
 </style>

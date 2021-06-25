@@ -1,15 +1,14 @@
 <script>
-
-	import Axis from '../common/AxisScatter.svelte';
-	import Tooltip from '../common/Tooltip.svelte'
-	import {scaleSqrt, scaleTime, scaleLinear, scaleQuantize} from 'd3-scale';
-	import {extent} from 'd3-array'
-    import { Delaunay } from 'd3-delaunay'
-    // import { fade } from 'svelte/transition';
+	import Axis from "../common/AxisScatter.svelte";
+	import Tooltip from "../common/Tooltip.svelte";
+	import { scaleSqrt, scaleTime, scaleLinear, scaleQuantize } from "d3-scale";
+	import { extent } from "d3-array";
+	import { Delaunay } from "d3-delaunay";
+	// import { fade } from 'svelte/transition';
 	// import IntersectionObserver from "svelte-intersection-observer";
 
-    export let data;
-	export let margin = {top: 20, right: 10, bottom: 20, left: 10};
+	export let data;
+	export let margin = { top: 20, right: 10, bottom: 20, left: 10 };
 	export let format;
 	export let minDate;
 	export let maxDate;
@@ -17,77 +16,94 @@
 	export let layout;
 
 	let element;
-  	let intersecting;
+	let intersecting;
 
 	let datum, width, height, tooltipOptions, tip;
 
-	data.sort((a,b) => a[key.size] - b[key.size])
+	data.sort((a, b) => a[key.size] - b[key.size]);
 
 	// $: x = scaleLinear()
 	// 	.domain(extent(data, d => d[key.x]))
 	// 	.range([margin.left, width - margin.right]);
 
 	$: x = scaleLinear()
-		.domain([0,100])
+		.domain([0, 100])
 		.range([margin.left, width - margin.right]);
 
 	$: y = scaleLinear()
-		.domain(extent(data, d => d[key.y]))
-        .range([height - margin.bottom - margin.top, margin.top]);
-    
+		.domain(extent(data, (d) => d[key.y]))
+		.range([height - margin.bottom - margin.top, margin.top]);
+
 	$: colorScale = scaleLinear()
 		.domain([minDate, maxDate])
-		.range(['#305C2A', '#B3FF7D']);	
-		// .range(['#657C89','#85DA46']);	
+		.range(["#305C2A", "#B3FF7D"]);
+	// .range(['#657C89','#85DA46']);
 
-	function fade2(node, { duration, delay}){
-	const o = +getComputedStyle(node).opacity;
-	return {
-		delay,
-		duration,
-		css: t => { 
-			if( t >= 1){
-				return `opacity: 0`
-			} 
-			return `opacity : ${t*1}`
-		}		
-	};
+	function fade2(node, { duration, delay }) {
+		const o = +getComputedStyle(node).opacity;
+		return {
+			delay,
+			duration,
+			css: (t) => {
+				if (t >= 1) {
+					return `opacity: 0`;
+				}
+				return `opacity : ${t * 1}`;
+			},
+		};
 	}
-
-
 </script>
 
+<div
+	bind:this={element}
+	class:intersecting
+	class="graphic {layout}"
+	bind:clientWidth={width}
+	bind:clientHeight={height}
+>
+	{#if width}
+		<svg
+			xmlns:svg="https://www.w3.org/2000/svg"
+			viewBox="0 0 {width} {height}"
+			{width}
+			{height}
+			role="img"
+		>
+			<text x="450" y="50"> More people vaccinated ➔</text>
+			<text x="600" y="80"> Fewer </text>
+			<text x="600" y="95"> cases </text>
+			<text x="620" y="110"> ↓</text>
+			<text x="500" y="520">Fully vaccinated rate</text>
+			<text x="0" y="25">Share of peak</text>
 
-	<div  bind:this={element} class:intersecting class='graphic {layout}' bind:clientWidth={width} bind:clientHeight={height}  >
-		{#if width }
-			<svg xmlns:svg='https://www.w3.org/2000/svg' 
-				viewBox='0 0 {width} {height}'
+			<Axis
 				{width}
 				{height}
-				role='img'
-				>
-				<text x=450 y=50> More people vaccinated ➔</text>
-				<text x=600 y=80> Fewer </text>
-				<text x=600 y=95> cases </text>
-				<text x=620 y=110> ↓</text>
-				<text x=500 y=520>Fully vaccinated rate</text>
-				<text x=0 y=25>Share of peak</text>
-
-				<Axis {width} {height} {margin} scale={y} position='left' format={format.y} />
-				<Axis {width} {height} {margin} scale={x} position='bottom' format={format.x} />
-				<g>
-					{#each data as d, i}
-						
-						<circle 
-							cx={x(d[key.x])}
-							cy={y(d[key.y])}
-							r=7
-							fill-opacity=0.5
-							fill={colorScale(d[key.z])}
-							stroke='rgba(0, 0, 0, 0.3)'
-							stroke-width=1
-						/>
-						<!-- <circle 
+				{margin}
+				scale={y}
+				position="left"
+				format={format.y}
+			/>
+			<Axis
+				{width}
+				{height}
+				{margin}
+				scale={x}
+				position="bottom"
+				format={format.x}
+			/>
+			<g>
+				{#each data as d, i}
+					<circle
+						cx={x(d[key.x])}
+						cy={y(d[key.y])}
+						r="7"
+						fill-opacity="0.5"
+						fill={colorScale(d[key.z])}
+						stroke="rgba(0, 0, 0, 0.3)"
+						stroke-width="1"
+					/>
+					<!-- <circle 
 							cx={x(d[key.x])}
 							cy={y(d[key.y])}
 							r=7
@@ -97,15 +113,17 @@
 							stroke-width=2
 							class='date-text'
 						/> -->
-						<text
-							x={x(d[key.x])}
-							y={y(d[key.y])}
-							class={ x(d[key.x]) < width/2 ? 'date-text date-text--left' : 'date-text date-text--right'}
-						>
-							{d.dateStr}
-						</text>
-					{/each}
-					<!-- {#each data as d}
+					<text
+						x={x(d[key.x])}
+						y={y(d[key.y])}
+						class={x(d[key.x]) < width / 2
+							? "date-text date-text--left"
+							: "date-text date-text--right"}
+					>
+						{d.dateStr}
+					</text>
+				{/each}
+				<!-- {#each data as d}
 					<circle 
 						cx={x(d[key.x])}
 						cy={y(d[key.y])}
@@ -114,13 +132,11 @@
 						class:selected={d === datum}
 					/>
 					{/each} -->
-
-				</g>
-
-			</svg>
+			</g>
+		</svg>
 		<!-- <Tooltip {... tooltipOptions} {width} {height} /> -->
-		{/if}
-	</div>
+	{/if}
+</div>
 
 <style>
 	/* path {
@@ -139,29 +155,35 @@
 		transition: all .3s;
 	} */
 
-	.graphic{
-		height:60vh;
+	.graphic {
+		/* height:60vh; */
+		height: 450px;
+		font-family: "Merriweather Sans";
+		font-style: normal;
+		font-weight: normal;
+		font-size: 10px;
+		fill: #757575;
 	}
 
-	.date-text{
+	.date-text {
 		opacity: 0;
 	}
-	
+
 	.date-text.date-text--left {
 		text-anchor: start;
-		transform: translate(7px,-5px);
+		transform: translate(7px, -5px);
 	}
 
 	.date-text.date-text--right {
 		text-anchor: end;
-		transform: translate(-7px , -5px);
-	}	
+		transform: translate(-7px, -5px);
+	}
 	.date-text:last-of-type {
 		/* last date stays  */
-		opacity : 1;
+		opacity: 1;
 	}
 
-	svg{
-  	  overflow: visible;
-  	}
+	svg {
+		overflow: visible;
+	}
 </style>
