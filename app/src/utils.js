@@ -10,18 +10,19 @@ export function textvalues(){
     // console.log('DATA -----',data)
 
     const today = loc.formatTime('%B %e, %Y')(new Date())
-    const today_raw = new Date()
+    const today_raw = (new Date())
+    var d = new Date();
 
     
-    const prev_month = loc.formatTime('%B')(today_raw.setDate(today_raw.getDate()-30))
-    const curr_month = loc.formatTime('%B')(today_raw.setDate(today_raw.getMonth()+2))
+    const prev_month = loc.formatTime('%B')(d.setMonth(d.getMonth() - 1))
+    const curr_month = loc.formatTime('%B')(d.setMonth(d.getMonth())
     console.log(prev_month,curr_month)
 
     const national_data = data.filter(d => d.ccaa === 'Total España'|| d.ccaa === 'Totales')
     const total_population = national_data.reverse()[0]['pop_total']
     console.log('POPULATION -----',total_population)
     
-    const total_millions = loc.format(',.2f')(aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['administradas'])
+    const total_millions = loc.format(',.2f')(aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['administradas']/1000000) 
     const total_dose2 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose2']
     const total_dose1 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose1']
     console.log('DOSE1-dose2 -----', total_dose1, total_dose2)
@@ -54,13 +55,17 @@ export function textvalues(){
         .select('daily_avg').groupby('daily_avg')
         .objects()[0].daily_avg
     
-    const daily_avg_increase = ( daily_avg_current_month -daily_avg_previous_month ) / daily_avg_current_month *100
-
+        
+    const daily_avg_increase = loc.format('%')(( daily_avg_current_month - daily_avg_previous_month ) / daily_avg_current_month *100)
+        
+    const daily_avg_curr_formatted = loc.format(',.0f')(daily_avg_current_month)
+    const daily_avg_prev_formatted = loc.format(',.0f')(daily_avg_previous_month)
+    const daily_avg_increase_formatted = loc.format(',.2f')(daily_avg_increase)
     
     const days_until_70pct =  (total_population *0.7-total_dose2) / daily_avg_current_month
     const days_until_100pct =  (total_population -total_dose2) / daily_avg_current_month
-    const end_date_70pct = loc.formatTime('%B %e, %Y')(today_raw.setDate(today_raw.getDate()+days_until_70pct))
-    const end_date_100pct = loc.formatTime('%B %e, %Y')(today_raw.setDate(today_raw.getDate()+days_until_100pct))
+    const end_date_70pct = loc.formatTime('%B %e, %Y')(new Date(today_raw).setDate(today_raw.getDate()+days_until_70pct))
+    const end_date_100pct = loc.formatTime('%B %e, %Y')(new Date(today_raw).setDate(today_raw.getDate()+days_until_100pct))
     console.log('days until 70%', days_until_70pct)
     console.log('date end 70%', end_date_70pct)
     console.log('days until 100%', days_until_100pct)
@@ -77,9 +82,9 @@ export function textvalues(){
         vacc_over_pop_100_2dose,
         vacc_over_pop_100_1dose,
         total_millions,
-        daily_avg_current_month,
-        daily_avg_previous_month,
-        daily_avg_increase,
+        daily_avg_curr_formatted,
+        daily_avg_prev_formatted,
+        daily_avg_increase_formatted,
         days_until_70pct,
         days_until_100pct,
         end_date_70pct,
