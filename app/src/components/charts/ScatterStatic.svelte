@@ -31,7 +31,8 @@
 		.range([margin.left, width - margin.right]);
 
 	$: y = scaleLinear()
-		.domain(extent(data, (d) => d[key.y]))
+		// .domain(extent(data, (d) => d[key.y]))
+		.domain([0,25])
 		.range([height - margin.bottom - margin.top, margin.top]);
 
 	$: colorScale = scaleLinear()
