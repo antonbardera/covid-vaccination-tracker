@@ -10,26 +10,33 @@ export function textvalues(){
     // console.log('DATA -----',data)
 
     const today = loc.formatTime('%B %e, %Y')(new Date())
+    const today_raw = new Date()
+
     
+    const prev_month = loc.formatTime('%B')(today_raw.setDate(today_raw.getDate()-30))
+    const curr_month = loc.formatTime('%B')(today_raw.setDate(today_raw.getMonth()+2))
+    console.log(prev_month,curr_month)
+
     const national_data = data.filter(d => d.ccaa === 'Total España'|| d.ccaa === 'Totales')
     const total_population = national_data.reverse()[0]['pop_total']
     console.log('POPULATION -----',total_population)
     
+    const total_millions = loc.format(',.2f')(aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['administradas'])
     const total_dose2 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose2']
     const total_dose1 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose1']
     console.log('DOSE1-dose2 -----', total_dose1, total_dose2)
 
     const current_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === new Date().getMonth())
     const previous_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === new Date().getMonth()-1)
-    console.log(loc.formatTime('%B')(new Date()),current_month_data)
-    console.log(loc.formatTime('%B')((new Date().getMonth()-1)),previous_month_data)
+    console.log(current_month_data)
+    console.log(previous_month_data)
     
-    let vacc_over_pop_100_2dose = Math.round(total_dose2/total_population*100)
-    let vacc_over_pop_100_1dose = Math.round(total_dose1/total_population*100)
+    const vacc_over_pop_100_2dose = Math.round(total_dose2/total_population*100)
+    const vacc_over_pop_100_1dose = Math.round(total_dose1/total_population*100)
     console.log(vacc_over_pop_100_2dose +' people out of 100 complete vaccination' )
     console.log(vacc_over_pop_100_1dose +' people out of 100 at least 1 dose' )
 
-    let daily_avg_previous_month = aq.from(previous_month_data)
+    const daily_avg_previous_month = aq.from(previous_month_data)
         .orderby('fecha').select('fecha','administradas')
         .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
         .slice(1,-1)
@@ -37,8 +44,7 @@ export function textvalues(){
         .orderby(aq.desc('fecha'))
         .select('daily_avg').groupby('daily_avg')
         .objects()[0].daily_avg
-    const days_this_month = (new Date()).getDate()
-    console.log(days_this_month)
+    
     const daily_avg_current_month = aq.from(current_month_data)
         .orderby('fecha').select('fecha','administradas')
         .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
@@ -50,7 +56,7 @@ export function textvalues(){
     
     const daily_avg_increase = ( daily_avg_current_month -daily_avg_previous_month ) / daily_avg_current_month *100
 
-    const today_raw = (new Date())
+    
     const days_until_70pct =  (total_population *0.7-total_dose2) / daily_avg_current_month
     const days_until_100pct =  (total_population -total_dose2) / daily_avg_current_month
     const end_date_70pct = loc.formatTime('%B %e, %Y')(today_raw.setDate(today_raw.getDate()+days_until_70pct))
@@ -64,7 +70,21 @@ export function textvalues(){
     console.log('daily avg current month',daily_avg_current_month)
     console.log(daily_avg_increase > 0 ? '▲ '+daily_avg_increase+' increase': '▼ '+daily_avg_increase+' decrease')
     
-    let text = { today }
+    let text = {
+        today, 
+        prev_month,
+        curr_month,
+        vacc_over_pop_100_2dose,
+        vacc_over_pop_100_1dose,
+        total_millions,
+        daily_avg_current_month,
+        daily_avg_previous_month,
+        daily_avg_increase,
+        days_until_70pct,
+        days_until_100pct,
+        end_date_70pct,
+        end_date_100pct,
+    }
     console.log('CURRENT DATE -----',text.today)
     return text   
 }
