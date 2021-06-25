@@ -148,6 +148,7 @@
 
 			<br />
 			<p class="overline center">
+				<span> Age groups </span>
 				<span class="group5059">⬤</span> 50-59
 				<span class="group6069">⬤</span> 60-69
 				<span class="group7079">⬤</span> 70-79
