@@ -72,3 +72,7 @@ Both the prototype and the styleguide were iteratively adjusted as the project a
 ## Conclusions
 
 
+## Data pipeline
+![pipeline](https://github.com/ssalcido/mvtec-group1/blob/main/pipeline_flowchart.png?raw=true)
+![pipeline](https://github.com/X80110/covid-vaccination-tracker/blob/main/dataPipeline.png?raw=true)
+
