@@ -1,76 +1,74 @@
-![Generate data daily](https://img.shields.io/github/workflow/status/fndvit/covid-vaccination-tracker/Generate%20data%20daily?label=generate-data)
-![Deploy to GitHub pages](https://img.shields.io/github/workflow/status/fndvit/covid-vaccination-tracker/Deploy%20to%20GitHub%20Pages?label=deploy)
-![Updated](https://img.shields.io/github/last-commit/fndvit/covid-vaccination-tracker)
-![License](https://img.shields.io/github/license/fndvit/covid-vaccination-tracker)
+# This is how vaccination progresses in Spain
+[**Live project here**](https://covid-vaccination-tracker.vercel.app/)
 
-# Tracking COVID-19 vaccination in Spain
-[**The project is live here!!**](https://vacunas.fndvit.org/)
+## Introduction 
 
-## To do (prioritized):
+Spain rolled out its mass vaccination program in January. 
 
-- [x] Transform data (to visualize it)
-- [x] Visualize it —obviously
-- [x] Export data in multiple reusable formats
-- [x] Calculate expected dates based on the current progress of the rollout (implemented in the app)
-- [x] Correct Github Action to generate data daily (not working properly now)
-- [x] Sanitize names of regions
-- [x] Download `.ods` files to repo in case they take them offline —see `/spreadsheets`
-- [ ] Add expected dates to data output instead of calculating in the browser
-- [ ] Sanitize dates. Canarias and Baleares have wrong dates on a couple of places, and some regions have extra spaces.
-- [ ] Separate latest data and historical data into two files —or maybe two objects in the same `JSON`
-- [ ] Translate docs to Catalan and Spanish
-- [ ] Combine it with population data by age groups
+The first people to receive the vaccine were elderly people as well as first-line medical staff. As the vaccination campaign progresses, doses of different vaccins have been administered to the rest of the population, with the elderly being given priority. Currently there are four types of Covid-19 vaccines being administered in seventeen Spanish regions. These include Johnson & Johnson’s single-dose vaccine, Janssenm and the two-dose series, Pfizer-BioNTech, Moderna and AstraZeneca/Oxford. 
 
-*(We'll continue to add a detailed 'to do')*
+The nation focuses on a health risk and age-based vaccine rollout plan to protect the most vulnerable groups from contracting the disease. In our preliminary analysis with available open data, we conclude some notable regional differences in vaccination rate and the first sign of vaccine effect comparing the nearly 100% vaccinated group versus less ones.
 
-## App
-It has its own separate [README.md](https://github.com/fndvit/covid-vaccination-tracker/tree/main/app)
+This tracker shows the status of the vaccination process in Spain in each autonomous community, the percentage of fully inoculated population by CCAA versus national level, the vaccine effect shown by age group and the evaluation of vaccine effectiveness by age group.
 
-## Data
-To generate the data simply install and run the node app.
-```
-npm install
-node index.js
-```
-It outputs two fresh [`JSON`](https://raw.githubusercontent.com/fndvit/covid-vaccination-tracker/main/app/public/data.json) and [`CSV`](https://raw.githubusercontent.com/fndvit/covid-vaccination-tracker/main/app/public/data.csv) files to `app/public/`. (It's good to know you have options.)
+## Data source and ethical considerations
 
-* `JSON` [raw](https://raw.githubusercontent.com/fndvit/covid-vaccination-tracker/main/app/public/data.json) and [preview](https://github.com/fndvit/covid-vaccination-tracker/blob/main/app/public/data.json)
-* `CSV` [raw](https://raw.githubusercontent.com/fndvit/covid-vaccination-tracker/main/app/public/data.csv) and [preview](https://github.com/fndvit/covid-vaccination-tracker/blob/main/app/public/data.csv)
+Our data pipeline aggregates two official data sources: [one on vaccination rollout](https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/vacunaCovid19.htm) and the other on [pandemic indices](https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos). 
 
-The data comes from the `.ods` files that the [Health Alert and Emergency Coordination Centre (CCAES in Spanish)](https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov/vacunaCovid19.htm) has published daily since January 4.
+The age group breakdown of the vaccination data is not available before March 31 hence we are not able to present the evolution of the earliest batch (Aged 80+) in our last scatter plot section along with other age groups.
 
-We are also backing up the `spreadsheets` in case they take them offline.
 
-**Important!** A few dates in the `Fecha de la última vacuna registrada` column (renamed as `hasta` in our data) are wrong —for Baleares and Canarias. Until they fix it —or we write something to catch that— use `fecha` which is the date of the report.
+## Data processing and analysis
 
-We renamed the columns as:
 
- | | Dosis entregadas Pfizer (1) | Dosis entregadas Moderna (1) | Total Dosis entregadas (1) | Dosis administradas (2) | % sobre entregadas | Nº Personas vacunadas (pauta completada) | Fecha de la última vacuna registrada (2) 
-:--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- 
- ccaa | pfizer | moderna | entregadas | administradas | admin_entregadas | vacuna_completa | hasta 
-*String* | *Integer* | *Integer* | *Integer* | *Integer*  | *Integer*  | *Integer*  | *Date*
+## Visualization and interaction design
 
-The columns have already changed three times. In the event they add new colums —for newly authorized vaccines, for example— we will add  a new schema to the set (in `index.js`):
+Earlier experiences from previous workshops made clear that before moving too early to prototyping, there were some key stages to improve the decisions about storytelling, visualization and implementation:
 
-```javascript
-const schema = [
-    {
-        date: new Date('2021-01-04'),
-        headers: ['ccaa', 'entregadas', 'administradas', 'admin_entregadas', 'hasta']
-    },
-    {
-        date: new Date('2021-01-14'),
-        headers: ['ccaa', 'pfizer', 'moderna', 'entregadas', 'administradas', 'admin_entregadas', 'hasta']
-    },
-    {
-        date: new Date('2021-01-17'),
-        headers: ['ccaa', 'pfizer', 'moderna', 'entregadas', 'administradas', 'admin_entregadas', 'vacuna_completa', 'hasta']
-    }
-];
-```
+- Early analysis
+- Benchmarking
+- Whiteboarding sessions
+    - Whiteboard meetings allow one or more people to quickly draw and write content on a board during a meeting. Virtual whiteboarding emulates this dynamic through collaborative digital whiteboards modified in real time.
+- Wireframing. Low-fidelity design layout
+- Static prototyping
+- Style Guide and UI Kit
 
-# Additional sources
-* [Actualización de la Estrategia de Vacunación](https://www.mscbs.gob.es/profesionales/saludPublica/prevPromocion/vacunaciones/covid19/docs/COVID-19_Actualizacion2_EstrategiaVacunacion.pdf)
-* [Nota de prensa de Moncloa del 18 de enero](https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/sanidad14/Paginas/2021/180121-residentes_sanitarios.aspx)
-* [Nota de prensa de Moncloa del 12 de enero](https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/sanidad14/Paginas/2021/120121-moderna.aspx)
+**Early analysis**. [Quick exploration](https://public.tableau.com/app/profile/ssalcido/viz/TableauAnalysis_16225631164420/1DosisVsCasesMay) of available datasets, in R and Tableau, to explore trends and insights.
+
+Benchmarking and [whiteboarding sessions](https://miro.com/app/board/o9J_lBLs_mM=/?fromRedirect=1), to explore and compare vaccination trackers from different media. This was helpful during the first week of the project to detect minimum requirements and opportunities to improve on the existing options of trackers. In this stage we found the three main topics that we wanted to cover:
+- The percentage of fully vaccinated population by CCAA (autonomous communities) versus the national level 
+- The vaccine effect by age group, and
+- The evaluation of vaccine effectiveness by age group
+
+**Wireframing and static prototyping**. After our whiteboard sessions conclusions we had two ways of structuring the project: 
+By individual CCAA with its corresponding topics.
+By topic with all of the CCAAs data inside each one.
+
+We chose option B because it reduced repetition of topics as well as allowing us to compare each CCAA status with each other in the first topic. We also decided to add a national progress bar as the Hero Viz; since it provides the first important answer: How Vaccinations Are Going in Spain?
+
+Most of these decisions were made during the Hackathon weekend. In addition to presenting our findings from whiteboarding sessions and early analysis to our mentors, we wireframed different iterations for the overall layout.
+
+Figma collaboration in real time was very helpful in early outlining the structure and layout of the page. We did not create high fidelity production on this stage, we worked with screenshots from R analysis to quickly decide the visual encoding for the charts:
+
+- **National Progress: Gauge chart** 
+    We choose it as our hero viz because it makes a strong visual statement on the current state of the vaccination rollout in Spain. It is also a nice alternative to a traditional progress bar.
+- **Percentage of vaccinated population by CCAA: Small Multiples**
+    We agreed on the beginning of a series of small multiples of line charts to compare each CCAA to the national share of the vaccinated population. We also got inspired by a similar approach by the NYT using color to visualize the gap between above and below the national level. The layout emulates a Spain cartogram. 
+- **Vaccine effect by age group: Multi Line Chart**
+    While traditional, the time series approach is quite useful to compare how trends of each age group diverged after the mass inoculation campaign. We completed it with a zoom level on the last trends from April 2021 when vaccination data breakdown by age group is available.
+- **Vaccine effectiveness by age group: Scatterplot**
+    Lastly, we choose a series of scatterplots per age group to visualize the correlation between the percentage of peak number of cases as the vaccination rate increased. 
+
+**Style guide and UI Kit**. We decided to implement a UI library (Svelte Material UI) for interactive components. In our case, we focused on a **Material Theme**, customizing only the Type System, Type Scale and Theme colors. 
+
+We chose a scrollytelling format with basic interaction to explore the charts: rolling over for tooltips and Tabs to filter data from the time series. The first scatterplot (age group 70-79) uses animation to introduce the cases of the winter peak vs. vaccination rate.
+
+Both the prototype and the styleguide were iteratively adjusted as the project advanced, particularly to adapt the overall style and color palettes for the charts. The final versions of the static prototype and the styleguide can be [consulted here](https://www.figma.com/file/tMdbRGYP15EL99NovIp6OD/Static-Prototype?node-id=180%3A3357).
+
+
+## Implementation details
+
+
+## Conclusions
+
 
