@@ -1,30 +1,133 @@
 import * as aq from 'arquero';
-import { group } from 'd3-array';
+//import { group } from 'd3-array';
 import locale from "@reuters-graphics/d3-locale";
 
 const loc = new locale('en');
 
-
-// import * as csv from "../public/data.csv"
-// let data = csv.default
-
 export function textvalues(_data){
     let data = _data
     let today = loc.formatTime('%B %e, %Y')(new Date())
-    
-    
     let text = { today }
     console.log('TEXT OBJECT -----',text.today)
     return text   
 }
-    
-
-
-
-
 
 // Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
 export function multiline_data(_data){
+    let dataCases = aq.from(_data.reverse())
+        ///// NATIONAL VALUES /////
+        .select(['ccaa','fecha',aq.matches('cases')])
+        .fold(aq.not('fecha','ccaa'))
+        .groupby('fecha')
+        .pivot('key',{value:d => op.sum(d.value) })
+    
+    
+        ///// ROLLING-AVG /////
+        .derive({cases_50to59 : aq.rolling(d=> op.average(d.cases_50to59), [-3,3])})
+        .derive({cases_60to69 : aq.rolling(d=> op.average(d.cases_60to69), [-3,3])})
+        .derive({cases_70to79 : aq.rolling(d=> op.average(d.cases_70to79), [-3,3])})
+        .derive({cases_above80 : aq.rolling(d=> op.average(d.cases_above80), [-3,3])})
+        .derive({cases_under50 : aq.rolling(d=> op.average(d.cases_under50), [-3,3])})
+        ///// RELATIVE VALUE V. MAX PEAK /////
+        .derive({peak_cases_50to59 : d=> (d.cases_50to59/op.max(d.cases_50to59))})
+        .derive({peak_cases_60to69 : d=> (d.cases_60to69/op.max(d.cases_60to69))})
+        .derive({peak_cases_70to79 : d=> (d.cases_70to79/op.max(d.cases_70to79))})
+        .derive({peak_cases_above80 : d=> (d.cases_above80/op.max(d.cases_above80))})
+        .derive({peak_cases_under50 : d=> (d.cases_under50/op.max(d.cases_under50))})
+        .select(['fecha',aq.matches('peak_')])
+        // .select(['fecha',aq.matches('ra_')])
+        .orderby('fecha')
+        .objects()
+
+    let dataDeaths = aq.from(_data.reverse())
+        ///// NATIONAL VALUES /////
+        .select(['ccaa','fecha', aq.matches('deat')])
+        .fold(aq.not('fecha','ccaa'))
+        .groupby('fecha')
+        .pivot('key',{value:d => op.sum(d.value) })
+        
+    
+        ///// ROLLING-AVG /////
+        .derive({deaths_50to59 : aq.rolling(d=> op.average(d.deaths_50to59), [-3,3])})
+        .derive({deaths_60to69 : aq.rolling(d=> op.average(d.deaths_60to69), [-3,3])})
+        .derive({deaths_70to79 : aq.rolling(d=> op.average(d.deaths_70to79), [-3,3])})
+        .derive({deaths_above80 : aq.rolling(d=> op.average(d.deaths_above80), [-3,3])})
+        .derive({deaths_under50 : aq.rolling(d=> op.average(d.deaths_under50), [-3,3])})
+
+        ///// RELATIVE VALUE V. MAX PEAK /////
+        .derive({peak_deaths_50to59 : d=> (d.deaths_50to59/op.max(d.deaths_50to59))})
+        .derive({peak_deaths_60to69 : d=> (d.deaths_60to69/op.max(d.deaths_60to69))})
+        .derive({peak_deaths_70to79 : d=> (d.deaths_70to79/op.max(d.deaths_70to79))})
+        .derive({peak_deaths_above80 : d=> (d.deaths_above80/op.max(d.deaths_above80))})
+        .derive({peak_deaths_under50 : d=> (d.deaths_under50/op.max(d.deaths_under50))})
+        .select(['fecha',aq.matches('peak_')])
+        // .select(['fecha',aq.matches('ra_')])
+        .orderby('fecha')
+        .objects()
+        
+    let dataHosp = aq.from(_data.reverse())
+        ///// NATIONAL VALUES /////
+        .select(['ccaa','fecha', aq.matches('hosp')])
+        .fold(aq.not('fecha','ccaa'))
+        .groupby('fecha')
+        .pivot('key',{value:d => op.sum(d.value) })
+        
+    
+        ///// ROLLING-AVG /////
+        .derive({hosp_50to59 : aq.rolling(d=> op.average(d.hosp_50to59), [-3,3])})
+        .derive({hosp_60to69 : aq.rolling(d=> op.average(d.hosp_60to69), [-3,3])})
+        .derive({hosp_70to79 : aq.rolling(d=> op.average(d.hosp_70to79), [-3,3])})
+        .derive({hosp_above80 : aq.rolling(d=> op.average(d.hosp_above80), [-3,3])})
+        .derive({hosp_under50 : aq.rolling(d=> op.average(d.hosp_under50), [-3,3])})
+
+        ///// RELATIVE VALUE V. MAX PEAK /////
+        .derive({peak_hosp_50to59 : d=> (d.hosp_50to59/op.max(d.hosp_50to59))})
+        .derive({peak_hosp_60to69 : d=> (d.hosp_60to69/op.max(d.hosp_60to69))})
+        .derive({peak_hosp_70to79 : d=> (d.hosp_70to79/op.max(d.hosp_70to79))})
+        .derive({peak_hosp_above80 : d=> (d.hosp_above80/op.max(d.hosp_above80))})
+        .derive({peak_hosp_under50 : d=> (d.hosp_under50/op.max(d.hosp_under50))})
+        .select(['fecha',aq.matches('peak_')])
+        // .select(['fecha',aq.matches('ra_')])
+        .orderby('fecha')
+        .objects()
+    
+    let dataICU = aq.from(_data.reverse())
+        ///// NATIONAL VALUES /////
+        .select(['ccaa','fecha',aq.matches('uci')])
+        .fold(aq.not('fecha','ccaa'))
+        .groupby('fecha')
+        .pivot('key',{value:d => op.sum(d.value) })
+        
+    
+        ///// ROLLING-AVG /////
+        .derive({uci_50to59 : aq.rolling(d=> op.average(d.uci_50to59), [-3,3])})
+        .derive({uci_60to69 : aq.rolling(d=> op.average(d.uci_60to69), [-3,3])})
+        .derive({uci_70to79 : aq.rolling(d=> op.average(d.uci_70to79), [-3,3])})
+        .derive({uci_above80 : aq.rolling(d=> op.average(d.uci_above80), [-3,3])})
+        .derive({uci_under50 : aq.rolling(d=> op.average(d.uci_under50), [-3,3])})
+
+        ///// RELATIVE VALUE V. MAX PEAK /////
+        .derive({peak_uci_50to59 : d=> (d.uci_50to59/op.max(d.uci_50to59))})
+        .derive({peak_uci_60to69 : d=> (d.uci_60to69/op.max(d.uci_60to69))})
+        .derive({peak_uci_70to79 : d=> (d.uci_70to79/op.max(d.uci_70to79))})
+        .derive({peak_uci_above80 : d=> (d.uci_above80/op.max(d.uci_above80))})
+        .derive({peak_uci_under50 : d=> (d.uci_under50/op.max(d.uci_under50))})
+        .select(['fecha',aq.matches('peak_')])
+        // .select(['fecha',aq.matches('ra_')])
+        .orderby('fecha')
+        .objects()
+        // .print({offset:200})
+    // console.log(data)
+    return ({
+        Cases: dataCases,
+        Deaths: dataDeaths,
+        Hospitalized: dataHosp,
+        ICU: dataICU
+    })
+}
+
+// Rolling average calculation-> https://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquerohttps://observablehq.com/@uwdata/working-with-window-queries?collection=@uwdata/arquero
+export function multiline_data_old(_data){
     let data = aq.from(_data.reverse())
         ///// NATIONAL VALUES /////
         .select(['ccaa','fecha',aq.matches('cases'), aq.matches('deat'), aq.matches('hosp'),aq.matches('uci')])
@@ -84,7 +187,6 @@ export function multiline_data(_data){
     // console.log(data)
     return data
 }
-
 
 /* export function rolling_peak_national(_data){
     let data = aq.from(_data.reverse())

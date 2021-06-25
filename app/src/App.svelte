@@ -2,7 +2,7 @@
 <script>
 	import Footer from "./components/common/Footer.svelte";
 	import Speedometer from "./components/charts/Speedometer.svelte";
-	import SpeedometerBg from "./components/charts/SpeedometerBg.svelte";
+	//import SpeedometerBg from "./components/charts/SpeedometerBg.svelte";
 	import Menu from "./components/common/Menu.svelte";
 	// import locale from "@reuters-graphics/d3-locale";
 	// import Scatter from "./components/charts/Scatter2.svelte";
@@ -14,7 +14,7 @@
 	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
 	import TabBar from "@smui/tab-bar";
-	let active = "Cases";
+	$: active = "Cases";
 
 	/* Small multiple map */
 	import gridData from "../public/dataGrid.json";
@@ -23,7 +23,6 @@
 
 	/* Gauge */
 	let speedData = gridData[gridData.length - 1].value0;
-	console.log("speed: " + speedData);
 
 	/* Scatterplot */
 	import ScatterWapper from "./components/ScatterWapper.svelte";
@@ -159,7 +158,9 @@
 				<span class="group7079">⬤</span> 70-79
 				<span class="groupAbove80">⬤</span> 80+
 			</p>
-			<MultilineWrapper />
+			<MultilineWrapper 
+				tablabel = {active}
+			/>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus

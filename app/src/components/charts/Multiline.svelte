@@ -5,15 +5,23 @@
 	import { scaleTime, scaleLinear } from "d3-scale";
 	import { max, extent } from "d3-array";
 	import { Delaunay } from "d3-delaunay";
-
+	import { fade } from 'svelte/transition';
+	
 	export let data;
 	export let margin = { top: 20, right: 5, bottom: 20, left: 5 };
 	export let options;
-	let { key, format, color, layout, title, desc, curve } = options;
+	export let text;
+	export let keyx;
+	export let keyy;
+	let {format, color, layout, title, desc, curve } = options;
+	$: key = {
+		x:keyx,
+		y:keyy
+	}
 
 	let datum, width, height;
 
-	const _data = key.y.map((key, i) =>
+	$: _data = key.y.map((key, i) =>
 		data.map((d) => ({
 			x: new Date(d.fecha),
 			y: d[key],
@@ -21,8 +29,7 @@
 			color: color[i],
 		}))
 	);
-	console.log(_data);
-	// console.log(_data[0][0].x.getMonth())
+
 	$: x = scaleTime()
 		.domain(extent(_data.flat(), (d) => d.x))
 		.range([margin.left, width - margin.right]);
@@ -77,7 +84,7 @@
 			on:mouseleave={leave}
 			on:touchend={leave}
 		>
-			<title id="title">{title}</title>
+			<title id="title">{text}</title>
 			<desc id="desc">{desc}</desc>
 			<g>
 				{#each _data as d}
@@ -86,10 +93,10 @@
 						stroke={d[0].color}
 						fill="none"
 						opacity={hilite(d[0].key)}
+						transition:fade="{{duration: 1000}}"
 					/>
 				{/each}
 			</g>
-
 			<Axis
 				{width}
 				{height}
