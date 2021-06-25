@@ -4,21 +4,102 @@ import locale from "@reuters-graphics/d3-locale";
 
 const loc = new locale('en');
 
+import * as vaccines from "../public/vaccines_data.json"
+export function textvalues(){
+    const data = vaccines.default
+    // console.log('DATA -----',data)
 
-// import * as csv from "../public/data.csv"
-// let data = csv.default
-
-export function textvalues(_data){
-    let data = _data
-    let today = loc.formatTime('%B %e, %Y')(new Date())
+    const today = loc.formatTime('%B %e, %Y')(new Date())
     
+    const national_data = data.filter(d => d.ccaa === 'Total España'|| d.ccaa === 'Totales')
+    const total_population = national_data.reverse()[0]['pop_total']
+    console.log('POPULATION -----',total_population)
+    
+    const total_dose2 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose2']
+    const total_dose1 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose1']
+    console.log('DOSE1-dose2 -----', total_dose1, total_dose2)
+
+    const current_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === new Date().getMonth())
+    const previous_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === new Date().getMonth()-1)
+    console.log(loc.formatTime('%B')(new Date()),current_month_data)
+    console.log(loc.formatTime('%B')((new Date().getMonth()-1)),previous_month_data)
+    
+    let vacc_over_pop_100_2dose = Math.round(total_dose2/total_population*100)
+    let vacc_over_pop_100_1dose = Math.round(total_dose1/total_population*100)
+    console.log(vacc_over_pop_100_2dose +' people out of 100 complete vaccination' )
+    console.log(vacc_over_pop_100_1dose +' people out of 100 at least 1 dose' )
+
+    let daily_avg_previous_month = aq.from(previous_month_data)
+        .orderby('fecha').select('fecha','administradas')
+        .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
+        .slice(1,-1)
+        .derive({daily_avg: d=> op.sum(d.diff)/30})
+        .orderby(aq.desc('fecha'))
+        .select('daily_avg').groupby('daily_avg')
+        .objects()[0].daily_avg
+    const days_this_month = (new Date()).getDate()
+    console.log(days_this_month)
+    const daily_avg_current_month = aq.from(current_month_data)
+        .orderby('fecha').select('fecha','administradas')
+        .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
+        .slice(1,-1)
+        .derive({daily_avg: d=> op.sum(d.diff)/op.date(op.now())})
+        .orderby(aq.desc('fecha'))
+        .select('daily_avg').groupby('daily_avg')
+        .objects()[0].daily_avg
+    
+    const daily_avg_increase = ( daily_avg_current_month -daily_avg_previous_month ) / daily_avg_current_month *100
+
+    const today_raw = (new Date())
+    const days_until_70pct =  (total_population *0.7-total_dose2) / daily_avg_current_month
+    const days_until_100pct =  (total_population -total_dose2) / daily_avg_current_month
+    const end_date_70pct = loc.formatTime('%B %e, %Y')(today_raw.setDate(today_raw.getDate()+days_until_70pct))
+    const end_date_100pct = loc.formatTime('%B %e, %Y')(today_raw.setDate(today_raw.getDate()+days_until_100pct))
+    console.log('days until 70%', days_until_70pct)
+    console.log('date end 70%', end_date_70pct)
+    console.log('days until 100%', days_until_100pct)
+    console.log('date end 100%', end_date_100pct)
+
+    console.log('daily avg previous month',daily_avg_previous_month)
+    console.log('daily avg current month',daily_avg_current_month)
+    console.log(daily_avg_increase > 0 ? '▲ '+daily_avg_increase+' increase': '▼ '+daily_avg_increase+' decrease')
     
     let text = { today }
-    console.log('TEXT OBJECT -----',text.today)
+    console.log('CURRENT DATE -----',text.today)
     return text   
 }
-    
+ 
 
+
+// const data = vacc_data
+    // console.log(data)
+
+    // // const keys = (str) => Object.keys(data[0]).filter(key=> !key.includes(str))
+    // let total_population = data.filter(d => new Date(d.fecha) > new Date("2021-03-30") && d.ccaa === 'Total España')[0]['pop_total']
+    // // let total_dose1 = data.reverse()[0]['dose1_total']
+    // // let total_dose2 = data.reverse()[0]['dose2_total']
+    // let current_month
+    // let last_month = newDate(data.reverse()[0].fecha)
+
+    // let vacc_over_pop_100_2dose 
+    // let vacc_over_pop_100_1dose
+    // let avg_dailyvacc_last_month
+    // let avg_dailyvacc_current_month
+    // let diff_months_vacc_avg
+
+
+    // console.log('POPULATION---',total_population)
+    // console.log('TOTAL_DOSE2---',total_dose2)
+    // console.log('TOTAL_DOSE1---',total_dose1)
+    // console.log('LASTMONTH---',last_month)
+
+    // let today = loc.formatTime('%B %e, %Y')(new Date())
+    
+    
+    // let text = { today }
+
+    // console.log('TEXT OBJECT -----',text.today)
+    // return text   
 
 
 
