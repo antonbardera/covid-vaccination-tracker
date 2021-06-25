@@ -155,6 +155,20 @@
 					</Tab>
 				</TabBar>
 			</div>
+		
+
+			<br />
+			<p class="overline center">
+				<span> Age groups </span>
+				<span class="group5059">⬤</span> 50-59
+				<span class="group6069">⬤</span> 60-69
+				<span class="group7079">⬤</span> 70-79
+				<span class="groupAbove80">⬤</span> 80+
+			</p>
+
+			<MultilineWrapper 
+				tablabel = {active}
+			/>
 
 			<p>
 				Now with close to 100% vaccinated, the group’s share of cases versus its winter peak has been failing and separated itself from other younger age groups which received shots later than the group. 
@@ -168,24 +182,6 @@
 			<small>
 				The share of peak is calculated by dividing the rolling average numbers by its max value. This normalization allows us to compare across age groups of various sizes. 
 			</small>
-
-			<br />
-			<p class="overline center">
-				<span> Age groups </span>
-				<span class="group5059">⬤</span> 50-59
-				<span class="group6069">⬤</span> 60-69
-				<span class="group7079">⬤</span> 70-79
-				<span class="groupAbove80">⬤</span> 80+
-			</p>
-			<MultilineWrapper 
-				tablabel = {active}
-			/>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
-			</p>
 			<!-- <img src="img/topicB-scatterplot.png" alt="placeholder" /> -->
 		</div>
 
