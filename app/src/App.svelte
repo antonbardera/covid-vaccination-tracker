@@ -6,10 +6,10 @@
 	import Menu from "./components/common/Menu.svelte";
 	// import locale from "@reuters-graphics/d3-locale";
 	// import Scatter from "./components/charts/Scatter2.svelte";
-	import {textvalues} from "./utils.js"
-	export let data
-	let text = textvalues(data)
-	console.log(text.today)
+	import { textvalues } from "./utils.js";
+	export let data;
+	let text = textvalues(data);
+	console.log(text.today);
 
 	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
@@ -29,9 +29,10 @@
 
 	/* Multiline */
 	import MultilineWrapper from "./components/MultilineWrapper.svelte";
-
-
 	let color = ["rgba(92,198,178, 1)", "rgba(0,0,0, 1)"];
+
+	/* MUI Paper */
+	import Paper, { Title, Subtitle, Content } from "@smui/paper";
 </script>
 
 <!-- HEAD -->
@@ -158,16 +159,40 @@
 				<span class="group7079">⬤</span> 70-79
 				<span class="groupAbove80">⬤</span> 80+
 			</p>
-			<MultilineWrapper 
-				tablabel = {active}
-			/>
+			<MultilineWrapper tablabel={active} />
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
+				People over 80 were the earliest to receive shots. They were the
+				most affected measured by the relative terms
+				<a href="#textBox">*</a>
+				of covid-19 cases, hospital admissions, severe hospital cases (ICU)
+				and deaths in previous waves of outbreak.
 			</p>
-			<!-- <img src="img/topicB-scatterplot.png" alt="placeholder" /> -->
+			<p>
+				Now with close to 100% vaccinated, the group’s share of cases
+				versus its winter peak has been failing and separated itself
+				from other younger age groups which received shots later than
+				the group.
+			</p>
+			<p>
+				Similar pattern surfaces after the vaccination rolled out to the
+				next elderly age groups, 70 to 79, 60 to 69, 50 to 59 and so
+				forth.
+			</p>
+			<br />
+
+			<Paper class="paper-demo">
+				<div class="subtitle1">
+					<!-- svelte-ignore a11y-missing-content -->
+					<a id="textBox" />
+					Why do we show “share of the peak”, indices as a percentage of
+					its peak, instead of absolute numbers?
+				</div>
+				<div class="body1" style="padding-top: 12px;">
+					The share of peak is calculated by dividing the rolling
+					average numbers by its max value. This normalization allows
+					us to compare across age groups of various sizes.
+				</div>
+			</Paper>
 		</div>
 
 		<!-- TopicC -->
@@ -176,18 +201,6 @@
 			<h4>How each age group compare to the others</h4>
 			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
 			<ScatterWapper />
-
-			<!-- <img
-				src="img/topicC-scatterplot.png"
-				alt="placeholder"
-				class="extendedContentContainer"
-			/> -->
-			<!-- <p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
-			</p> -->
 		</div>
 	</div>
 </main>
@@ -197,7 +210,7 @@
 <style>
 	:global(body) {
 		margin: 0;
-		font-family: "Merriweather", "Merriweather Sans", Arial, 
+		font-family: "Merriweather", "Merriweather Sans", Arial;
 	}
 
 	.center {
@@ -246,7 +259,7 @@
 	}
 
 	.group5059 {
-		color: #3A505C;
+		color: #3a505c;
 		margin-left: 15px;
 		position: relative;
 		top: -2px;
@@ -254,7 +267,7 @@
 	}
 
 	.group6069 {
-		color: #00A7B9;
+		color: #00a7b9;
 		margin-left: 15px;
 		position: relative;
 		top: -2px;
@@ -262,7 +275,7 @@
 	}
 
 	.group7079 {
-		color: #59C28E;
+		color: #59c28e;
 		margin-left: 15px;
 		position: relative;
 		top: -2px;
@@ -270,11 +283,15 @@
 	}
 
 	.groupAbove80 {
-		color: #85DA46;
+		color: #85da46;
 		margin-left: 15px;
 		position: relative;
 		top: -2px;
 		margin-right: 2px;
 	}
 
+	* :global(.paper-demo) {
+		margin: 0 auto;
+		max-width: 680px;
+	}
 </style>
