@@ -56,19 +56,39 @@
     console.log("min max ======");
     console.log(maxDate);
     console.log(minDate);
+
+    let d70 = data.filter((d) => d.age_group === "70to79")
+    let d60 = data.filter((d) => d.age_group === "60to69")
+    let d50 = data.filter((d) => d.age_group === "50to59")
 </script>
 
 <div>
-    <p>70to79</p>
+    <h6 class='h6'>Age group 70-79</h6>
+    <p class='subtitle1'>Cases as share of the winter peak vs. vaccination rate</p>
     <Scatter
-        data={data.filter((d) => d.age_group === "70to79")}
+        data={d70}
         key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff" }}
         {format}
         {maxDate}
         {minDate}
         layout="col"
     />
-
+    <p> 
+        The 70 to 79 age group is the second batch to be invited to get jabs. 
+        The earliest available data shows {d70[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
+        shot on {d70[0]['dateStr']}. 
+    </p>
+    <p>
+        As of {d70[d70.length-1]['dateStr']}, 
+        the number has increased to {d70[d70.length-1]['dose2_pct'].toFixed(1)}%. 
+        It takes almost three months from close to 
+        zero to almost 100 percent fully vaccinated. 
+    </p>
+    <p>
+        With more being fully vaccinated, the share of the peak index 
+        has dropped from {d70[0]['cases_peak'].toFixed(1)}% on {d70[0]['dateStr']} 
+        to {d70[d70.length-1]['cases_peak'].toFixed(1)}% on {d70[d70.length-1]['dateStr']}. 
+    </p>
     <!-- <p>above80</p>
     <ScatterStatic
         data={data.filter((d) => d.age_group === "above80")}
@@ -79,7 +99,8 @@
         class="scatter-item"
     /> -->
 
-    <p>60to69</p>
+    <h6 class='h6'>Age group 60-69</h6>
+    <p class='subtitle1'>Cases as share of the winter peak vs. vaccination rate</p>
     <ScatterStatic
         data={data.filter((d) => d.age_group === "60to69")}
         key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff", a:"age_group" }}
@@ -88,7 +109,21 @@
         {minDate}
     />
 
-    <p>50to59</p>
+    <p> 
+        The earliest available data shows {d60[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
+        shot on {d60[0]['dateStr']}. 
+        
+        As of {d60[d60.length-1]['dateStr']}, the number has increased to 
+        {d60[d60.length-1]['dose2_pct'].toFixed(1)}%. 
+    </p>
+    <p>
+        With more being fully vaccinated, the share of the peak index 
+        has dropped from {d60[0]['cases_peak'].toFixed(1)}% on {d60[0]['dateStr']} 
+        to {d60[d60.length-1]['cases_peak'].toFixed(1)}% on {d60[d60.length-1]['dateStr']}. 
+    </p>
+
+    <h6 class='h6'>Age group 50-59</h6>
+    <p class='subtitle1'>Cases as share of the winter peak vs. vaccination rate</p>
     <ScatterStatic
         data={data.filter((d) => d.age_group === "50to59")}
         key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff", a:"age_group"}}
@@ -96,6 +131,19 @@
         {maxDate}
         {minDate}
     />
+    <p> 
+        The earliest available data shows {d50[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
+        shot on {d50[0]['dateStr']}. 
+        
+        As of {d50[d50.length-1]['dateStr']}, the number has increased to 
+        {d50[d50.length-1]['dose2_pct'].toFixed(1)}%. 
+    </p>
+    <p>
+        With more being fully vaccinated, the share of the peak index 
+        has dropped from {d50[0]['cases_peak'].toFixed(1)}% on {d50[0]['dateStr']} 
+        to {d50[d50.length-1]['cases_peak'].toFixed(1)}% on {d50[d50.length-1]['dateStr']}. 
+    </p>
+
 </div>
 
 <!-- COLUMNS TEST WITH FLEX GRID -->
@@ -149,6 +197,9 @@
 </div> -->
 
 <style>
+    .h6{
+        margin-bottom: -10px;
+    }
     /* .scatter-container {
         display: grid;
         grid-template-columns: auto auto;

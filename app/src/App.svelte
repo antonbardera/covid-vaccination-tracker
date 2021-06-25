@@ -173,14 +173,6 @@
 		<br />
 		<div>
 			<h4>How each age group compare to the others</h4>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
-			</p>
-
-			<p>Daily cases versus the winter peak in the age group 70 to 79</p>
 			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
 			<ScatterWapper />
 
@@ -189,12 +181,12 @@
 				alt="placeholder"
 				class="extendedContentContainer"
 			/> -->
-			<p>
+			<!-- <p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
-			</p>
+			</p> -->
 		</div>
 	</div>
 </main>

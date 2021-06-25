@@ -14,7 +14,6 @@ export function textvalues(_data){
     
     
     let text = { today }
-
     console.log('TEXT OBJECT -----',text.today)
     return text   
 }
