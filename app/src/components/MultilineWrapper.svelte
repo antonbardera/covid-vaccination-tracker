@@ -15,7 +15,7 @@
 	const loc = new locale('en');
 	const format = {
 		x: loc.formatTime('%b %e'),
-		y: loc.format('%').loc.format(',.2f')
+		y: loc.format('%')
 	}
 	
 	let mldata = multiline_data(data) 
@@ -44,11 +44,6 @@
 
 
 
-
-
-
-	let mldata = multiline_data(data);
-	$: mldata = multiline_data(data);
 </script>
 
 <div class="narrowColumn">
