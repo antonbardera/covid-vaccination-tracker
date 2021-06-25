@@ -49,18 +49,18 @@
 	<div class="contentContainer">
 		<!-- GaugeChart -->
 		<div>
-			<p class="mdc-typography--headline6" style="text-align: center;">
+			<h6 style="text-align: center;">
 				Percentage of the population with complete vaccination
-			</p>
+			</h6>
 
 			<div class="center">
 				<div style="width: 500px; height: 281px;">
-					<SpeedometerBg />
+					<!-- Disabled Temporarily -->
+					<!-- <SpeedometerBg /> -->
 					<Speedometer speedValue={speedData} />
 				</div>
 			</div>
-
-			<p class="mdc-typography--body2">
+			<p>
 				17% 1 dose Lorem ipsum dolor sit amet, consectetur adipiscing
 				elit. Volutpat donec pretium, proin metus. At the current rate,
 				it would take 3 months to vaccinate 70% of the population (with
@@ -70,22 +70,23 @@
 
 		<!-- Intro -->
 		<div>
-			<p class="mdc-typography--headline2" style="text-align: center;">
+			<h2 style="text-align: center;">
 				This is how vaccination progresses in Spain
-			</p>
-			<div class="mdc-typography--subtitle1" style="text-align: center;">
+			</h2>
+
+			<div class="subtitle1" style="text-align: center;">
 				By Spe Chen, Xavier Bolló and Santiago Salcido
 			</div>
-			<div class="mdc-typography--overline" style="text-align: center;">
+			<div class="overline" style="text-align: center;">
 				June 26, 2021
 			</div>
-			<p class="mdc-typography--subtitle1">
+			<p class="subtitle1">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
 			</p>
-			<p class="mdc-typography--body1">
+			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
@@ -96,27 +97,20 @@
 		<!-- TopicA -->
 		<br />
 		<div>
-			<p class="mdc-typography--headline4">
-				How does each CCAA compare to the <span class='dotted'>national share</span> of vaccinated
-				people?
-			</p>
-			<p class="mdc-typography--overline center">
-				<span class='aboveNational'>⬤</span> Above national
-				<span class='belowNational'>⬤</span> Below national
+			<h4>
+				How does each CCAA compare to the <span class="dotted"
+					>national share</span
+				> of vaccinated people?
+			</h4>
+			<p class="overline center">
+				<span class="aboveNational">⬤</span> Above national
+				<span class="belowNational">⬤</span> Below national
 			</p>
 
 			<div>
 				<Grid {grid} />
 			</div>
-			<!-- <img
-				src="img/topicA-smallMultiples.png"
-				alt="placeholder"
-				class="extendedContentContainer"
-			/> -->
-			<!-- <p class="mdc-typography--caption">
-				Share of the population that has received two doses
-			</p> -->
-			<p class="mdc-typography--body1">
+			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
@@ -127,12 +121,8 @@
 		<!-- TopicB -->
 		<br />
 		<div>
-			<br />
-
-			<p class="mdc-typography--headline4">
-				Vaccine effect shown by age group
-			</p>
-			<p class="mdc-typography--body1">
+			<h4>Vaccine effect shown by age group</h4>
+			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
@@ -157,28 +147,27 @@
 			</div>
 
 			<br />
+			<p class="overline center">
+				<span class="group5059">⬤</span> 50-59
+				<span class="group6069">⬤</span> 60-69
+				<span class="group7079">⬤</span> 70-79
+				<span class="groupAbove80">⬤</span> 80+
+			</p>
 			<MultilineWrapper />
-			<!-- <img
-				src="img/topicB-DailyCases2.png"
-				alt="placeholder"
-				class="wideColumn"
-			/> -->
-			<p class="mdc-typography--body1">
+			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
 				consectetur.
 			</p>
-			<img src="img/topicB-scatterplot.png" alt="placeholder" />
+			<!-- <img src="img/topicB-scatterplot.png" alt="placeholder" /> -->
 		</div>
 
 		<!-- TopicC -->
 		<br />
 		<div>
-			<p class="mdc-typography--headline4">
-				How each age group compare to the others
-			</p>
-			<p class="mdc-typography--body1">
+			<h4>How each age group compare to the others</h4>
+			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
@@ -189,12 +178,12 @@
 			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
 			<ScatterWapper />
 
-			<img
+			<!-- <img
 				src="img/topicC-scatterplot.png"
 				alt="placeholder"
 				class="extendedContentContainer"
-			/>
-			<p class="mdc-typography--body1">
+			/> -->
+			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
 				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
@@ -207,10 +196,9 @@
 
 <!-- EXTRA CSS & STYLES -->
 <style>
-	/* Modified :global(body,html) produce error deploying on Vercel -> 'ValidationError: :global(...) must contain a single selector'  */
 	:global(body) {
 		margin: 0;
-		font-family: Merriweather Sans, Arial, Helvetica, sans-serif;
+		font-family: "Merriweather", "Merriweather Sans", Arial, 
 	}
 
 	.center {
@@ -225,7 +213,7 @@
 		border-left: 1px solid #757575;
 		border-right: 1px solid #757575;
 		max-width: 1024px;
-		background-color: #f2f2f2;
+		background-color: #f6f8f9;
 	}
 
 	.contentContainer {
@@ -236,29 +224,58 @@
 	.extendedContentContainer {
 		margin-left: -160px;
 	}
-	.credits {
-		border-top: 1px solid rgb(124, 124, 124);
-		margin: 48px 0px 24px 0px;
-	}
 
-	.dotted{
+	.dotted {
 		border-bottom: 2px dotted #999;
- 		text-decoration: none; 
+		text-decoration: none;
 	}
 
-	.aboveNational{
-		color: #569E4B;
-		margin-bottom:2px;
+	.aboveNational {
+		color: #569e4b;
+		margin-bottom: 2px;
 		position: relative;
-   		top: -2px;
+		top: -2px;
 		margin-right: 2px;
 	}
 
-	.belowNational{
-		color: #F0A81C;
+	.belowNational {
+		color: #f0a81c;
 		margin-left: 15px;
 		position: relative;
-   		top: -2px;
+		top: -2px;
 		margin-right: 2px;
 	}
+
+	.group5059 {
+		color: #3A505C;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
+	.group6069 {
+		color: #00A7B9;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
+	.group7079 {
+		color: #59C28E;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
+	.groupAbove80 {
+		color: #85DA46;
+		margin-left: 15px;
+		position: relative;
+		top: -2px;
+		margin-right: 2px;
+	}
+
 </style>

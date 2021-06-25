@@ -149,7 +149,13 @@
 	} */
 
 	.graphic{
-		height:60vh;
+		/* height:60vh; */
+		height: 450px;
+		font-family: "Merriweather Sans";
+		font-style: normal;
+		font-weight: normal;
+		font-size: 10px;
+		fill: #757575;
 	}
 
 	.date-text{

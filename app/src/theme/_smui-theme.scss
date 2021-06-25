@@ -3,10 +3,8 @@
 
 // Svelte Colors!
 @use '@material/theme/index' as theme with (
-  /* $primary: #232226,
-  $secondary: #BF7D56, */
-  $primary: #BF7D56,
-  $secondary: #232226,
+  $primary: #37474F,
+  $secondary: #8BC34A,
   $surface: #fff,
   $background: #CFD8DC,
   $error: color-palette.$red-900,
@@ -14,25 +12,119 @@
 
 // Svelte Typography!
 @use '@material/typography/mdc-typography';
+@use '@material/typography/index' as typography;
 
 // Google Fonts
-@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,700;0,800;1,700;1,800&family=Merriweather:ital,wght@0,400;1,300&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,700;0,800;1,700;1,800&family=Merriweather:ital,wght@0,400;1,300&display=swap"); */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,400;0,700;0,800;1,400;1,700;1,800&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 html,
 body {
+  @include typography.typography("body1");
   background-color: theme.$background;
-  /* color: theme.$on-surface; */
+  font-family: "Merriweather", "Merriweather Sans", Arial, sans-serif;
+  line-height: 175%;
+  letter-spacing: 0.15px;
 }
 
 a {
-  color: #BF7D56;
+  color: #bf7d56;
 }
 
 a:visited {
-  color: color.scale(#BF7D56);
+  color: color.scale(#bf7d56);
 }
 
-/* REDUCED LIGHTNESS FOR VISITED LINKS */
-/* a:visited {
-  color: color.scale(#BF7D56, $lightness: -35%);
-} */
+.body2 {
+  @include typography.typography("body2");
+  font-family: "Merriweather", "Merriweather Sans", Arial, sans-serif;
+}
+
+h1 {
+  @include typography.typography("headline1");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+h2 {
+  @include typography.typography("headline2");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -2.5px;
+}
+
+h3 {
+  @include typography.typography("headline3");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+h4 {
+  @include typography.typography("headline4");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+h5 {
+  @include typography.typography("headline5");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+h6 {
+  @include typography.typography("headline6");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.subtitle1 {
+  @include typography.typography("subtitle1");
+  font-family: "Merriweather", "Merriweather Sans", Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.15px;
+}
+
+.subtitle2 {
+  @include typography.typography("subtitle2");
+  font-family: "Merriweather", "Merriweather Sans", Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+}
+
+caption {
+  @include typography.typography("caption");
+  font-family: "Merriweather", "Merriweather Sans", Arial, sans-serif;
+  letter-spacing: 0.4px;
+  font-size: 12px;
+  line-height: 166%;
+}
+
+button {
+  @include typography.typography("button");
+  font-family: "Merriweather Sans", Arial, sans-serif;
+}
+
+.overline {
+  @include typography.typography("overline");
+  font-family: "Merriweather", "Merriweather Sans", Arial, sans-serif;
+  line-height: 166%;
+  letter-spacing: 1px;
+}
+
+small {
+  font-size: 0.9em;
+}
+
+big {
+  font-size: 1.1em;
+}
+
+b,
+strong {
+  font-weight: bold;
+}

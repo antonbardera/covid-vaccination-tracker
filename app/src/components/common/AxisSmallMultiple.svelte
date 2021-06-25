@@ -112,11 +112,11 @@
     stroke: white;
   }
   text{
-    font-family: "Merriweather";
+    font-family: "Merriweather Sans";
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
-    fill: #e2dfdf;
+    fill: #bdbdbd;
   }
 
 </style>
