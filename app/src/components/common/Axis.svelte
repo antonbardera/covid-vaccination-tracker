@@ -81,4 +81,11 @@
 	line {
 		stroke: #DCDCDC;
 	}
+  text {
+		paint-order: stroke;
+		stroke:#fff;
+		stroke-width: 2px;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
 </style>

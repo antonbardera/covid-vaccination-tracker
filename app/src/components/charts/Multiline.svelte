@@ -96,7 +96,7 @@
 				{margin}
 				scale={y}
 				position="left"
-				format={format.y}
+				format={format.yAxis}
 			/>
 			<Axis
 				{width}

@@ -12,10 +12,31 @@
 	import * as csv from "../../public/data.csv"
 	let data = csv.default
 	
+	const formatPercentage = (value, locale = "en-GB") => {
+    return Intl.NumberFormat(locale, {
+			style: "percent",
+			minimumFractionDigits: 1,
+			maximumFractionDigits: 2
+    	}).format(value);
+	};
+	const formatPercentageAxis = (value, locale = "en-GB") => {
+    return Intl.NumberFormat(locale, {
+			style: "percent",
+			maximumFractionDigits: 0
+    	}).format(value);
+	};
+	
 	const loc = new locale('en');
 	const format = {
+		x: loc.formatTime('%b'),
+		y: formatPercentage,
+		yAxis: formatPercentageAxis
+	}
+	
+	const formatLong = {
 		x: loc.formatTime('%b %e'),
-		y: loc.format('%')
+		y: formatPercentage,
+		yAxis: formatPercentageAxis
 	}
 	
 	let mldata = multiline_data(data) 
@@ -87,7 +108,7 @@
 			}	,
 			// key:{x: 'fecha', y: ['ra_cases_50to59', 'ra_cases_60to69','ra_cases_70to79','ra_cases_above80']},
 			// key:{x: 'fecha', y: ['cases_50to59', 'cases_60to69','cases_70to79','cases_above80']},
-			format: format,
+			format: formatLong,
 			color: ["#3A505C", "#00A7B9", "#59C28E", "#85DA46"],
 			layout: "col",
 			title: "Title",

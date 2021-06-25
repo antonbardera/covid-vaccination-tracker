@@ -66,6 +66,8 @@
 
 <style>
     text.tooltip {
+        font-size: 110%;
+        color:#000;
 		paint-order: stroke;
 		stroke:#fff;
 		stroke-width: 5px;
