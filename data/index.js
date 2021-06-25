@@ -507,8 +507,10 @@ function simpleMovingAverage(data, window = 5) {
           writeRaw(aq.from(data.reverse()).toCSV(), 'data', pathTo, 'csv');
           console.log('csv data created')
         }
-
+        
         writeFiles(full_data)
+        writeJSON(flatvac,'vaccines_data',pathTo)
+        console.log('vaccines json created')
         
 
 
