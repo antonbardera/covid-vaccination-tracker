@@ -9,7 +9,7 @@
 	
 	$: nTicks = (position === 'bottom' || position === 'top' ) 
 		? width / 50
-    : height / 50;
+    : height / 25;
 
   $: transform = position === 'bottom'
     ? `translate(0, ${height - margin.bottom - margin.top})`
@@ -76,7 +76,7 @@
     </g>
     {:else if position === 'left'}
     <g class='tick' transform='translate(0, {tick.offset})'>
-        {#if i !== 0} 
+        {#if i !== 0 && i % 2 !== 1} 
           <line class='thin-line' x2={width - margin.left - margin.right - 5}/>
           <text class='label-bg' x=0 y=3 text-anchor='start'> 
             {tick.value * 100}
@@ -84,6 +84,8 @@
           <text class='label' x=0 y=3 text-anchor='start'> 
             {tick.value * 100}
           </text>
+        {:else if i % 2 === 1}
+          <line class='thin-line' x2={width - margin.left - margin.right - 5}/>
         {:else}
            <line class='thick-line' x2={width - margin.left - margin.right}/>
         {/if}
@@ -106,7 +108,6 @@
     stroke-width: 13px;
     stroke: white;
   }
-
   .label-bg-l{
     stroke-width: 10px;
     stroke: white;

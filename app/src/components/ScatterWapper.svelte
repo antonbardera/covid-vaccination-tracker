@@ -57,18 +57,18 @@
     console.log(minDate);
 </script>
 
-<p>70to79</p>
-<Scatter
-    data={data.filter((d) => d.age_group === "70to79")}
-    key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff" }}
-    {format}
-    {maxDate}
-    {minDate}
-    layout="col"
-/>
+<div>
+    <p>70to79</p>
+    <Scatter
+        data={data.filter((d) => d.age_group === "70to79")}
+        key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff" }}
+        {format}
+        {maxDate}
+        {minDate}
+        layout="col"
+    />
 
-<div class="scatter-container">
-    <p>above80</p>
+    <!-- <p>above80</p>
     <ScatterStatic
         data={data.filter((d) => d.age_group === "above80")}
         key={{ x: "dose2_pct", y: "cases_peak", z: "dateDiff" }}
@@ -76,7 +76,7 @@
         {maxDate}
         {minDate}
         class="scatter-item"
-    />
+    /> -->
 
     <p>60to69</p>
     <ScatterStatic
@@ -85,7 +85,6 @@
         {format}
         {maxDate}
         {minDate}
-        class="scatter-item"
     />
 
     <p>50to59</p>
@@ -95,12 +94,11 @@
         {format}
         {maxDate}
         {minDate}
-        class="scatter-item"
     />
 </div>
 
 <!-- COLUMNS TEST WITH FLEX GRID -->
-<div class="flex-grid">
+<!-- <div class="flex-grid">
     <div class="col">
         <p>50to59</p>
         <ScatterStatic
@@ -147,10 +145,10 @@
             class="scatter-item"
         />
     </div>
-</div>
+</div> -->
 
 <style>
-    .scatter-container {
+    /* .scatter-container {
         display: grid;
         grid-template-columns: auto auto;
         padding: 10px;
@@ -165,5 +163,5 @@
     }
     .col {
         flex: 1;
-    }
+    } */
 </style>
