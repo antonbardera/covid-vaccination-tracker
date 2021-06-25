@@ -7,9 +7,8 @@
 	// import locale from "@reuters-graphics/d3-locale";
 	// import Scatter from "./components/charts/Scatter2.svelte";
 	import {textvalues} from "./utils.js"
-	export let data
-	let text = textvalues(data)
-	console.log(text.today)
+	$: text = textvalues()
+	// console.log('---text toodaaay',text.today)
 
 	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
@@ -65,10 +64,7 @@
 				</div>
 			</div>
 			<p>
-				17% 1 dose Lorem ipsum dolor sit amet, consectetur adipiscing
-				elit. Volutpat donec pretium, proin metus. At the current rate,
-				it would take 3 months to vaccinate 70% of the population (with
-				two doses)
+				As of {text.today}, for every 100 people at least {text.vacc_over_pop_100_2dose} are fully vaccinated and {text.vacc_over_pop_100_1dose} had received their first dose in Spain. At the current rate, the national target of vaccinating 70% of its population would be reached by  <span class="dotted">{text.end_date_70pct}</span>. 
 			</p>
 		</div>
 
@@ -82,19 +78,19 @@
 				By Spe Chen, Xavier Bolló and Santiago Salcido
 			</div>
 			<div class="overline" style="text-align: center;">
-				June 26, 2021
+				Published: June 26, 2021   |   Upated: {text.today}
 			</div>
 			<p class="subtitle1">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
+				Spain rolled out its mass vaccination program in January. A total of {text.total_millions} million doses have been administered so far. On average, {text.daily_avg_previous_month} of shots were given out everyday in early {text.prev_month} and the figure has increased to {text.daily_avg_current_month} in {text.curr_month}. 
+
 			</p>
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
+				Currently there are four types of Covid-19 vaccines being administered in seventeen Spanish regions. These include Johnson & Johnson’s single-dose vaccine, Janssenm and the two-dose series, Pfizer-BioNTech, Moderna and AstraZeneca/Oxford. 
+
+			</p>
+			<p>
+				The nation focuses on a health risk and age-based vaccine rollout plan to protect the most vulnerable groups from contracting the disease. In our preliminary analysis with available open data, we conclude some notable regional differences in vaccination rate and the first sign of vaccine effect comparing the nearly 100% vaccinated group versus less ones.  
+
 			</p>
 		</div>
 
@@ -102,10 +98,14 @@
 		<br />
 		<div>
 			<h4>
-				How does each CCAA compare to the <span class="dotted"
+				How does each region compare to the <span class="dotted"
 					>national share</span
 				> of vaccinated people?
 			</h4>
+			<h6>
+				Percentage of fully inoculated population by region versus national level 
+
+			</h6>
 			<p class="overline center">
 				<span class="aboveNational">⬤</span> Above national
 				<span class="belowNational">⬤</span> Below national
@@ -115,11 +115,19 @@
 				<Grid {grid} />
 			</div>
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
+				Why is there a gap in those regions?
 			</p>
+			<p>
+			Following the national guideline, each autonomous region (<i>Comunidad Autónoma</i>) manages the vaccine administration to its priority groups. Every region more or less follows the same rollout policy. So why does the gap occur? 
+			</p>
+			<p>
+				One possible explanation is that the demography in each region is not uniform. The age group of more than 70 years old takes up roughly 8% of the whole population in Spain. 
+			</p>
+			<p>
+				This aging demographic coincides with the above national vaccination rate regions colored green shown in the above chart. This vaccination gap is rooted in the age-based rollout plan. The opposite vaccination trends are reflected in the younger CCAAs like Madrid, Cataluña and Com. Valenciana where vaccination rates lag behind the national average, colored orange. 
+			</p>
+			
+			
 		</div>
 
 		<!-- TopicB -->
@@ -127,11 +135,9 @@
 		<div>
 			<h4>Vaccine effect shown by age group</h4>
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Volutpat donec pretium, proin metus. Amet, malesuada dui purus
-				amet ullamcorper dui, nec. Dis nisl eu tristique dolor fames
-				consectetur.
+				Several covid-19 indicators continue their overall downward trend since January. However, indices trends of each age group diverged after the mass inoculation campaign rolled out progressively. 
 			</p>
+
 
 			<!-- TopicB Tabs -->
 			<div>
@@ -149,6 +155,19 @@
 					</Tab>
 				</TabBar>
 			</div>
+
+			<p>
+				Now with close to 100% vaccinated, the group’s share of cases versus its winter peak has been failing and separated itself from other younger age groups which received shots later than the group. 
+			</p>
+			<p>
+				Similar pattern surfaces after the vaccination rolled out to the next elderly age groups, 70 to 79, 60 to 69, 50 to 59 and so forth. 
+			</p>
+			<small>
+				*Why do we show “share of the peak”, indices as a percentage of its peak, instead of absolute numbers?
+			</small>
+			<small>
+				The share of peak is calculated by dividing the rolling average numbers by its max value. This normalization allows us to compare across age groups of various sizes. 
+			</small>
 
 			<br />
 			<p class="overline center">
@@ -220,9 +239,9 @@
 		max-width: 680px;
 	}
 
-	.extendedContentContainer {
+	/* .extendedContentContainer {
 		margin-left: -160px;
-	}
+	} */
 
 	.dotted {
 		border-bottom: 2px dotted #999;
