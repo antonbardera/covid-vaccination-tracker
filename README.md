@@ -60,7 +60,7 @@ However, our conclusion only applies to CCAAs in mainland Spain. The age group d
 
 ## Visualization and interaction design
 
-Earlier experiences from previous workshops made clear that before moving too early to prototyping, there were some key stages to improve the decisions about storytelling, visualization and implementation:
+Earlier experiences from previous workshops made clear that before moving too soon to prototyping, there were some key stages to improve the decisions about storytelling, visualization and implementation:
 
 - Early analysis
 - Benchmarking
