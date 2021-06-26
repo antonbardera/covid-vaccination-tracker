@@ -81,13 +81,14 @@
 			</h2>
 
 			<div class="subtitle1" style="text-align: center;">
-				By Spe Chen, Xavier Bolló and Santiago Salcido
+				By Spe Chen, Xavier Bolló and Santiago Salcido + 🤖<span class='robot'>*</span> 
 			</div>
-
 			<div class="overline" style="text-align: center; padding-bottom: 24px;">
 				Published: June 26, 2021 | Updated: <span class="computed">{text.today}</span>
 			</div>
-			
+            <p class="center robot">
+                *Our robot writes the green text and updates the charts based on official data sources. Its works only on weekdays.
+            </p>
 			<p class="subtitle1">
 				Spain rolled out its mass vaccination program in January. A
 				total of  <span class="computed">{text.total_millions}</span> million doses have been administered
@@ -122,7 +123,7 @@
 				> of vaccinated people?
 			</h4>
 			<p class='subtitle1'>
-				Percentage of fully inoculated population by region versus
+				Percentage of fully inoculated population by region vs.
 				national level
             </p>
 			<p class="overline center">
@@ -187,7 +188,7 @@
 				  Note: tabs must be unique. (They cannot === each other.)
 				-->
 				<TabBar
-					tabs={["Cases", "Hospitalized", "Deaths", "ICU"]}
+					tabs={["Cases", "Hospitalized", "ICU", "Deaths"]}
 					let:tab
 					bind:active
 				>
@@ -345,5 +346,15 @@
     .computed{
         color: #618833;
         font-weight: 700;
+    }
+
+    .robot{
+        color: darkgray;
+        font-family: "Merriweather Sans", Arial, sans-serif;
+        font-size: 13px;
+        line-height: 1.5;
+        max-width: 25vw;
+        margin: 0 auto;
+        text-align: center;
     }
 </style>
