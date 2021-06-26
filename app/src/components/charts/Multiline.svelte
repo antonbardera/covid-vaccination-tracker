@@ -10,7 +10,7 @@
 	export let data;
 	export let margin = { top: 20, right: 5, bottom: 20, left: 5 };
 	export let options;
-	export let text;
+	// export let text;
 	export let keyx;
 	export let keyy;
 	let {format, color, layout, title, desc, curve } = options;
@@ -30,10 +30,12 @@
 		}))
 	);
 
+	console.log(data[data.length -3]['fecha'])
+	console.log(max(data.map(d => new Date(d.fecha))))
+
 	$: x = scaleTime()
 		.domain(extent(_data.flat(), (d) => d.x))
 		.range([margin.left, width - margin.right]);
-	// console.log(_data)
 	$: y = scaleLinear()
 		.domain([0, max(_data.flat(), (d) => d.y)])
 		.range([height - margin.bottom - margin.top, margin.top]);
@@ -84,8 +86,10 @@
 			on:mouseleave={leave}
 			on:touchend={leave}
 		>
-			<title id="title">{text}</title>
-			<desc id="desc">{desc}</desc>
+			<!-- <title id="title">{text}</title>
+			<desc id="desc">{desc}</desc> -->
+			<text class='axis-label' x={width*0.85} y={height*0.08} >Share of peak</text>
+
 			<g>
 				{#each _data as d}
 					<path
@@ -139,5 +143,9 @@
 	path {
 		transition: opacity 0.3s;
 		stroke-width: 2px;
+	}
+
+	.axis-label{
+		text-transform: uppercase;
 	}
 </style>

@@ -20,7 +20,6 @@
 	let height = 150;	
 	let width2 = 150;
 
-	console.log(color)
 
 	let selectedCurve = curveBasis;
 
@@ -66,17 +65,6 @@
 		.y0(d => y(d[key.y[1]]))
 		.y1(height)
 		.curve(selectedCurve);
-	const mouseMove = (m) => {
-		const mX = (m.offsetX) ? m.offsetX : m.clientX;
-		const _data = [...data];
-		_data.sort((a,b) => a[key.x] - b[[key.x]]);
-		const index = x.invert(mX);
-		const i = bisector(d => d[key.x]).center(_data, index);
-		datum = _data[i];
-	}
-	const leave = (m) => {
-		datum = undefined;
-	}
 
 </script> 
 
@@ -87,11 +75,6 @@
 	{width}
 	height={width}
 	role='img'
-	aria-labelledby='title desc'
-	on:touchmove|preventDefault
-	on:pointermove|preventDefault={mouseMove}
-	on:mouseleave={leave}
-	on:touchend={leave}
 	>
 	<!-- <title id='title'>{title}</title>
 	<desc id='desc'>{desc}</desc> -->

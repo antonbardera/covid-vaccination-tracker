@@ -93,8 +93,8 @@
 			format: formatLong,
 			color: ["#3A505C", "#00A7B9", "#59C28E", "#85DA46"],
 			layout: "col",
-			title: "Title",
-			desc: "Description",
+			// title: "Title",
+			// desc: "Description",
 			curve: curveBasis
 		}}
 	/>

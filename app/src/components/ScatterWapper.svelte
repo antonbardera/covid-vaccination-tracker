@@ -53,9 +53,9 @@
     let minDate = min(data.map((d) => d.dateDiff));
     let maxDate2 = max(data.map((d) => d.date));
     let minDate2 = min(data.map((d) => d.date));
-    console.log("min max ======");
-    console.log(maxDate);
-    console.log(minDate);
+    // console.log("min max ======");
+    // console.log(maxDate);
+    // console.log(minDate);
 
     let d70 = data.filter((d) => d.age_group === "70to79")
     let d60 = data.filter((d) => d.age_group === "60to69")
