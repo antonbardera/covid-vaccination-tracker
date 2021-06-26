@@ -13,7 +13,7 @@
 
     <a
         class="twitter-share-button"
-        href="https://twitter.com/intent/tweet?text=Hello%20world"
+        href="https://twitter.com/intent/tweet?text=This%20is%20how%20vaccination%20progresses%20in%20Spain: https://covid-vaccination-tracker-x80110.vercel.app/"
         target="_blank"
     >
         <img
