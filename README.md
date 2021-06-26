@@ -134,8 +134,11 @@ We adapted the UI on the GaugeChart according to the props available on the comp
 
 ## Conclusions
 
-When we began the project it became quickly evident that there are many different trackers available in the media. We found that the comparison of regional and national data was not that evident in some of them. We had also noted some sort of information overload. As such, we decided to focus on three specific topics and present them as best as possible. 
-
+When we began the project it became quickly evident that there are many different trackers available in the media. We found that the comparison of regional and national data was not that evident in some of them. We had also noted some sort of information overload. As such, we decided to focus on three specific topics and present them as good as possible:
+- The percentage of fully vaccinated population by CCAA (autonomous communities) versus the national level 
+- The vaccine effect by age group, and
+- The evaluation of vaccine effectiveness by age group
+ 
 While our visualizations are traditional, we strive for accuracy and efficiency; particularly, to make sure that the automated data pipeline is working well.
 
 Toolchain:
