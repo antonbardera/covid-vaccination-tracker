@@ -84,15 +84,15 @@
 			</div>
 
 			<div class="overline" style="text-align: center; padding-bottom: 24px;">
-				Published: June 26, 2021 | Upated: {text.today}
+				Published: June 26, 2021 | Updated: {text.today}
 			</div>
 			
 			<p class="subtitle1">
 				Spain rolled out its mass vaccination program in January. A
 				total of {text.total_millions} million doses have been administered
-				so far. On average, {text.daily_avg_previous_month} of shots were
+				so far. On average, {text.daily_avg_prev_formatted} of shots were
 				given out everyday in early {text.prev_month} and the figure has
-				increased to {text.daily_avg_current_month} in {text.curr_month}.
+				increased to {text.daily_avg_curr_formatted} in {text.curr_month}.
 			</p>
 			<p>
 				Currently there are four types of Covid-19 vaccines being
@@ -207,9 +207,7 @@
 			<MultilineWrapper tablabel={active} />
 			<p>
 				People over 80 were the earliest to receive shots. They were the
-				most affected measured by the relative terms
-				<a href="#textBox">*</a>
-				of covid-19 cases, hospital admissions, severe hospital cases (ICU)
+				most affected measured by the relative terms of covid-19 cases, hospital admissions, severe hospital cases (ICU)
 				and deaths in previous waves of outbreak.
 			</p>
 			<p>
@@ -239,29 +237,7 @@
 				</div>
 			</Paper>
 
-			<MultilineWrapper tablabel={active} />
 
-			<p>
-				Now with close to 100% vaccinated, the group’s share of cases
-				versus its winter peak has been failing and separated itself
-				from other younger age groups which received shots later than
-				the group.
-			</p>
-			<p>
-				Similar pattern surfaces after the vaccination rolled out to the
-				next elderly age groups, 70 to 79, 60 to 69, 50 to 59 and so
-				forth.
-			</p>
-			<small>
-				*Why do we show “share of the peak”, indices as a percentage of
-				its peak, instead of absolute numbers?
-			</small>
-			<small>
-				The share of peak is calculated by dividing the rolling average
-				numbers by its max value. This normalization allows us to
-				compare across age groups of various sizes.
-			</small>
-			<!-- <img src="img/topicB-scatterplot.png" alt="placeholder" /> -->
 		</div>
 
 		<!-- TopicC -->
