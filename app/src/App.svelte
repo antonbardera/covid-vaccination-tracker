@@ -121,10 +121,10 @@
 					>national share</span
 				> of vaccinated people?
 			</h4>
-			<h6>
+			<p class='subtitle1'>
 				Percentage of fully inoculated population by region versus
 				national level
-			</h6>
+            </p>
 			<p class="overline center">
 				<span class="aboveNational">⬤</span> Above national
 				<span class="belowNational">⬤</span> Below national
@@ -133,7 +133,7 @@
 			<div>
 				<Grid {grid} />
 			</div>
-			<p class='subtitle1'>Why is there a gap in those regions?</p>
+			<h6>Why is there a gap in those regions?</h6>
 			<p>
 				Following the national guideline, each autonomous region (<i
 					>Comunidad Autónoma</i
@@ -153,7 +153,7 @@
 				across all CCAAs — according to the latest census data.
 			</p>
 			<p>
-				This aging demographic coincides with the above national
+				This aging demographic trend coincides with the above national
 				vaccination rate regions colored green shown in the above chart.
 				This vaccination gap is rooted in the age-based rollout plan.
 				The opposite vaccination trends are reflected in the younger
