@@ -72,3 +72,5 @@ Both the prototype and the styleguide were iteratively adjusted as the project a
 ## Conclusions
 
 
+## Data pipeline
+![pipeline](https://github.com/X80110/covid-vaccination-tracker/raw/main/pipeline_flowchart.png)
