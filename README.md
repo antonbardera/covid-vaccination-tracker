@@ -78,8 +78,8 @@ Earlier experiences from previous workshops made clear that before moving too ea
 - The evaluation of vaccine effectiveness by age group
 
 **Wireframing and static prototyping**. After our whiteboard sessions conclusions we had two ways of structuring the project: 
-By individual CCAA with its corresponding topics.
-By topic with all of the CCAAs data inside each one.
+- By individual CCAA with its corresponding topics.
+- By topic with all of the CCAAs data inside each one.
 
 We chose option B because it reduced repetition of topics as well as allowing us to compare each CCAA status with each other in the first topic. We also decided to add a national progress bar as the Hero Viz; since it provides the first important answer: How Vaccinations Are Going in Spain?
 
