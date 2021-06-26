@@ -75,19 +75,21 @@
     />
     <p> 
         The 70 to 79 age group is the second batch invited to get jabs. 
-        The earliest available data shows {d70[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
-        shot on {d70[0]['dateStr']}. 
+        The earliest available data shows <span class="computed">{d70[0]['dose2_pct'].toFixed(1)}</span>% of the group have received a second 
+        shot on <span class="computed">{d70[0]['dateStr']}</span>. 
     </p>
     <p>
-        As of {d70[d70.length-1]['dateStr']}, 
-        the number has increased to {d70[d70.length-1]['dose2_pct'].toFixed(1)}%. 
+        As of <span class="computed">{d70[d70.length-1]['dateStr']}</span>, 
+        the number has increased to <span class="computed">{d70[d70.length-1]['dose2_pct'].toFixed(1)}%</span>. 
         It takes almost three months from close to 
         zero to almost 100 percent fully vaccinated. 
     </p>
     <p>
         With more being fully vaccinated, the share of the peak index 
-        has dropped from {d70[0]['cases_peak'].toFixed(1)}% on {d70[0]['dateStr']} 
-        to {d70[d70.length-1]['cases_peak'].toFixed(1)}% on {d70[d70.length-1]['dateStr']}. 
+        has dropped from <span class="computed">{d70[0]['cases_peak'].toFixed(1)}%</span> 
+        on <span class="computed">{d70[0]['dateStr']}</span> 
+        to <span class="computed">{d70[d70.length-1]['cases_peak'].toFixed(1)}%</span> 
+        on  <span class="computed">{d70[d70.length-1]['dateStr']}</span>. 
     </p>
     <!-- <p>above80</p>
     <ScatterStatic
@@ -110,16 +112,19 @@
     />
 
     <p> 
-        The earliest available data shows {d60[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
-        shot on {d60[0]['dateStr']}. 
+        The earliest available data shows <span class="computed">{d60[0]['dose2_pct'].toFixed(1)}%</span> 
+        of the group have received a second 
+        shot on <span class="computed">{d60[0]['dateStr']}</span>. 
         
-        As of {d60[d60.length-1]['dateStr']}, the number has increased to 
-        {d60[d60.length-1]['dose2_pct'].toFixed(1)}%. 
+        As of <span class="computed">{d60[d60.length-1]['dateStr']}</span>, the number has increased to 
+        <span class="computed">{d60[d60.length-1]['dose2_pct'].toFixed(1)}%</span>. 
     </p>
     <p>
         With more being fully vaccinated, the share of the peak index 
-        has dropped from {d60[0]['cases_peak'].toFixed(1)}% on {d60[0]['dateStr']} 
-        to {d60[d60.length-1]['cases_peak'].toFixed(1)}% on {d60[d60.length-1]['dateStr']}. 
+        has dropped from <span class="computed">{d60[0]['cases_peak'].toFixed(1)}%</span> on 
+        <span class="computed">{d60[0]['dateStr']}</span>
+        to  <span class="computed">{d60[d60.length-1]['cases_peak'].toFixed(1)}%</span> on 
+        <span class="computed">{d60[d60.length-1]['dateStr']}</span>. 
     </p>
 
     <h6 class='h6'>Age group 50-59</h6>
@@ -132,17 +137,21 @@
         {minDate}
     />
     <p> 
-        The earliest available data shows {d50[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
-        shot on {d50[0]['dateStr']}. 
+        The earliest available data shows <span class="computed">{d50[0]['dose2_pct'].toFixed(1)}%</span> 
+        of the group have received a second 
+        shot on <span class="computed">{d50[0]['dateStr']}</span>. 
         
-        As of {d50[d50.length-1]['dateStr']}, the number has increased to 
-        {d50[d50.length-1]['dose2_pct'].toFixed(1)}%. 
+        As of <span class="computed">{d50[d50.length-1]['dateStr']}</span>, the number has increased to 
+        <span class="computed">{d50[d50.length-1]['dose2_pct'].toFixed(1)}%</span>. 
     </p>
     <p>
         With more being fully vaccinated, the share of the peak index 
-        has dropped from {d50[0]['cases_peak'].toFixed(1)}% on {d50[0]['dateStr']} 
-        to {d50[d50.length-1]['cases_peak'].toFixed(1)}% on {d50[d50.length-1]['dateStr']}. 
+        has dropped from <span class="computed">{d50[0]['cases_peak'].toFixed(1)}%</span> on 
+        <span class="computed">{d50[0]['dateStr']}</span>
+        to  <span class="computed">{d50[d50.length-1]['cases_peak'].toFixed(1)}%</span> on 
+        <span class="computed">{d50[d50.length-1]['dateStr']}</span>. 
     </p>
+
 
 </div>
 
@@ -199,6 +208,10 @@
 <style>
     .h6{
         margin-bottom: -10px;
+    }
+    .computed{
+        color: #618833;
+        font-weight: 700;
     }
     /* .scatter-container {
         display: grid;

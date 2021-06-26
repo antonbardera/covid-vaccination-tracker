@@ -65,11 +65,12 @@
 				</div>
 			</div>
 			<p>
-				As of {text.today}, for every 100 people at least {text.vacc_over_pop_100_2dose}
-				are fully vaccinated and {text.vacc_over_pop_100_1dose} had received
+				As of <span class="computed">{text.today}</span>, for every 100 people at least 
+                <span class="computed">{text.vacc_over_pop_100_2dose}</span>
+				are fully vaccinated and <span class="computed">{text.vacc_over_pop_100_1dose}</span> had received
 				their first dose in Spain. At the current rate, the national target
 				of vaccinating 70% of its population would be reached by
-				<span class="dotted">{text.end_date_70pct}</span>.
+				<span class="computed">{text.end_date_70pct}</span>.
 			</p>
 		</div>
 
@@ -84,15 +85,16 @@
 			</div>
 
 			<div class="overline" style="text-align: center; padding-bottom: 24px;">
-				Published: June 26, 2021 | Updated: {text.today}
+				Published: June 26, 2021 | Updated: <span class="computed">{text.today}</span>
 			</div>
 			
 			<p class="subtitle1">
 				Spain rolled out its mass vaccination program in January. A
-				total of {text.total_millions} million doses have been administered
-				so far. On average, {text.daily_avg_prev_formatted} of shots were
-				given out everyday in early {text.prev_month} and the figure has
-				increased to {text.daily_avg_curr_formatted} in {text.curr_month}.
+				total of  <span class="computed">{text.total_millions}</span> million doses have been administered
+				so far. On average, <span class="computed">{text.daily_avg_prev_formatted}</span> of shots were
+				given out everyday in early <span class="computed">{text.prev_month}</span> and the figure has
+				increased to <span class="computed">{text.daily_avg_curr_formatted}</span> in 
+                <span class="computed">{text.curr_month}</span>.
 			</p>
 			<p>
 				Currently there are four types of Covid-19 vaccines being
@@ -339,4 +341,9 @@
 		margin-bottom: 48px;
 		max-width: 680px;
 	}
+
+    .computed{
+        color: #618833;
+        font-weight: 700;
+    }
 </style>
