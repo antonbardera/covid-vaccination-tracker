@@ -124,12 +124,12 @@ We customized a [UI kit in Figma](https://www.figma.com/file/U8l9GjvhphEkKu0Gsy9
 SMUI is styled through Sass. SMUI supports all of the mixins provided by Material Design Components for Web. Theming SMUI was challenging, because we did not have previous experience with Sass; however, once we managed to compile the styles from it, it became a powerful solution to globally control the Design Theme for our page. Although we didn’t make extensive use of Material components, the Type and Color System is entirely managed through it and it provides a strong foundation for future projects.
 
 Main difficulties
-At some point, refreshing the development environment in Visual Studio became quite slow. We think it may be due to calculations in the charts as well as a great number of dependencies installed in node modules.
-While we worked continuously during the whole duration of the project, we still faced challenges on web development due to the complexity of the code or our own learning curve. In order to present a final project, we made some decisions:
-We dropped optimizing a mobile version for the small multiples.
-We dropped the implementation of an inset chart on the second line chart, to indicate that it is a zoom level from the first one.
-We focused on optimizing the Desktop version.
-We adapted the UI on the GaugeChart according to the props available on the component, which is slightly different from the one on the prototype.
+- At some point, refreshing the development environment in Visual Studio became quite slow. We think it may be due to calculations in the charts as well as a great number of dependencies installed in node modules.
+- While we worked continuously during the whole duration of the project, we still faced challenges on web development due to the complexity of the code or our own learning curve. In order to present a final project, we made some decisions:
+    - We dropped optimizing a mobile version for the small multiples.
+    - We dropped the implementation of an inset chart on the second line chart, to indicate that it is a zoom level from the first one.
+    - We focused on optimizing the Desktop version.
+    - We adapted the UI on the GaugeChart according to the props available on the component, which is slightly different from the one on the prototype.
 
 
 ## Conclusions
