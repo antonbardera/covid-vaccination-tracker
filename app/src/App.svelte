@@ -131,11 +131,11 @@
 			<div>
 				<Grid {grid} />
 			</div>
-			<p>Why is there a gap in those regions?</p>
+			<p class='subtitle1'>Why is there a gap in those regions?</p>
 			<p>
 				Following the national guideline, each autonomous region (<i
 					>Comunidad Autónoma</i
-				>) manages the vaccine administration to its priority groups.
+				> abbreviated as CCAA) manages the vaccine administration to its priority groups.
 				Every region more or less follows the same rollout policy. So
 				why does the gap occur?
 			</p>
@@ -145,6 +145,12 @@
 				roughly 8% of the whole population in Spain.
 			</p>
 			<p>
+				On the contrary, Castilla y León, Galicia and Asturias 
+				which sit in the northwestern corner of the country see more than 
+				20% of their residents aged above 70 — the largest share of elderly 
+				across all CCAAs — according to the latest census data.
+			</p>
+			<p>
 				This aging demographic coincides with the above national
 				vaccination rate regions colored green shown in the above chart.
 				This vaccination gap is rooted in the age-based rollout plan.
@@ -152,6 +158,13 @@
 				CCAAs like Madrid, Cataluña and Com. Valenciana where
 				vaccination rates lag behind the national average, colored
 				orange.
+			</p>
+			<p>
+				However, the age group difference can not explain why two islands 
+				have an older population but see the widest vaccination gap below 
+				national average in the course of the inoculation campaign. Both 
+				Canarias and Baleares have approximately 13% of its residents aged 
+				more than 70, whereas 8% of the whole population in Spain is beyond that age. 
 			</p>
 		</div>
 
@@ -254,8 +267,7 @@
 		<!-- TopicC -->
 		<br />
 		<div>
-			<h4>How each age group compare to the others</h4>
-			<!-- <p>x: 'ra_dose2_pct_70to79', y: 'ra_case_peak_pct_70to79'</p> -->
+			<h4>Evolution of vaccine effectiveness by age group</h4>
 			<ScatterWapper />
 		</div>
 	</div>

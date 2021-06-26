@@ -74,7 +74,7 @@
         layout="col"
     />
     <p> 
-        The 70 to 79 age group is the second batch to be invited to get jabs. 
+        The 70 to 79 age group is the second batch invited to get jabs. 
         The earliest available data shows {d70[0]['dose2_pct'].toFixed(1)}% of the group have received a second 
         shot on {d70[0]['dateStr']}. 
     </p>
