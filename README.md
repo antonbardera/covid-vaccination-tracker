@@ -144,7 +144,7 @@ While our visualizations are traditional, we strive for accuracy and efficiency;
 Toolchain:
 - Data analysis: R, Tableau 
 - Whiteboarding: Miro 
-- Design, Static prototyping and Accessibility: Figma, Illustrator, Data - - Color Picker, Viz Palette, Colour Contrast Analyser 
+- Design, Static prototyping and Accessibility: Figma, Illustrator, Data Color Picker, Viz Palette, Colour Contrast Analyser 
 - Development and version control: Visual Studio, Github, Svelte
 - App deployment: Vercel 
 - Project Management and collaboration: Google Workspace, Slack
