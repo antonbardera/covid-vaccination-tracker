@@ -3,6 +3,7 @@
 	import Multiline from "../components/charts/Multiline.svelte";
 	import {curveBasis} from 'd3-shape'
 	import {multiline_data} from '../utils.js'
+	
 //	import Button, { Label, Icon } from '@smui/button';
 //	import { fade } from 'svelte/transition';
 //	import IntersectionObserver from "svelte-intersection-observer";
@@ -56,18 +57,6 @@
 		ICU : ['peak_uci_50to59', 'peak_uci_60to69','peak_uci_70to79','peak_uci_above80']
 	}
 	
-	let xKey = "fecha";
-	//let yKey = cases
-	let selected;
-	
-
-	let selected_cases = () => { y = cases }
-	let selected_deaths = () => { y = deaths }
-
-	
-	function setValues(vars){
-		y = `${vars}`
-	}
 
 
 
@@ -92,7 +81,7 @@
 	/>
 </div> 
  <br> 
-<p class="overline center">Trend from April 2021</p>
+<p class="overline center">Detail view from April 2021</p>
 <div class="narrowColumn">
 	<Multiline
 		data={mldata[tablabel].filter((d) => new Date(d.fecha) > new Date("2021-04-01"))}
