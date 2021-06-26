@@ -65,15 +65,11 @@
 				</div>
 			</div>
 			<p>
-<<<<<<< HEAD
-				As of {text.today}, <strong>for every 100 people at least <span class="dotted">{text.vacc_over_pop_100_2dose}</span> are fully vaccinated and <span class="dotted">{text.vacc_over_pop_100_1dose}</span> had received their first dose in Spain</strong>. At the current rate, the national target of vaccinating 70% of its population would be reached by  <span class="dotted">{text.end_date_70pct}</span>. 
-=======
 				As of {text.today}, for every 100 people at least {text.vacc_over_pop_100_2dose}
 				are fully vaccinated and {text.vacc_over_pop_100_1dose} had received
 				their first dose in Spain. At the current rate, the national target
 				of vaccinating 70% of its population would be reached by
 				<span class="dotted">{text.end_date_70pct}</span>.
->>>>>>> ff65b2a9bf15cec43946b376451605a180ca4475
 			</p>
 		</div>
 
@@ -86,27 +82,17 @@
 			<div class="subtitle1" style="text-align: center;">
 				By Spe Chen, Xavier Bolló and Santiago Salcido
 			</div>
-<<<<<<< HEAD
-			<div class="overline" style="text-align: center;">
-				Published: June 26, 2021    |    Upated: {text.today}
-=======
 
 			<div class="overline" style="text-align: center; padding-bottom: 24px;">
 				Published: June 26, 2021 | Upated: {text.today}
->>>>>>> ff65b2a9bf15cec43946b376451605a180ca4475
 			</div>
 			
 			<p class="subtitle1">
-<<<<<<< HEAD
-				Spain rolled out its mass vaccination program in January. A total of <span class="dotted">{text.total_millions} million doses</span> have been administered so far. On average, <span class="dotted">{text.daily_avg_prev_formatted}</span> of shots were given out everyday in early {text.prev_month} and the figure has increased to <span class="dotted">{text.daily_avg_curr_formatted}</span> in {text.curr_month}.
-
-=======
 				Spain rolled out its mass vaccination program in January. A
 				total of {text.total_millions} million doses have been administered
 				so far. On average, {text.daily_avg_previous_month} of shots were
 				given out everyday in early {text.prev_month} and the figure has
 				increased to {text.daily_avg_current_month} in {text.curr_month}.
->>>>>>> ff65b2a9bf15cec43946b376451605a180ca4475
 			</p>
 			<p>
 				Currently there are four types of Covid-19 vaccines being
@@ -133,17 +119,10 @@
 					>national share</span
 				> of vaccinated people?
 			</h4>
-<<<<<<< HEAD
-			<h5>
-				Percentage of fully inoculated population by region versus national level 
-
-			</h5>
-=======
 			<h6>
 				Percentage of fully inoculated population by region versus
 				national level
 			</h6>
->>>>>>> ff65b2a9bf15cec43946b376451605a180ca4475
 			<p class="overline center">
 				<span class="aboveNational">⬤</span> Above national
 				<span class="belowNational">⬤</span> Below national
@@ -152,13 +131,6 @@
 			<div>
 				<Grid {grid} />
 			</div>
-<<<<<<< HEAD
-			<h6>
-				Why is there a gap in those regions?
-			</h6>
-			<p>
-			Following the national guideline, each autonomous region (<i>Comunidad Autónoma</i>) manages the vaccine administration to its priority groups. Every region more or less follows the same rollout policy. So why does the gap occur? 
-=======
 			<p>Why is there a gap in those regions?</p>
 			<p>
 				Following the national guideline, each autonomous region (<i
@@ -166,7 +138,6 @@
 				>) manages the vaccine administration to its priority groups.
 				Every region more or less follows the same rollout policy. So
 				why does the gap occur?
->>>>>>> ff65b2a9bf15cec43946b376451605a180ca4475
 			</p>
 			<p>
 				One possible explanation is that the demography in each region
