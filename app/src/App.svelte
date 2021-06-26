@@ -90,9 +90,9 @@
 			<p class="subtitle1">
 				Spain rolled out its mass vaccination program in January. A
 				total of {text.total_millions} million doses have been administered
-				so far. On average, {text.daily_avg_previous_month} of shots were
+				so far. On average, {text.daily_avg_prev_formatted} of shots were
 				given out everyday in early {text.prev_month} and the figure has
-				increased to {text.daily_avg_current_month} in {text.curr_month}.
+				increased to {text.daily_avg_curr_formatted} in {text.curr_month}.
 			</p>
 			<p>
 				Currently there are four types of Covid-19 vaccines being
