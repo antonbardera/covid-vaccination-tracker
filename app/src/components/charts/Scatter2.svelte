@@ -166,12 +166,14 @@
 	
 	.date-text.date-text--left {
 		text-anchor: start;
-		transform: translate(12px, 3px);
+		transform: translate(15px, 5px);
+		font-size: 13px;
 	}
 
 	.date-text.date-text--right {
 		text-anchor: end;
-		transform: translate(-12px, 3px);
+		transform: translate(-15px, 5px);
+		font-size: 13px;
 	}	
 	.date-text:last-of-type {
 		/* last date stays  */

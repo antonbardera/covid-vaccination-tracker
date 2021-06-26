@@ -46,7 +46,7 @@ import { text } from "svelte/internal";
   {#each ticks as tick, i}
     {#if position === 'bottom'}
     <g class='tick' transform='translate({tick.offset}, 0)'>
-      <line y2=6 />
+      <line y2=10 />
           {#if i === ticks.length - 1}
           <text class='label' y=20 text-anchor={anchor(tick.offset)}>
             {tick.valueUnit}
@@ -74,9 +74,9 @@ import { text } from "svelte/internal";
     {:else if position === 'right'}
     <g class='tick' transform='translate(0, {tick.offset})'>
 			{#if tick.value === '0'}
-      <line x2={width}/>
+      <line x2={width * 1.01}/>
 			{:else}
-      <line x2={width} stroke-dasharray="2 3" />
+      <line x2={width * 1.01} stroke-dasharray="2 3" />
       <text class='label' x={width} y=-5 text-anchor='end'>
         {#if i === ticks.length - 1}
           {tick.valueUnit}
@@ -89,9 +89,9 @@ import { text } from "svelte/internal";
     {:else if position === 'left'}
     <g class='tick' transform='translate(-30, {tick.offset})'>
       {#if tick.value === '0'}
-      <line x2={width}/>
+      <line x2={width * 1.04}/>
 			{:else}
-      <line x2={width} stroke-dasharray="2 3" />
+      <line x2={width*  1.04} stroke-dasharray="2 3" />
       <text class='label' x=0 y=-5 text-anchor='start'>
         {#if i === ticks.length - 1}
          {tick.valueUnit}
