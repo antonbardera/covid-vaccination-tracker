@@ -84,7 +84,7 @@
 			</div>
 
 			<div class="overline" style="text-align: center; padding-bottom: 24px;">
-				Published: June 26, 2021 | Upated: {text.today}
+				Published: June 26, 2021 | Updated: {text.today}
 			</div>
 			
 			<p class="subtitle1">
