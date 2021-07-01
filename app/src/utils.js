@@ -10,8 +10,8 @@ export function textvalues(){
     // console.log('DATA -----',data)
 
     const today = loc.formatTime('%B %e, %Y')(new Date())
-    const today_raw = (new Date())
-    var d = new Date();
+    const today_raw = (new Date(data.reverse()[0]['fecha']))
+    var d = new Date(today_raw);
 
     
     const prev_month = loc.formatTime('%B')(d.setMonth(d.getMonth() - 1))
@@ -19,16 +19,18 @@ export function textvalues(){
     console.log(prev_month,curr_month)
 
     const national_data = data.filter(d => d.ccaa === 'Total España'|| d.ccaa === 'Totales')
-    const total_population = national_data.reverse()[0]['pop_total']
+    const total_population = national_data[0]['pop_total'] 
     console.log('POPULATION -----',total_population)
     
+    // aq.from(national_data).print()
+
     const total_millions = loc.format(',.2f')(aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['administradas']/1000000) 
     const total_dose2 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose2']
     const total_dose1 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose1']
     console.log('DOSE1-dose2 -----', total_dose1, total_dose2)
 
-    const current_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === new Date().getMonth())
-    const previous_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === new Date().getMonth()-1)
+    const current_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === today_raw.getMonth())
+    const previous_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === today_raw.getMonth()-1)
     console.log(current_month_data)
     console.log(previous_month_data)
     
@@ -64,8 +66,8 @@ export function textvalues(){
     
     const days_until_70pct =  (total_population *0.7-total_dose2) / daily_avg_current_month
     const days_until_100pct =  (total_population -total_dose2) / daily_avg_current_month
-    const end_date_70pct = loc.formatTime('%B %e, %Y')(new Date(today_raw).setDate(today_raw.getDate()+days_until_70pct))
-    const end_date_100pct = loc.formatTime('%B %e, %Y')(new Date(today_raw).setDate(today_raw.getDate()+days_until_100pct))
+    const end_date_70pct = loc.formatTime('%B %e, %Y')(new Date().setDate(today_raw.getDate()+days_until_70pct))
+    const end_date_100pct = loc.formatTime('%B %e, %Y')(new Date().setDate(today_raw.getDate()+days_until_100pct))
     console.log('days until 70%', days_until_70pct)
     console.log('date end 70%', end_date_70pct)
     console.log('days until 100%', days_until_100pct)
