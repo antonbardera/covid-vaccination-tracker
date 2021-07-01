@@ -133,6 +133,9 @@
 
 			<div>
 				<Grid {grid} />
+				<p class="center robot">
+					Chart data updated on {text.today}
+				</p>
 			</div>
 			<h6>Why is there a gap in those regions?</h6>
 			<p>
@@ -182,6 +185,11 @@
 				progressively.
 			</p>
 
+			<p>
+				People over 80 were the earliest to receive shots. They were the
+				most affected measured by the relative terms of covid-19 cases, hospital admissions, severe hospital cases (ICU)
+				and deaths in previous waves of outbreak.
+			</p>
 			<!-- TopicB Tabs -->
 			<div>
 				<!--
@@ -208,11 +216,6 @@
 				<span class="groupAbove80">⬤</span> 80+
 			</p>
 			<MultilineWrapper tablabel={active} />
-			<p>
-				People over 80 were the earliest to receive shots. They were the
-				most affected measured by the relative terms of covid-19 cases, hospital admissions, severe hospital cases (ICU)
-				and deaths in previous waves of outbreak.
-			</p>
 			<p>
 				Now with close to 100% vaccinated, the group’s share of cases
 				versus its winter peak has been failing and separated itself
