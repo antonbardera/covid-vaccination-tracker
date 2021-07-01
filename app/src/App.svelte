@@ -65,11 +65,14 @@
 				</div>
 			</div>
 			<p>
-				As of <span class="computed">{text.today}</span>, for every 100 people at least 
-                <span class="computed">{text.vacc_over_pop_100_2dose}</span>
-				are fully vaccinated and <span class="computed">{text.vacc_over_pop_100_1dose}</span> had received
-				their first dose in Spain. At the current rate, the national target
-				of vaccinating 70% of its population would be reached by
+				As of <span class="computed">{text.today}</span>, for every 100
+				people at least
+				<span class="computed">{text.vacc_over_pop_100_2dose}</span>
+				are fully vaccinated and
+				<span class="computed">{text.vacc_over_pop_100_1dose}</span>
+				had received their first dose in Spain. At the current rate, the
+				national target of vaccinating 70% of its population would be reached
+				by
 				<span class="computed">{text.end_date_70pct}</span>.
 			</p>
 		</div>
@@ -81,22 +84,44 @@
 			</h2>
 
 			<div class="subtitle1" style="text-align: center;">
-				By Spe Chen, Xavier Bolló and Santiago Salcido + 🤖<span class='robot'>*</span> 
+				By <a href="https://twitter.com/spepechen" target="_blank"
+					>Spe Chen</a
+				>,
+				<a href="https://twitter.com/elgatdolent" target="_blank"
+					>Xavier Bolló</a
+				>
+				and
+				<a href="https://twitter.com/santiagosalcido" target="_blank"
+					>Santiago Salcido</a
+				>
+				+ 🤖<span class="robot">*</span>
 			</div>
-			<div class="overline" style="text-align: center; padding-bottom: 24px;">
-				Published: June 26, 2021 | Updated: <span class="computed">{text.today}</span>
+			<div
+				class="overline"
+				style="text-align: center; padding-bottom: 24px;"
+			>
+				Published: June 26, 2021 | Updated: <span class="computed"
+					>{text.today}</span
+				>
 			</div>
-            <p class="center robot">
-                *Our robot writes the green text and updates the charts based on official data sources. Its works only on weekdays.
-            </p>
+			<p class="center robot">
+				*Our robot writes the green text and updates the charts based on
+				official data sources. Its works only on weekdays.
+			</p>
+			<br />
 			<p class="subtitle1">
 				Spain rolled out its mass vaccination program in January. A
-				total of  <span class="computed">{text.total_millions}</span> million doses have been administered
-				so far. On average, <span class="computed">{text.daily_avg_prev_formatted}</span> of shots were
-				given out everyday in early <span class="computed">{text.prev_month}</span> and the figure has
-				increased to <span class="computed">{text.daily_avg_curr_formatted}</span> in 
-                <span class="computed">{text.curr_month}</span>.
+				total of <span class="computed">{text.total_millions}</span>
+				million doses have been administered so far. On average,
+				<span class="computed">{text.daily_avg_prev_formatted}</span>
+				of shots were given out everyday in early
+				<span class="computed">{text.prev_month}</span>
+				and the figure has increased to
+				<span class="computed">{text.daily_avg_curr_formatted}</span>
+				in
+				<span class="computed">{text.curr_month}</span>.
 			</p>
+			<br />
 			<p>
 				Currently there are four types of Covid-19 vaccines being
 				administered in seventeen Spanish regions. These include Johnson
@@ -122,10 +147,10 @@
 					>national share</span
 				> of vaccinated people?
 			</h4>
-			<p class='subtitle1'>
-				Percentage of fully inoculated population by region vs.
-				national level
-            </p>
+			<p class="subtitle1">
+				Percentage of fully inoculated population by region vs. national
+				level
+			</p>
 			<p class="overline center">
 				<span class="aboveNational">⬤</span> Above national
 				<span class="belowNational">⬤</span> Below national
@@ -137,13 +162,15 @@
 					Chart data updated on {text.today}
 				</p>
 			</div>
-			<h6>Why is there a gap in those regions?</h6>
+			<h6 style="margin-bottom: 24px;">
+				Why is there a gap in those regions?
+			</h6>
 			<p>
 				Following the national guideline, each autonomous region (<i
 					>Comunidad Autónoma</i
-				> abbreviated as CCAA) manages the vaccine administration to its priority groups.
-				Every region more or less follows the same rollout policy. So
-				why does the gap occur?
+				> abbreviated as CCAA) manages the vaccine administration to its
+				priority groups. Every region more or less follows the same rollout
+				policy. So why does the gap occur?
 			</p>
 			<p>
 				One possible explanation is that the demography in each region
@@ -151,9 +178,9 @@
 				roughly 8% of the whole population in Spain.
 			</p>
 			<p>
-				On the contrary, Castilla y León, Galicia and Asturias 
-				which sit in the northwestern corner of the country see more than 
-				20% of their residents aged above 70 — the largest share of elderly 
+				On the contrary, Castilla y León, Galicia and Asturias which sit
+				in the northwestern corner of the country see more than 20% of
+				their residents aged above 70 — the largest share of elderly
 				across all CCAAs — according to the latest census data.
 			</p>
 			<p>
@@ -166,11 +193,12 @@
 				orange.
 			</p>
 			<p>
-				However, the age group difference can not explain why two islands 
-				have an older population but see the widest vaccination gap below 
-				national average in the course of the inoculation campaign. Both 
-				Canarias and Baleares have approximately 13% of its residents aged 
-				more than 70, whereas 8% of the whole population in Spain is beyond that age. 
+				However, the age group difference can not explain why two
+				islands have an older population but see the widest vaccination
+				gap below national average in the course of the inoculation
+				campaign. Both Canarias and Baleares have approximately 13% of
+				its residents aged more than 70, whereas 8% of the whole
+				population in Spain is beyond that age.
 			</p>
 		</div>
 
@@ -242,12 +270,10 @@
 					us to compare across age groups of various sizes.
 				</div>
 			</Paper>
-
-
 		</div>
 
 		<!-- TopicC -->
-		<br />
+		<br>
 		<div>
 			<h4>Evolution of vaccine effectiveness by age group</h4>
 			<ScatterWapper />
@@ -288,7 +314,7 @@
 	} */
 
 	.dotted {
-		border-bottom: 2px dotted #999;
+		border-bottom: 2px dotted #333;
 		text-decoration: none;
 	}
 
@@ -346,18 +372,18 @@
 		max-width: 680px;
 	}
 
-    .computed{
-        color: #618833;
-        font-weight: 700;
-    }
+	.computed {
+		color: #618833;
+		font-weight: 700;
+	}
 
-    .robot{
-        color: darkgray;
-        font-family: "Merriweather Sans", Arial, sans-serif;
-        font-size: 13px;
-        line-height: 1.5;
-        max-width: 25vw;
-        margin: 0 auto;
-        text-align: center;
-    }
+	.robot {
+		color: darkgray;
+		font-family: "Merriweather Sans", Arial, sans-serif;
+		font-size: 13px;
+		line-height: 1.5;
+		max-width: 25vw;
+		margin: 0 auto;
+		text-align: center;
+	}
 </style>
