@@ -7,8 +7,9 @@
 	// import locale from "@reuters-graphics/d3-locale";
 	// import Scatter from "./components/charts/Scatter2.svelte";
 	import { textvalues } from "./utils.js";
-	$: text = textvalues();
-	// console.log('---text toodaaay',text.today)
+	$: texts = textvalues();
+	
+	// console.log('---text toodaaay',texts.today)
 
 	/* TopicB TabBar */
 	import Tab, { Label } from "@smui/tab";
@@ -32,6 +33,7 @@
 
 	/* MUI Paper */
 	import Paper, { Title, Subtitle, Content } from "@smui/paper";
+	import { text } from "svelte/internal";
 </script>
 
 <!-- HEAD -->
@@ -65,15 +67,15 @@
 				</div>
 			</div>
 			<p>
-				As of <span class="computed">{text.today}</span>, for every 100
+				As of <span class="computed">{texts.today}</span>, for every 100
 				people at least
-				<span class="computed">{text.vacc_over_pop_100_2dose}</span>
+				<span class="computed">{texts.vacc_over_pop_100_2dose}</span>
 				are fully vaccinated and
-				<span class="computed">{text.vacc_over_pop_100_1dose}</span>
+				<span class="computed">{texts.vacc_over_pop_100_1dose}</span>
 				had received their first dose in Spain. At the current rate, the
 				national target of vaccinating 70% of its population would be reached
 				by
-				<span class="computed">{text.end_date_70pct}</span>.
+				<span class="computed">{texts.end_date_70pct}</span>.
 			</p>
 		</div>
 
@@ -101,7 +103,7 @@
 				style="text-align: center; padding-bottom: 24px;"
 			>
 				Published: June 26, 2021 | Updated: <span class="computed"
-					>{text.today}</span
+					>{texts.today}</span
 				>
 			</div>
 			<p class="center robot">
@@ -111,15 +113,19 @@
 			<br />
 			<p class="subtitle1">
 				Spain rolled out its mass vaccination program in January. A
-				total of <span class="computed">{text.total_millions}</span>
+				total of <span class="computed">{texts.total_millions}</span>
 				million doses have been administered so far. On average,
-				<span class="computed">{text.daily_avg_prev_formatted}</span>
+				<span class="computed">{texts.daily_avg_prev_formatted}</span>
 				of shots were given out everyday in early
-				<span class="computed">{text.prev_month}</span>
-				and the figure has increased to
-				<span class="computed">{text.daily_avg_curr_formatted}</span>
+				<span class="computed">{texts.prev_month}</span>
+				and the figure has 
+				{#if texts.daily_avg_curr_formatted > texts.daily_avg_prev_formatted }
+				<span class="computed"> increased to {texts.daily_avg_curr_formatted } </span>
+				{:else}
+				<span class="computed"> decreased to {texts.daily_avg_curr_formatted } </span>
+				{/if}
 				in
-				<span class="computed">{text.curr_month}</span>.
+				<span class="computed">{texts.curr_month}</span>.
 			</p>
 			<br />
 			<p>
@@ -159,7 +165,7 @@
 			<div>
 				<Grid {grid} />
 				<p class="center robot">
-					Chart data updated on {text.today}
+					Chart data updated on {texts.today}
 				</p>
 			</div>
 			<h6 style="margin-bottom: 24px;">
