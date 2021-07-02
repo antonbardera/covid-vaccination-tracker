@@ -28,34 +28,51 @@ export function textvalues(){
     const total_dose2 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose2']
     const total_dose1 = aq.from(national_data).orderby(aq.desc('fecha')).objects()[0]['dose1']
     console.log('DOSE1-dose2 -----', total_dose1, total_dose2)
-
-    const current_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === today_raw.getMonth())
-    const previous_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === today_raw.getMonth()-1)
-    console.log(current_month_data)
-    console.log(previous_month_data)
     
     const vacc_over_pop_100_2dose = Math.round(total_dose2/total_population*100)
     const vacc_over_pop_100_1dose = Math.round(total_dose1/total_population*100)
     console.log(vacc_over_pop_100_2dose +' people out of 100 complete vaccination' )
     console.log(vacc_over_pop_100_1dose +' people out of 100 at least 1 dose' )
-
-    const daily_avg_previous_month = aq.from(previous_month_data)
-        .orderby('fecha').select('fecha','administradas')
-        .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
-        .slice(1,-1)
-        .derive({daily_avg: d=> op.sum(d.diff)/30})
-        .orderby(aq.desc('fecha'))
-        .select('daily_avg').groupby('daily_avg')
-        .objects()[0].daily_avg
     
-    const daily_avg_current_month = aq.from(current_month_data)
+    const current_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === today_raw.getMonth()  )
+    const previous_month_data = national_data.filter(d=>new Date(d.fecha).getMonth() === today_raw.getMonth()-1)
+    console.log(current_month_data)
+    console.log(previous_month_data)
+
+    const daily_avg_current_month = aq.from(national_data)
         .orderby('fecha').select('fecha','administradas')
         .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
-        .slice(1,-1)
+        .filter(aq.escape(d=>new Date(d.fecha).getMonth() === today_raw.getMonth()))
         .derive({daily_avg: d=> op.sum(d.diff)/op.date(op.now())})
-        .orderby(aq.desc('fecha'))
         .select('daily_avg').groupby('daily_avg')
-        .objects()[0].daily_avg
+        .objects()[0].daily_avg        
+  
+    const daily_avg_previous_month = aq.from(national_data)
+        .orderby('fecha').select('fecha','administradas')
+        .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
+        .filter(aq.escape(d=>new Date(d.fecha).getMonth() === today_raw.getMonth()-1))
+        .derive({daily_avg: d=> op.sum(d.diff)/30})
+        .select('daily_avg').groupby('daily_avg')
+        .objects()[0].daily_avg        
+
+    // const daily_avg_previous_month = aq.from(previous_month_data)
+    //     .orderby('fecha').select('fecha','administradas')
+    //     .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
+    //     .slice(1,-1)
+    //     .derive({daily_avg: d=> op.sum(d.diff)/30})
+    //     .orderby(aq.desc('fecha'))
+    //     .select('daily_avg').groupby('daily_avg')
+    //     .objects()[0].daily_avg
+    
+    // const daily_avg_current_month = aq.from(current_month_data)
+    //     .orderby('fecha').select('fecha','administradas')
+    //     .derive({diff:d => d.administradas - op.lag(d.administradas, 0, -1) } )
+    //     // .slice(1,-1)
+    //     .derive({daily_avg: d=> op.sum(d.diff)/op.date(op.now())})
+    //     .orderby(aq.desc('fecha'))
+    //     .select('daily_avg').groupby('daily_avg')
+    //     // .print()
+    //     .objects()[0].daily_avg
     
         
     const daily_avg_increase = loc.format('%')(( daily_avg_current_month - daily_avg_previous_month ) / daily_avg_current_month *100)
