@@ -16,7 +16,7 @@
         <br />
         <div class="body2" style="text-align: center;">Mentors</div>
         <div class="subtitle1" style="text-align: center;">
-            Anton Bardera, Niko Kommenda
+            Anton Bardera and Niko Kommenda
         </div>
         <br />
 

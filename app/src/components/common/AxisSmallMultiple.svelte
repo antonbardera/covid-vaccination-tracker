@@ -48,10 +48,10 @@
         {tick.value}
        </text>
        {:else if i === ticks.length - 1} 
-       <text class='label-bg-l' x=10 y=3 text-anchor='start'>
+       <text class='label-bg-l' x=7 y=3 text-anchor='end'>
         {tick.value}
        </text>
-       <text class='label' x=10 y=3 text-anchor='start'>
+       <text class='label' x=7 y=3 text-anchor='end'>
         {tick.value}
        </text>
       {/if}

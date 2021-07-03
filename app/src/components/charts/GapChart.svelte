@@ -12,6 +12,8 @@
 	export let format;
 	export let key;
 	export let color;
+	export let maxValueAll;
+
 	// export let colorDiff;
 	// export let title;
 	// export let desc;
@@ -30,9 +32,10 @@
 	// $: y = scaleLinear()
 	// 	.domain([0, max(data, d => d[key.y[0]])])
 	// 	.range([height - margin.bottom - margin.top, margin.top]);
+	console.log(maxValueAll)
 	
 	$: y = scaleLinear()
-		.domain([0, 0.45])
+		.domain([0, maxValueAll])
 		.range([height - margin.bottom - margin.top, margin.top]);
 
 	$: path = line()

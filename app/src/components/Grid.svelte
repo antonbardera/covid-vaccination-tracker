@@ -60,19 +60,25 @@
 			value1: findValueByDate(d.date.split("T")[0]),
 		};
 	});
-	console.log("data2=========");
-	console.log(data2);
+
+
+
+
 	/* --------------------  
 	   Set up for <div> 
 	-----------------------*/
+	console.log("maxValueAll=========");
+	let maxValueAll = max(data2.map((d) => d.value0)).toFixed(1);
+	console.log(maxValueAll);
 
 	// let color = ['rgba(92,198,178, 1)', 'rgba(0,0,0, 1)']
 
 	let color = ["#569E4B", "#F0A81C"];
 	// let colorDiff = ['rgba(92,198,178, 0.5)', 'rgba(0,0,0, 0.5)']
+	// time format https://github.com/d3/d3-time-format/blob/v3.0.0/README.md#timeFormat
 	const loc = new locale("en");
 	const format = {
-		x: loc.formatTime("%B"),
+		x: loc.formatTime("%B %e"),
 		y: loc.format(",.1f"),
 	};
 
@@ -192,6 +198,7 @@
 							key={{ x: "dateStr", y: ["value0", "value1"] }}
 							{format}
 							{color}
+							{maxValueAll}
 							layout="col"
 						/>
 					{/if}

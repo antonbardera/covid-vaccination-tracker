@@ -108,7 +108,7 @@
 			</div>
 			<p class="center robot">
 				*Our robot writes the green text and updates the charts based on
-				official data sources. Its works only on weekdays.
+				official data sources. It speaks Spanish and works only on weekdays.
 			</p>
 			<br />
 			<p class="subtitle1">
@@ -131,8 +131,8 @@
 			<p>
 				Currently there are four types of Covid-19 vaccines being
 				administered in seventeen Spanish regions. These include Johnson
-				& Johnson’s single-dose vaccine, Janssenm and the two-dose
-				series, Pfizer-BioNTech, Moderna and AstraZeneca/Oxford.
+				& Johnson’s single-dose vaccine, Janssenm, and the two-dose
+				series: Pfizer-BioNTech, Moderna and AstraZeneca/Oxford.
 			</p>
 			<p>
 				The nation focuses on a health risk and age-based vaccine
@@ -388,7 +388,7 @@
 		font-family: "Merriweather Sans", Arial, sans-serif;
 		font-size: 13px;
 		line-height: 1.5;
-		max-width: 25vw;
+		max-width: 28vw;
 		margin: 0 auto;
 		text-align: center;
 	}

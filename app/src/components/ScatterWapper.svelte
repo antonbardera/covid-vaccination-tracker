@@ -25,7 +25,7 @@
     let data_ = DataLong.map((d) => {
         return {
             date: new Date(d.date),
-            dateStr: loc.formatTime("%B %d")(new Date(d.date)),
+            dateStr: loc.formatTime("%B %e")(new Date(d.date)),
             age_group: d.age_group,
             dateDiff: new Date(d.date) - new Date("2021-03-30"),
             dose2_pct: d.dose2_pct,
