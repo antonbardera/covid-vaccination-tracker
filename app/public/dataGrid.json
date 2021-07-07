@@ -7375,5 +7375,115 @@
     "date": "2021-07-06T00:00:00.000Z",
     "ccaa": "Total España",
     "value0": 0.46
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Andalucía",
+    "value0": 0.47
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Aragón",
+    "value0": 0.51
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Asturias",
+    "value0": 0.56
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Baleares",
+    "value0": 0.44
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Canarias",
+    "value0": 0.43
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Cantabria",
+    "value0": 0.48
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Castilla y Leon",
+    "value0": 0.53
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Castilla - La Mancha",
+    "value0": 0.47
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Cataluña",
+    "value0": 0.46
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "C.Valenciana",
+    "value0": 0.45
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Extremadura",
+    "value0": 0.53
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Galicia",
+    "value0": 0.54
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "La Rioja",
+    "value0": 0.51
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Madrid",
+    "value0": 0.45
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Murcia",
+    "value0": 0.45
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Navarra",
+    "value0": 0.5
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "País Vasco",
+    "value0": 0.5
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Ceuta",
+    "value0": 0.46
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Melilla",
+    "value0": 0.45
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Fuerzas Armadas",
+    "value0": 0
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Sanidad Exterior",
+    "value0": 0
+  },
+  {
+    "date": "2021-07-07T00:00:00.000Z",
+    "ccaa": "Total España",
+    "value0": 0.47
   }
 ]
