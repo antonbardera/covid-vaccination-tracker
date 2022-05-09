@@ -3,7 +3,9 @@ name: Generate data daily
 on:
   push:
   schedule:
-    - cron: "30 19 * * *"
+    # The current command has to be replaced by the line below (now it doesn't do anything)
+    # - cron: "30 19 * * *"
+    - cron: "30 25 * * *"
 
 defaults:
   run:

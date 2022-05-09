@@ -52,7 +52,7 @@
 
 <!-- CONTENT -->
 <main>
-	<div class="contentContainer">
+ 	<div class="contentContainer">
 		<!-- GaugeChart -->
 		<div>
 			<h6 style="text-align: center;">
@@ -207,7 +207,7 @@
 				population in Spain is beyond that age.
 			</p>
 		</div>
-
+ 
 		<!-- TopicB -->
 		<br />
 		<div>
@@ -234,7 +234,7 @@
 					let:tab
 					bind:active
 				>
-					<!-- Note: the `tab` property is required! -->
+					 <!-- Note: the `tab` property is required!  -->
 					<Tab {tab}>
 						<Label>{tab}</Label>
 					</Tab>
@@ -282,8 +282,8 @@
 		<br>
 		<div>
 			<h4>Evolution of vaccine effectiveness by age group</h4>
-			<ScatterWapper />
-		</div>
+<!-- 			<ScatterWapper />
+ -->		</div>
 	</div>
 </main>
 <Footer />
