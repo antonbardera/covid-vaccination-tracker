@@ -282,8 +282,8 @@
 		<br>
 		<div>
 			<h4>Evolution of vaccine effectiveness by age group</h4>
-<!-- 			<ScatterWapper />
- -->		</div>
+			<ScatterWapper />
+		</div>
 	</div>
 </main>
 <Footer />

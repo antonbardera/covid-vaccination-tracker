@@ -9,10 +9,13 @@ export function textvalues(){
     const data = vaccines.default
     // console.log('DATA -----',data)
 
-    const today = loc.formatTime('%B %e, %Y')(new Date())
+/*     const today = loc.formatTime('%B %e, %Y')(new Date())
     const today_raw = (new Date(data.reverse()[0]['fecha']))
     var d = new Date(today_raw);
-
+ */
+    const today = loc.formatTime('%B %e, %Y')(new Date("10/01/2021"));
+    const today_raw = (new Date(data.reverse()[0]['fecha']));
+    var d = new Date(today_raw);
     
     const prev_month = loc.formatTime('%B')(d.setMonth(d.getMonth() - 1))
     const curr_month = loc.formatTime('%B')(today_raw)
@@ -83,7 +86,8 @@ export function textvalues(){
     
     const days_until_70pct =  (total_population *0.7-total_dose2) / daily_avg_current_month
     const days_until_100pct =  (total_population -total_dose2) / daily_avg_current_month
-    const end_date_70pct = loc.formatTime('%B %e, %Y')(new Date().setDate(today_raw.getDate()+days_until_70pct))
+//    const end_date_70pct = loc.formatTime('%B %e, %Y')(new Date().setDate(today_raw.getDate()+days_until_70pct))
+    const end_date_70pct = "September 4, 2021"; //Hack to doesn't do the estimation
     const end_date_100pct = loc.formatTime('%B %e, %Y')(new Date().setDate(today_raw.getDate()+days_until_100pct))
     console.log('days until 70%', days_until_70pct)
     console.log('date end 70%', end_date_70pct)
